@@ -13,6 +13,7 @@
 
         body {
             font-family: 'Arial', sans-serif;
+            /* Restoring image background settings */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -28,7 +29,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 255, 255, 0.85);
+            /* Restoring white overlay for contrast */
+            background: rgba(255, 255, 255, 0.3);
             z-index: 1;
         }
 
@@ -72,7 +74,7 @@
 
         .section-content {
             display: none;
-            background: white;
+            background: white; /* Default background for content */
         }
 
         .section-block.expanded .section-content {
@@ -105,16 +107,97 @@
             padding: 2rem;
         }
 
-        #loading {
-            position: fixed;
-            top: 20px;
-            right: 20px;
+        /* NEW: Styling for the bold Shows content area (Complementary to Contact) */
+        .shows-section-content {
+            background: #00E5FF; /* Electric Cyan */
+            color: black;
+        }
+
+        /* Styling for the bold Contact content area */
+        .contact-section-content {
+            background: #FF4500; /* Bold Red-Orange */
+            color: white;
+        }
+
+        /* Shows List Styling */
+        .show-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .show-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            line-height: 1.4;
+        }
+
+        .show-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        /* Contact Form Styling */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem; /* Space between form fields */
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            width: 100%;
+            transition: border-color 0.3s ease;
+            background: white; /* Default inputs are white */
+            color: black;
+        }
+
+        /* Adjustments for inputs inside the bold contact section */
+        .contact-section-content .contact-form input,
+        .contact-section-content .contact-form textarea {
+            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white for inputs */
+            color: #1a1a1a;
+            border: 2px solid white;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: black;
+            outline: none;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+        }
+
+        .contact-form button {
             background: black;
             color: white;
-            padding: 10px 20px;
+            padding: 1rem 2rem;
+            border: none;
             border-radius: 4px;
-            z-index: 1000;
-            display: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.1s ease;
+        }
+
+        .contact-form button:hover {
+            background: #333;
+        }
+
+        .contact-form button:active {
+            transform: scale(0.98);
         }
 
         @media (max-width: 968px) {
@@ -138,8 +221,6 @@
     </style>
 </head>
 <body>
-    <div id="loading">Loading background...</div>
-    
     <div class="container">
         <h1>CHORE BOYS</h1>
         
@@ -148,9 +229,18 @@
             <div class="section-header" onclick="toggleSection(this)">
                 UPCOMING SHOWS
             </div>
-            <div class="section-content">
+            <div class="section-content shows-section-content">
                 <div class="text-content">
-                    <p>Shows coming soon...</p>
+                    <ul class="show-list">
+                        <li>
+                            <strong>OCTOBER 4</strong><br>
+                            Fete du Void
+                        </li>
+                        <li>
+                            <strong>OCTOBER 31</strong><br>
+                            Nightcrawlers Halloween Dance party with Brookiecita - Saturn Bar
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -180,15 +270,26 @@
             <div class="section-header" onclick="toggleSection(this)">
                 CONTACT
             </div>
-            <div class="section-content">
+            <div class="section-content contact-section-content">
                 <div class="text-content">
-                    <p>Contact information coming soon...</p>
+                    <form class="contact-form" action="#" method="POST">
+                        <input type="text" placeholder="Your Name" name="name" required>
+                        <input type="email" placeholder="Your Email" name="email" required>
+                        <textarea placeholder="Your Message / Booking Inquiry" name="message" rows="5" required></textarea>
+                        <button type="submit">SEND MESSAGE</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Generate array of GitHub image URLs from 10047.jpg to 10125.jpg
+        const backgroundImages = [];
+        for (let i = 10047; i <= 10125; i++) {
+            backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
+        }
+
         function toggleSection(header) {
             const section = header.parentElement;
             const wasExpanded = section.classList.contains('expanded');
@@ -204,47 +305,13 @@
             }
         }
 
-        // Fallback images if API fails
-        const fallbackImages = [
-            'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1600',
-            'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1600',
-            'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=1600'
-        ];
-
-        async function fetchPinterestImages() {
-            const loading = document.getElementById('loading');
-            loading.style.display = 'block';
-
-            try {
-                const response = await fetch('/api/pinterest-images');
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch images from server');
-                }
-
-                const data = await response.json();
-                
-                if (data.success && data.images.length > 0) {
-                    const imageUrls = data.images.map(img => img.url);
-                    setRandomBackground(imageUrls);
-                } else {
-                    setRandomBackground(fallbackImages);
-                }
-            } catch (error) {
-                console.error('Error fetching Pinterest images:', error);
-                setRandomBackground(fallbackImages);
-            } finally {
-                loading.style.display = 'none';
-            }
-        }
-
-        function setRandomBackground(images) {
-            const randomImage = images[Math.floor(Math.random() * images.length)];
+        function setRandomBackground() {
+            const randomImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
             document.body.style.backgroundImage = `url(${randomImage})`;
         }
 
-        // Initialize on page load
-        fetchPinterestImages();
+        // Set random background on page load
+        setRandomBackground();
     </script>
 </body>
 </html>
