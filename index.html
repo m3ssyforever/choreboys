@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chore Boys</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            transition: background-image 1s ease-in-out;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 0;
+        }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+        }
+
+        .section-block {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header {
+            background: black;
+            color: white;
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-align: center;
+            padding: 2.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: #333;
+        }
+
+        .section-content {
+            display: none;
+            background: white;
+        }
+
+        .section-block.expanded .section-content {
+            display: block;
+        }
+
+        /* Mixes Grid */
+        .mixes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            width: 100%;
+            background: #f0f0f0;
+        }
+
+        .mix-item {
+            width: 100%;
+            height: 400px;
+        }
+
+        .mix-item iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* Shows and Contact Content */
+        .text-content {
+            padding: 2rem;
+        }
+
+        #loading {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: black;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            z-index: 1000;
+            display: none;
+        }
+
+        @media (max-width: 968px) {
+            .mixes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            .section-header {
+                font-size: 1.5rem;
+                padding: 2rem;
+            }
+            .mixes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">Loading background...</div>
+    
+    <div class="container">
+        <h1>CHORE BOYS</h1>
+        
+        <!-- Upcoming Shows -->
+        <div class="section-block">
+            <div class="section-header" onclick="toggleSection(this)">
+                UPCOMING SHOWS
+            </div>
+            <div class="section-content">
+                <div class="text-content">
+                    <p>Shows coming soon...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mixes -->
+        <div class="section-block">
+            <div class="section-header" onclick="toggleSection(this)">
+                MIXES
+            </div>
+            <div class="section-content">
+                <div class="mixes-grid">
+                    <div class="mix-item">
+                        <iframe width="100%" height="400" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+                    </div>
+                    <div class="mix-item">
+                        <iframe width="100%" height="400" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchoreplay-mini-mix-2-92bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+                    </div>
+                    <div class="mix-item">
+                        <iframe width="100%" height="400" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchore-boys-mini-mix-3-live%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="section-block">
+            <div class="section-header" onclick="toggleSection(this)">
+                CONTACT
+            </div>
+            <div class="section-content">
+                <div class="text-content">
+                    <p>Contact information coming soon...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const section = header.parentElement;
+            const wasExpanded = section.classList.contains('expanded');
+            
+            // Close all sections
+            document.querySelectorAll('.section-block').forEach(block => {
+                block.classList.remove('expanded');
+            });
+            
+            // If it wasn't expanded, expand it
+            if (!wasExpanded) {
+                section.classList.add('expanded');
+            }
+        }
+
+        // Fallback images if API fails
+        const fallbackImages = [
+            'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1600',
+            'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1600',
+            'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=1600'
+        ];
+
+        async function fetchPinterestImages() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+
+            try {
+                const response = await fetch('/api/pinterest-images');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch images from server');
+                }
+
+                const data = await response.json();
+                
+                if (data.success && data.images.length > 0) {
+                    const imageUrls = data.images.map(img => img.url);
+                    setRandomBackground(imageUrls);
+                } else {
+                    setRandomBackground(fallbackImages);
+                }
+            } catch (error) {
+                console.error('Error fetching Pinterest images:', error);
+                setRandomBackground(fallbackImages);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function setRandomBackground(images) {
+            const randomImage = images[Math.floor(Math.random() * images.length)];
+            document.body.style.backgroundImage = `url(${randomImage})`;
+        }
+
+        // Initialize on page load
+        fetchPinterestImages();
+    </script>
+</body>
+</html>
