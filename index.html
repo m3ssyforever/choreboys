@@ -11,6 +11,7 @@
             box-sizing: border-box;
         }
 
+        /* NEW: Added padding-top to body to clear the fixed header. */
         body {
             font-family: 'Arial', sans-serif;
             /* Restoring image background settings */
@@ -20,18 +21,25 @@
             background-attachment: fixed;
             transition: background-image 1s ease-in-out;
             min-height: 100vh;
+            padding-top: 15rem; /* Generous padding to clear the fixed header on desktop */
         }
 
+        /* NEW: Removing the full-page white overlay since the header is now black and opaque */
         body::before {
-            content: '';
+            display: none; 
+        }
+
+        /* NEW: Fixed black header bar for the title and tagline */
+        .main-header-bar {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            /* Restoring white overlay for contrast */
-            background: rgba(255, 255, 255, 0.3);
-            z-index: 1;
+            width: 100%;
+            background: black;
+            color: white; /* Ensures text is white */
+            padding: 2rem 0; /* Add top/bottom spacing to the bar */
+            z-index: 10; /* Ensure it sits above the rest of the content */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
         .container {
@@ -40,15 +48,26 @@
             width: 90%;
             max-width: 1000px;
             margin: 0 auto;
-            padding: 3rem 0;
+            /* Adjusted padding since body padding handles the top space */
+            padding: 0 0 3rem 0; 
         }
 
         h1 {
             font-size: 5rem;
             font-weight: 900;
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 0.5rem;
             letter-spacing: 0.05em;
+            color: white; /* Set color to white for the black background */
+        }
+
+        .subheader-tagline {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0; /* Removed margin since padding is on the bar */
+            color: white; /* Set color to white for the black background */
+            padding: 0 1rem;
         }
 
         .section-block {
@@ -107,7 +126,7 @@
             padding: 2rem;
         }
 
-        /* NEW: Styling for the bold Shows content area (Complementary to Contact) */
+        /* Styling for the bold Shows content area (Complementary to Contact) */
         .shows-section-content {
             background: #00E5FF; /* Electric Cyan */
             color: black;
@@ -210,6 +229,9 @@
             h1 {
                 font-size: 3rem;
             }
+            .subheader-tagline {
+                font-size: 1rem;
+            }
             .section-header {
                 font-size: 1.5rem;
                 padding: 2rem;
@@ -217,13 +239,23 @@
             .mixes-grid {
                 grid-template-columns: 1fr;
             }
+            /* Adjusted body padding for smaller screens */
+            body {
+                padding-top: 12rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- NEW: Fixed Header Bar containing H1 and Tagline -->
+    <div class="main-header-bar">
         <h1>CHORE BOYS</h1>
-        
+        <p class="subheader-tagline">
+            With a combined 100 years of experience, Chore Boys are the only choice for all of your lifestyle improvement projects.
+        </p>
+    </div>
+
+    <div class="container">
         <!-- Upcoming Shows -->
         <div class="section-block">
             <div class="section-header" onclick="toggleSection(this)">
