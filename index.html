@@ -345,7 +345,7 @@
             </div>
             <div class="section-content contact-section-content">
                 <div class="text-content">
-                    <!-- ACTION URL IS NOW SET TO THE LATEST DEPLOYED GOOGLE APPS SCRIPT URL -->
+                    <!-- ACTION URL IS SET TO THE LATEST DEPLOYED GOOGLE APPS SCRIPT URL -->
                     <form id="contactForm" class="contact-form" action="https://script.google.com/macros/s/AKfycbyLXnQr-OgJ6_I-ZpXrH6mqecenReKqLKQga2AzKpMaZVH5duxFzLamU7bC5B8tWcZQgw/exec" method="POST">
                         <input type="text" placeholder="Your Name" name="Name" required>
                         <input type="email" placeholder="Your Email" name="Email" required>
@@ -395,9 +395,85 @@
         const form = document.getElementById('contactForm');
         const statusMessage = document.getElementById('formStatus');
         const submitButton = document.getElementById('submitButton');
+        const MAX_RETRIES = 3;
+
+        /**
+         * Pauses execution for a specified duration.
+         * @param {number} ms - Milliseconds to wait.
+         */
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        /**
+         * Handles the actual form submission with retry logic.
+         * @param {string} formURL - The Google Apps Script endpoint URL.
+         * @param {FormData} formData - The form data to send.
+         */
+        async function submitFormWithRetry(formURL, formData) {
+            for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+                try {
+                    // Send Data via Fetch
+                    const response = await fetch(formURL, {
+                        method: 'POST',
+                        body: formData,
+                        mode: 'no-cors' // Use 'no-cors' for Google Apps Script to prevent CORS errors on success detection
+                    });
+
+                    // Google Apps Script usually returns an opaque response in 'no-cors' mode,
+                    // so we primarily rely on the response.ok status for success.
+                    // If we were in 'cors' mode, we'd check the content/status text.
+                    // However, since the script is configured to return a simple 'Success' message,
+                    // we'll stick to the original logic which assumes success on a network-level OK response,
+                    // but add checks if we can read the response body.
+                    
+                    if (response.ok) {
+                        // Attempt to read the text, though it might fail in 'no-cors'
+                        try {
+                            const resultText = await response.text();
+                            if (resultText && resultText.includes('Success')) {
+                                return { success: true, message: 'Success! Your message has been sent.' };
+                            } else if (resultText.trim() !== '') {
+                                // If a readable but non-success response comes back (only happens in 'cors' or on specific errors)
+                                return { success: false, message: 'Submission failed: Unexpected script response.' };
+                            }
+                        } catch (e) {
+                            // This catch block handles the error when response.text() is called on an opaque response in no-cors mode,
+                            // which is expected when the script runs successfully.
+                            return { success: true, message: 'Success! Your message has been sent.' };
+                        }
+                    } else {
+                        // Handle non-OK HTTP status codes (4xx, 5xx)
+                        const errorStatus = response.status;
+                        if (attempt < MAX_RETRIES && (errorStatus === 429 || errorStatus >= 500)) {
+                            const delay = Math.pow(2, attempt) * 1000; // Exponential delay: 2s, 4s, 8s
+                            statusMessage.textContent = `Attempt ${attempt} failed. Retrying in ${delay / 1000}s...`;
+                            await sleep(delay);
+                            continue; // Retry
+                        } else {
+                            // Permanent error or max retries reached
+                            return { success: false, message: `Submission failed. HTTP Status: ${errorStatus}.` };
+                        }
+                    }
+                } catch (error) {
+                    // Handle network errors (e.g., DNS failure, connection reset)
+                    if (attempt < MAX_RETRIES) {
+                        const delay = Math.pow(2, attempt) * 1000;
+                        statusMessage.textContent = `Network error on attempt ${attempt}. Retrying in ${delay / 1000}s...`;
+                        await sleep(delay);
+                        continue; // Retry
+                    } else {
+                        // Max retries reached for network error
+                        return { success: false, message: 'Network error: Could not reach the server after multiple attempts.' };
+                    }
+                }
+            }
+            return { success: false, message: 'Submission failed after multiple retries.' };
+        }
+
 
         form.addEventListener('submit', async function(e) {
-            e.preventDefault(); // Stop the default form submission
+            e.preventDefault();
 
             const formURL = form.action;
             const formData = new FormData(form);
@@ -407,50 +483,30 @@
             submitButton.textContent = 'SENDING...';
             statusMessage.style.display = 'block';
             statusMessage.className = 'form-status loading';
-            statusMessage.textContent = 'Sending message...';
+            statusMessage.textContent = 'Sending message (attempt 1)...';
             
-            try {
-                // 2. Send Data via Fetch (using POST method compatible with Apps Script doPost)
-                const response = await fetch(formURL, {
-                    method: 'POST',
-                    body: formData,
-                    // Note: We don't set 'Content-Type': 'application/json' when sending FormData
-                });
+            // 2. Execute Submission with Retry Logic
+            const result = await submitFormWithRetry(formURL, formData);
 
-                // 3. Handle Response (Apps Script returns a success message in plain text)
-                if (response.ok) {
-                    const resultText = await response.text();
-                    
-                    if (resultText && resultText.includes('Success')) {
-                         statusMessage.className = 'form-status success';
-                         statusMessage.textContent = 'Success! Your message has been sent and logged in the Google Sheet.';
-                         form.reset(); // Clear the form inputs
-                    } else {
-                         // Apps Script might return a non-Success text response on failure
-                         statusMessage.className = 'form-status error';
-                         statusMessage.textContent = 'Submission failed or received unexpected response from Google Sheet script. Double-check your script deployment!';
-                    }
-                } else {
-                    // Handle network/server errors outside the script (e.g., 404)
-                    statusMessage.className = 'form-status error';
-                    statusMessage.textContent = 'Oops! Network or server error submitting to the Apps Script endpoint. Status: ' + response.status;
-                }
-
-            } catch (error) {
-                // Handle general errors
-                console.error('Submission Error:', error);
+            // 3. Handle Final Result
+            if (result.success) {
+                statusMessage.className = 'form-status success';
+                statusMessage.textContent = 'Success! Your message has been sent and logged.';
+                form.reset();
+            } else {
                 statusMessage.className = 'form-status error';
-                statusMessage.textContent = 'An unexpected error occurred. Please check the console.';
-            } finally {
-                // 4. Reset Button State
-                submitButton.disabled = false;
-                submitButton.textContent = 'SEND MESSAGE';
-                
-                // Automatically hide the status message after a few seconds
-                setTimeout(() => {
-                    statusMessage.style.display = 'none';
-                }, 7000); 
+                // Use a more specific error message based on the retry logic outcome
+                statusMessage.textContent = result.message; 
             }
+
+            // 4. Reset Button State
+            submitButton.disabled = false;
+            submitButton.textContent = 'SEND MESSAGE';
+            
+            // Automatically hide the status message after a few seconds
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 7000); 
         });
     </script>
 </body>
