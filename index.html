@@ -27,7 +27,7 @@
                 extend: {
                     colors: {
                         // Custom colors from original CSS
-                        'custom-cyan': '#00E5FF',        // Electric Cyan for Shows
+                        'custom-cyan': '#00D4FF',        // Bright Blue-Cyan for Shows (complements orange-red)
                         'custom-orange-red': '#FF4500',  // Bold Red-Orange for Contact
                         'custom-success': '#177317',     // Dark green
                         'custom-error': '#d9534f',       // Red
@@ -91,7 +91,7 @@
             <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
                 UPCOMING SHOWS
             </div>
-            <div class="section-content hidden bg-white shows-section-content bg-custom-cyan text-black">
+            <div class="section-content hidden shows-section-content bg-custom-cyan text-black">
                 <div class="text-content p-8">
                     <ul class="show-list list-none p-0 m-0 text-center">
                         <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
@@ -128,11 +128,11 @@
         </div>
 
         <!-- Contact -->
-        <div class="section-block expanded w-full mb-6">
+        <div class="section-block w-full mb-6">
             <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
                 CONTACT
             </div>
-            <div class="section-content contact-section-content bg-custom-orange-red text-white">
+            <div class="section-content hidden contact-section-content bg-custom-orange-red text-white">
                 <div class="text-content p-8">
                     <!-- ACTION URL IS SET TO THE LATEST DEPLOYED GOOGLE APPS SCRIPT URL -->
                     <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto" action="https://script.google.com/macros/s/AKfycbwbvPnIUnyjiAaPEDu6_o-fZC-AaoSjJ601JYCaTE8JRKg5K65HiLXwI2bAheL_OXufIg/exec" method="POST">
