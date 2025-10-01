@@ -11,35 +11,68 @@
             box-sizing: border-box;
         }
 
-        /* NEW: Added padding-top to body to clear the fixed header. */
+        /* --- NEW HEADER STYLES --- */
+        header {
+            position: fixed; /* Fixes the header to the top of the viewport */
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: black;
+            color: white;
+            /* Increased vertical padding on the header block itself (2x previous 1rem) */
+            padding: 2rem 0;
+            z-index: 100; /* Ensures it sits above other content */
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            /* Increased size to match the previous main h1 */
+            font-size: 4rem; 
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-slogan {
+            /* CRITICAL UPDATE: Increased font size from 0.9rem to 1.2rem */
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* --- BODY ADJUSTMENT --- */
+        /* Pushes the content down so it doesn't hide behind the fixed header */
         body {
             font-family: 'Arial', sans-serif;
-            /* Restoring image background settings */
+            /* Padding set to 20rem (half of 40rem) */
+            padding-top: 20rem; 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             transition: background-image 1s ease-in-out;
             min-height: 100vh;
-            padding-top: 15rem; /* Generous padding to clear the fixed header on desktop */
         }
-
-        /* NEW: Removing the full-page white overlay since the header is now black and opaque */
+        
         body::before {
-            display: none; 
-        }
-
-        /* NEW: Fixed black header bar for the title and tagline */
-        .main-header-bar {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            background: black;
-            color: white; /* Ensures text is white */
-            padding: 2rem 0; /* Add top/bottom spacing to the bar */
-            z-index: 10; /* Ensure it sits above the rest of the content */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            right: 0;
+            bottom: 0;
+            /* Restoring white overlay for contrast */
+            background: rgba(255, 255, 255, 0.3);
+            z-index: 1;
         }
 
         .container {
@@ -48,28 +81,12 @@
             width: 90%;
             max-width: 1000px;
             margin: 0 auto;
-            /* Adjusted padding since body padding handles the top space */
-            padding: 0 0 3rem 0; 
+            /* Reduced padding top since the h1 is gone */
+            padding: 0 0 3rem 0;
         }
-
-        h1 {
-            font-size: 5rem;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.05em;
-            color: white; /* Set color to white for the black background */
-        }
-
-        .subheader-tagline {
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0; /* Removed margin since padding is on the bar */
-            color: white; /* Set color to white for the black background */
-            padding: 0 1rem;
-        }
-
+        
+        /* Removed h1 specific style block as the h1 element has been deleted */
+        
         .section-block {
             width: 100%;
             margin-bottom: 1.5rem;
@@ -126,7 +143,7 @@
             padding: 2rem;
         }
 
-        /* Styling for the bold Shows content area (Complementary to Contact) */
+        /* NEW: Styling for the bold Shows content area (Complementary to Contact) */
         .shows-section-content {
             background: #00E5FF; /* Electric Cyan */
             color: black;
@@ -219,6 +236,29 @@
             transform: scale(0.98);
         }
 
+        /* Styles for Status Messages */
+        .form-status {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            display: none; /* Hidden by default */
+        }
+        .form-status.success {
+            background: #177317; /* Dark green */
+            color: white;
+        }
+        .form-status.error {
+            background: #d9534f; /* Red */
+            color: white;
+        }
+        .form-status.loading {
+            background: #f0ad4e; /* Orange/Yellow */
+            color: black;
+        }
+
         @media (max-width: 968px) {
             .mixes-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -226,11 +266,13 @@
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 3rem;
+            /* Mobile size for the header title */
+            .header-title {
+                font-size: 3rem; 
             }
-            .subheader-tagline {
-                font-size: 1rem;
+            /* Mobile size for the slogan */
+            .header-slogan {
+                font-size: 1rem; 
             }
             .section-header {
                 font-size: 1.5rem;
@@ -239,22 +281,21 @@
             .mixes-grid {
                 grid-template-columns: 1fr;
             }
-            /* Adjusted body padding for smaller screens */
-            body {
-                padding-top: 12rem;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- NEW: Fixed Header Bar containing H1 and Tagline -->
-    <div class="main-header-bar">
-        <h1>CHORE BOYS</h1>
-        <p class="subheader-tagline">
-            With a combined 100 years of experience, Chore Boys are the only choice for all of your lifestyle improvement projects.
-        </p>
-    </div>
-
+    
+    <!-- --- NEW FIXED HEADER (Now the only title on the page) --- -->
+    <header>
+        <div class="header-content">
+            <div class="header-title">CHORE BOYS</div>
+            <div class="header-slogan">
+                With a combined 100 years of experience, Chore Boys are the only choice for all of your lifestyle improvement projects.
+            </div>
+        </div>
+    </header>
+    
     <div class="container">
         <!-- Upcoming Shows -->
         <div class="section-block">
@@ -298,26 +339,30 @@
         </div>
 
         <!-- Contact -->
-        <div class="section-block">
+        <div class="section-block expanded">
             <div class="section-header" onclick="toggleSection(this)">
                 CONTACT
             </div>
             <div class="section-content contact-section-content">
                 <div class="text-content">
-                    <form class="contact-form" action="#" method="POST">
-                        <input type="text" placeholder="Your Name" name="name" required>
-                        <input type="email" placeholder="Your Email" name="email" required>
-                        <textarea placeholder="Your Message / Booking Inquiry" name="message" rows="5" required></textarea>
-                        <button type="submit">SEND MESSAGE</button>
+                    <!-- ACTION URL IS NOW SET TO THE LATEST DEPLOYED GOOGLE APPS SCRIPT URL -->
+                    <form id="contactForm" class="contact-form" action="https://script.google.com/macros/s/AKfycbyLXnQr-OgJ6_I-ZpXrH6mqecenReKqLKQga2AzKpMaZVH5duxFzLamU7bC5B8tWcZQgw/exec" method="POST">
+                        <input type="text" placeholder="Your Name" name="Name" required>
+                        <input type="email" placeholder="Your Email" name="Email" required>
+                        <textarea placeholder="Your Message / Booking Inquiry" name="Message" rows="5" required></textarea>
+                        <button type="submit" id="submitButton">SEND MESSAGE</button>
                     </form>
+                    <!-- Status message container for user feedback -->
+                    <div id="formStatus" class="form-status"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Generate array of GitHub image URLs from 10047.jpg to 10125.jpg
+        // --- Image Background Logic ---
         const backgroundImages = [];
+        // The image links point to a raw GitHub user content URL, which is correct for static assets.
         for (let i = 10047; i <= 10125; i++) {
             backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
         }
@@ -344,6 +389,69 @@
 
         // Set random background on page load
         setRandomBackground();
+
+
+        // --- Contact Form Submission Logic (Google Apps Script Ready) ---
+        const form = document.getElementById('contactForm');
+        const statusMessage = document.getElementById('formStatus');
+        const submitButton = document.getElementById('submitButton');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault(); // Stop the default form submission
+
+            const formURL = form.action;
+            const formData = new FormData(form);
+
+            // 1. Show Loading State
+            submitButton.disabled = true;
+            submitButton.textContent = 'SENDING...';
+            statusMessage.style.display = 'block';
+            statusMessage.className = 'form-status loading';
+            statusMessage.textContent = 'Sending message...';
+            
+            try {
+                // 2. Send Data via Fetch (using POST method compatible with Apps Script doPost)
+                const response = await fetch(formURL, {
+                    method: 'POST',
+                    body: formData,
+                    // Note: We don't set 'Content-Type': 'application/json' when sending FormData
+                });
+
+                // 3. Handle Response (Apps Script returns a success message in plain text)
+                if (response.ok) {
+                    const resultText = await response.text();
+                    
+                    if (resultText && resultText.includes('Success')) {
+                         statusMessage.className = 'form-status success';
+                         statusMessage.textContent = 'Success! Your message has been sent and logged in the Google Sheet.';
+                         form.reset(); // Clear the form inputs
+                    } else {
+                         // Apps Script might return a non-Success text response on failure
+                         statusMessage.className = 'form-status error';
+                         statusMessage.textContent = 'Submission failed or received unexpected response from Google Sheet script. Double-check your script deployment!';
+                    }
+                } else {
+                    // Handle network/server errors outside the script (e.g., 404)
+                    statusMessage.className = 'form-status error';
+                    statusMessage.textContent = 'Oops! Network or server error submitting to the Apps Script endpoint. Status: ' + response.status;
+                }
+
+            } catch (error) {
+                // Handle general errors
+                console.error('Submission Error:', error);
+                statusMessage.className = 'form-status error';
+                statusMessage.textContent = 'An unexpected error occurred. Please check the console.';
+            } finally {
+                // 4. Reset Button State
+                submitButton.disabled = false;
+                submitButton.textContent = 'SEND MESSAGE';
+                
+                // Automatically hide the status message after a few seconds
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 7000); 
+            }
+        });
     </script>
 </body>
 </html>
