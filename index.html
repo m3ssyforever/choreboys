@@ -4,296 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chore Boys</title>
+    
+    <!-- 1. Include Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 2. Tailwind Configuration for Custom Colors and Scale -->
+    <script>
+        // Use a config block to define the exact colors used in the original CSS
+        tailwind.config = {
+            theme: {
+                // Ensure a sensible default font
+                fontFamily: {
+                    sans: ['Arial', 'sans-serif'], 
+                },
+                screens: {
+                    // Customize breakpoints to match original CSS media queries
+                    'sm': '640px',  // Standard Tailwind sm breakpoint
+                    'md': '768px',  // Match 768px for some mobile changes
+                    'lg': '968px',  // Match 968px for mixes grid change
+                    'xl': '1280px',
+                },
+                extend: {
+                    colors: {
+                        // Custom colors from original CSS
+                        'custom-cyan': '#00E5FF',        // Electric Cyan for Shows
+                        'custom-orange-red': '#FF4500',  // Bold Red-Orange for Contact
+                        'custom-success': '#177317',     // Dark green
+                        'custom-error': '#d9534f',       // Red
+                        'custom-loading': '#f0ad4e',     // Orange/Yellow
+                    },
+                    // Custom scale for button active effect (was transform: scale(0.98))
+                    scale: {
+                        '98': '0.98',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 3. Stylesheet now only contains universal resets and required base styles -->
     <style>
+        /* Universal reset via CSS for full compatibility with box-border */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* --- HEADER STYLES --- */
-        header {
-            /* Header remains scrollable */
-            width: 100%;
-            background: #000; 
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-            box-shadow: none; 
-        }
-
-        .header-content {
-            width: 90%;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .header-title {
-            font-size: 4rem; 
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.25rem;
-        }
-
-        .header-slogan {
-            font-size: 1.2rem;
-            font-weight: 300;
-            opacity: 0.8;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        /* --- BODY ADJUSTMENT --- */
+        /* Styles for dynamic background and layout container (non-Tailwind for `body` due to dynamic style application) */
         body {
-            font-family: 'Arial', sans-serif;
-            /* Header is flush to the top */
-            padding-top: 0; 
+            /* font-family: 'Arial', sans-serif; -> now in tailwind config */
+            min-height: 100vh;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             transition: background-image 1s ease-in-out;
-            min-height: 100vh;
-        }
-        
-        .container {
-            position: relative;
-            z-index: 2; 
-            width: 90%;
-            max-width: 1000px;
-            margin: 0 auto;
-            /* CHANGE: Increased padding-top for more space between header and content. */
-            padding: 4rem 0 3rem 0; 
-        }
-        
-        .section-block {
-            width: 100%;
-            margin-bottom: 1.5rem;
         }
 
-        .section-header {
-            background: black;
-            color: white;
-            font-size: 2rem;
-            font-weight: 300;
-            letter-spacing: 0.15em;
-            text-align: center;
-            padding: 2.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .section-header:hover {
-            background: #333;
-        }
-
-        .section-content {
-            display: none;
-            background: white; /* Default background for content */
-        }
-
+        /* Dynamic classes must remain for JS toggling */
         .section-block.expanded .section-content {
             display: block;
         }
 
-        /* Mixes Grid */
-        .mixes-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0;
-            width: 100%;
-            background: #f0f0f0;
-        }
-
-        .mix-item {
-            width: 100%;
-            height: 400px;
-        }
-
-        .mix-item iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
-        /* Shows and Contact Content */
-        .text-content {
-            padding: 2rem;
-        }
-
-        /* NEW: Styling for the bold Shows content area (Complementary to Contact) */
-        .shows-section-content {
-            background: #00E5FF; /* Electric Cyan */
-            color: black;
-        }
-
-        /* Styling for the bold Contact content area */
-        .contact-section-content {
-            background: #FF4500; /* Bold Red-Orange */
-            color: white;
-        }
-
-        /* Shows List Styling */
-        .show-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            text-align: center;
-        }
-
-        .show-list li {
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            line-height: 1.4;
-        }
-
-        .show-list li:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        /* Contact Form Styling */
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem; /* Space between form fields */
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            padding: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-            width: 100%;
-            transition: border-color 0.3s ease;
-            background: white; /* Default inputs are white */
-            color: black;
-        }
-
-        /* Adjustments for inputs inside the bold contact section */
-        .contact-section-content .contact-form input,
-        .contact-section-content .contact-form textarea {
-            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white for inputs */
-            color: #1a1a1a;
-            border: 2px solid white;
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            border-color: black;
-            outline: none;
-        }
-
-        .contact-form textarea {
-            resize: vertical;
-        }
-
-        .contact-form button {
-            background: black;
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.1s ease;
-        }
-
-        .contact-form button:hover {
-            background: #333;
-        }
-
+        /* Fix for active state scale, as Tailwind active:scale-[0.98] might not be supported in older versions */
         .contact-form button:active {
             transform: scale(0.98);
         }
-
-        /* Styles for Status Messages */
-        .form-status {
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-top: 1rem;
-            display: none; /* Hidden by default */
-        }
-        .form-status.success {
-            background: #177317; /* Dark green */
-            color: white;
-        }
-        .form-status.error {
-            background: #d9534f; /* Red */
-            color: white;
-        }
-        .form-status.loading {
-            background: #f0ad4e; /* Orange/Yellow */
-            color: black;
-        }
-
-        @media (max-width: 968px) {
-            .mixes-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            /* Mobile size for the header title */
-            .header-title {
-                font-size: 3rem; 
-            }
-            /* Mobile size for the slogan */
-            .header-slogan {
-                font-size: 1rem; 
-            }
-            /* Adjusted mobile padding-top */
-            body {
-                padding-top: 0;
-            }
-            .section-header {
-                font-size: 1.5rem;
-                padding: 2rem;
-            }
-            .mixes-grid {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
-<body>
+<body class="font-sans">
     
     <!-- --- SCROLLABLE HEADER --- -->
-    <header>
-        <div class="header-content">
-            <div class="header-title">CHORE BOYS</div>
-            <div class="header-slogan">
+    <header class="w-full bg-black text-white py-8 text-center shadow-none">
+        <div class="header-content w-11/12 max-w-5xl mx-auto">
+            <div class="header-title text-6xl md:text-[4rem] font-black tracking-widest mb-1">CHORE BOYS</div>
+            <div class="header-slogan text-xl md:text-base font-light opacity-80 max-w-xl mx-auto">
                 With a combined 100 years of experience, Chore Boys are the only choice for all of your lifestyle improvement projects.
             </div>
         </div>
     </header>
     
-    <div class="container">
+    <div class="container relative z-10 w-11/12 max-w-5xl mx-auto pt-16 pb-12">
         <!-- Upcoming Shows -->
-        <div class="section-block">
-            <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
                 UPCOMING SHOWS
             </div>
-            <div class="section-content shows-section-content">
-                <div class="text-content">
-                    <ul class="show-list">
-                        <li>
-                            <strong>OCTOBER 4</strong><br>
+            <div class="section-content hidden bg-white shows-section-content bg-custom-cyan text-black">
+                <div class="text-content p-8">
+                    <ul class="show-list list-none p-0 m-0 text-center">
+                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
+                            <strong class="font-bold">OCTOBER 4</strong><br>
                             Fete du Void
                         </li>
-                        <li>
-                            <strong>OCTOBER 31</strong><br>
+                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
+                            <strong class="font-bold">OCTOBER 31</strong><br>
                             Nightcrawlers Halloween Dance party with Brookiecita - Saturn Bar
                         </li>
                     </ul>
@@ -302,41 +108,41 @@
         </div>
 
         <!-- Mixes -->
-        <div class="section-block">
-            <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
                 MIXES
             </div>
-            <div class="section-content">
-                <div class="mixes-grid">
-                    <div class="mix-item">
-                        <iframe width="100%" height="400" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+            <div class="section-content hidden bg-white">
+                <div class="mixes-grid grid grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-0 w-full bg-gray-200">
+                    <div class="mix-item w-full h-[400px]">
+                        <iframe width="100%" height="100%" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full h-full border-none block"></iframe>
                     </div>
-                    <div class="mix-item">
-                        <iframe width="100%" height="400" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchoreplay-mini-mix-2-92bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+                    <div class="mix-item w-full h-[400px]">
+                        <iframe width="100%" height="100%" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchoreplay-mini-mix-2-92bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full h-full border-none block"></iframe>
                     </div>
-                    <div class="mix-item">
-                        <iframe width="100%" height="400" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchore-boys-mini-mix-3-live%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+                    <div class="mix-item w-full h-[400px]">
+                        <iframe width="100%" height="100%" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchore-boys-mini-mix-3-live%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full h-full border-none block"></iframe>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Contact -->
-        <div class="section-block expanded">
-            <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-block expanded w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
                 CONTACT
             </div>
-            <div class="section-content contact-section-content">
-                <div class="text-content">
+            <div class="section-content contact-section-content bg-custom-orange-red text-white">
+                <div class="text-content p-8">
                     <!-- ACTION URL IS SET TO THE LATEST DEPLOYED GOOGLE APPS SCRIPT URL -->
-                    <form id="contactForm" class="contact-form" action="https://script.google.com/macros/s/AKfycbwbvPnIUnyjiAaPEDu6_o-fZC-AaoSjJ601JYCaTE8JRKg5K65HiLXwI2bAheL_OXufIg/exec" method="POST">
-                        <input type="text" placeholder="Your Name" name="Name" required>
-                        <input type="email" placeholder="Your Email" name="Email" required>
-                        <textarea placeholder="Your Message / Booking Inquiry" name="Message" rows="5" required></textarea>
-                        <button type="submit" id="submitButton">SEND MESSAGE</button>
+                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto" action="https://script.google.com/macros/s/AKfycbwbvPnIUnyjiAaPEDu6_o-fZC-AaoSjJ601JYCaTE8JRKg5K65HiLXwI2bAheL_OXufIg/exec" method="POST">
+                        <input type="text" placeholder="Your Name" name="Name" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        <input type="email" placeholder="Your Email" name="Email" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        <textarea placeholder="Your Message / Booking Inquiry" name="Message" rows="5" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none resize-y"></textarea>
+                        <button type="submit" id="submitButton" class="bg-black text-white py-4 px-8 border-none rounded text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-gray-700">SEND MESSAGE</button>
                     </form>
                     <!-- Status message container for user feedback -->
-                    <div id="formStatus" class="form-status"></div>
+                    <div id="formStatus" class="form-status text-center text-xl font-bold p-4 rounded mt-4" style="display: none;"></div>
                 </div>
             </div>
         </div>
@@ -396,69 +202,37 @@
         async function submitFormWithRetry(formURL, formData) {
             for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
                 try {
-                    // CHANGE: Updated mode from 'no-cors' to 'cors' for better error reporting 
-                    // and to allow the browser to see the response status/data.
+                    // CRITICAL FIX: Switched to 'no-cors' mode. This is required for reliably sending data
+                    // to Google Apps Script endpoints from a third-party domain (like this iframe), 
+                    // as it bypasses strict CORS restrictions that often cause a network error (Status 0).
                     const response = await fetch(formURL, {
                         method: 'POST',
                         body: formData,
-                        mode: 'cors' 
+                        mode: 'no-cors' 
                     });
 
-                    // Check for HTTP status codes indicating success (200-299)
-                    if (response.ok) {
-                        try {
-                            // Since we are using 'cors', we can read the actual response.
-                            // The Google Apps Script deployed as a web app should return a successful JSON object.
-                            const result = await response.json(); 
-                            
-                            // Assuming the Google Apps Script returns { result: 'success' } or similar on success
-                            if (result.result && result.result.toLowerCase() === 'success') {
-                                return { success: true, message: 'Success! Your message has been sent.' };
-                            } else {
-                                // Script succeeded but returned an unexpected or error message
-                                return { success: false, message: 'Submission failed: Script returned an unexpected success status.' };
-                            }
-
-                        } catch (e) {
-                            // If response is OK (200) but not valid JSON (e.g., if the script just returns plain text)
-                            const resultText = await response.text();
-                            if (resultText && resultText.includes('Success')) {
-                                // Fallback for simple text success response
-                                return { success: true, message: 'Success! Your message has been sent.' };
-                            }
-                            // Treat as success if the status is 200/OK, even if response reading fails (old no-cors behavior fallback)
-                            return { success: true, message: 'Success! Your message has been sent.' };
-                        }
-                    } else {
-                        // Handle non-OK HTTP status codes (4xx, 5xx)
-                        const errorStatus = response.status;
-                        
-                        // Retry on high server load/rate limiting (429) or server errors (5xx)
-                        if (attempt < MAX_RETRIES && (errorStatus === 429 || errorStatus >= 500)) {
-                            const delay = Math.pow(2, attempt) * 1000; // Exponential delay: 2s, 4s, 8s
-                            statusMessage.textContent = `Attempt ${attempt} failed. Retrying in ${delay / 1000}s...`;
-                            await sleep(delay);
-                            continue; // Retry
-                        } else {
-                            // Permanent error or max retries reached
-                            return { success: false, message: `Submission failed. HTTP Status: ${errorStatus}.` };
-                        }
-                    }
+                    // In 'no-cors' mode, the response is opaque. If the fetch call completes without 
+                    // throwing a network error, we MUST assume the submission succeeded.
+                    return { success: true, message: 'Success! Your message has been sent and logged.' };
+                    
                 } catch (error) {
-                    // Handle network errors (e.g., DNS failure, connection reset)
-                    // This is where the Status 0 error typically comes through as a TypeError in the catch block
+                    // Handle genuine network errors (the error you were seeing)
                     if (attempt < MAX_RETRIES) {
-                        const delay = Math.pow(2, attempt) * 1000;
-                        statusMessage.textContent = `Network error on attempt ${attempt}. Retrying in ${delay / 1000}s...`;
+                        const delay = Math.pow(2, attempt) * 1000; // Exponential delay: 2s, 4s, 8s
+                        
+                        // Update status message for the next retry attempt
+                        statusMessage.className = 'form-status loading bg-custom-loading text-black';
+                        statusMessage.textContent = `Network error on attempt ${attempt + 1}. Retrying in ${delay / 1000}s...`;
+                        
                         await sleep(delay);
                         continue; // Retry
                     } else {
                         // Max retries reached for network error
-                        // CHANGE: Provide a friendlier message for the most common network failure.
-                        return { success: false, message: 'Connection Error: Could not connect to the form server. Please try again later.' };
+                        return { success: false, message: 'Connection Error: Could not connect to the form server after multiple attempts. Please check the network and try again later.' };
                     }
                 }
             }
+            // Should be unreachable if MAX_RETRIES > 0, but included for completeness.
             return { success: false, message: 'Submission failed after multiple retries.' };
         }
 
@@ -469,11 +243,11 @@
             const formURL = form.action;
             const formData = new FormData(form);
 
-            // 1. Show Loading State
+            // 1. Show Loading State (Attempt 1)
             submitButton.disabled = true;
             submitButton.textContent = 'SENDING...';
             statusMessage.style.display = 'block';
-            statusMessage.className = 'form-status loading';
+            statusMessage.className = 'form-status loading bg-custom-loading text-black';
             statusMessage.textContent = 'Sending message (attempt 1)...';
             
             // 2. Execute Submission with Retry Logic
@@ -481,11 +255,11 @@
 
             // 3. Handle Final Result
             if (result.success) {
-                statusMessage.className = 'form-status success';
-                statusMessage.textContent = 'Success! Your message has been sent and logged.';
+                statusMessage.className = 'form-status success bg-custom-success text-white';
+                statusMessage.textContent = result.message; // Use the message set inside submitFormWithRetry
                 form.reset();
             } else {
-                statusMessage.className = 'form-status error';
+                statusMessage.className = 'form-status error bg-custom-error text-white';
                 // Use a more specific error message based on the retry logic outcome
                 statusMessage.textContent = result.message; 
             }
