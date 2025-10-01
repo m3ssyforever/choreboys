@@ -11,20 +11,15 @@
             box-sizing: border-box;
         }
 
-        /* --- NEW HEADER STYLES --- */
+        /* --- HEADER STYLES --- */
         header {
-            /* FIXED: Make header sticky at the top */
-            position: fixed; 
-            top: 0;
-            left: 0;
+            /* Header remains scrollable */
             width: 100%;
-            /* Guaranteed Solid Black and above the body overlay */
             background: #000; 
             color: white;
             padding: 2rem 0;
-            z-index: 101; /* Set higher than body::before (z-index: 1) and container (z-index: 2) */
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7); /* Give it a sharp edge */
+            box-shadow: none; 
         }
 
         .header-content {
@@ -51,9 +46,8 @@
         /* --- BODY ADJUSTMENT --- */
         body {
             font-family: 'Arial', sans-serif;
-            /* CRITICAL FIX: Increased padding-top to 11.5rem to clear the fixed header 
-               AND create the desired vertical gap below it. */
-            padding-top: 11.5rem; 
+            /* Header is flush to the top */
+            padding-top: 0; 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -62,26 +56,14 @@
             min-height: 100vh;
         }
         
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            /* White overlay for contrast */
-            background: rgba(255, 255, 255, 0.3);
-            z-index: 1; /* Low z-index so content and header sit above it */
-        }
-
         .container {
             position: relative;
-            z-index: 2;
+            z-index: 2; 
             width: 90%;
             max-width: 1000px;
             margin: 0 auto;
-            /* CRITICAL FIX: Removed the padding-top here as the gap is now defined by body padding-top */
-            padding: 0 0 3rem 0; 
+            /* CHANGE: Increased padding-top for more space between header and content. */
+            padding: 4rem 0 3rem 0; 
         }
         
         .section-block {
@@ -271,9 +253,9 @@
             .header-slogan {
                 font-size: 1rem; 
             }
-            /* CRITICAL FIX: Increased mobile padding to 10rem for clearance and gap */
+            /* Adjusted mobile padding-top */
             body {
-                padding-top: 10rem;
+                padding-top: 0;
             }
             .section-header {
                 font-size: 1.5rem;
@@ -287,7 +269,7 @@
 </head>
 <body>
     
-    <!-- --- FIXED HEADER --- -->
+    <!-- --- SCROLLABLE HEADER --- -->
     <header>
         <div class="header-content">
             <div class="header-title">CHORE BOYS</div>
@@ -414,34 +396,44 @@
         async function submitFormWithRetry(formURL, formData) {
             for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
                 try {
-                    // Send Data via Fetch
+                    // CHANGE: Updated mode from 'no-cors' to 'cors' for better error reporting 
+                    // and to allow the browser to see the response status/data.
                     const response = await fetch(formURL, {
                         method: 'POST',
                         body: formData,
-                        mode: 'no-cors' // Use 'no-cors' for Google Apps Script to prevent CORS errors on success detection
+                        mode: 'cors' 
                     });
 
-                    // Google Apps Script usually returns an opaque response in 'no-cors' mode,
-                    // so we primarily rely on the response.ok status for success.
-                    
+                    // Check for HTTP status codes indicating success (200-299)
                     if (response.ok) {
-                        // Attempt to read the text, though it might fail in 'no-cors'
                         try {
+                            // Since we are using 'cors', we can read the actual response.
+                            // The Google Apps Script deployed as a web app should return a successful JSON object.
+                            const result = await response.json(); 
+                            
+                            // Assuming the Google Apps Script returns { result: 'success' } or similar on success
+                            if (result.result && result.result.toLowerCase() === 'success') {
+                                return { success: true, message: 'Success! Your message has been sent.' };
+                            } else {
+                                // Script succeeded but returned an unexpected or error message
+                                return { success: false, message: 'Submission failed: Script returned an unexpected success status.' };
+                            }
+
+                        } catch (e) {
+                            // If response is OK (200) but not valid JSON (e.g., if the script just returns plain text)
                             const resultText = await response.text();
                             if (resultText && resultText.includes('Success')) {
+                                // Fallback for simple text success response
                                 return { success: true, message: 'Success! Your message has been sent.' };
-                            } else if (resultText.trim() !== '') {
-                                // If a readable but non-success response comes back (only happens in 'cors' or on specific errors)
-                                return { success: false, message: 'Submission failed: Unexpected script response.' };
                             }
-                        } catch (e) {
-                            // This catch block handles the error when response.text() is called on an opaque response in no-cors mode,
-                            // which is expected when the script runs successfully.
+                            // Treat as success if the status is 200/OK, even if response reading fails (old no-cors behavior fallback)
                             return { success: true, message: 'Success! Your message has been sent.' };
                         }
                     } else {
                         // Handle non-OK HTTP status codes (4xx, 5xx)
                         const errorStatus = response.status;
+                        
+                        // Retry on high server load/rate limiting (429) or server errors (5xx)
                         if (attempt < MAX_RETRIES && (errorStatus === 429 || errorStatus >= 500)) {
                             const delay = Math.pow(2, attempt) * 1000; // Exponential delay: 2s, 4s, 8s
                             statusMessage.textContent = `Attempt ${attempt} failed. Retrying in ${delay / 1000}s...`;
@@ -454,6 +446,7 @@
                     }
                 } catch (error) {
                     // Handle network errors (e.g., DNS failure, connection reset)
+                    // This is where the Status 0 error typically comes through as a TypeError in the catch block
                     if (attempt < MAX_RETRIES) {
                         const delay = Math.pow(2, attempt) * 1000;
                         statusMessage.textContent = `Network error on attempt ${attempt}. Retrying in ${delay / 1000}s...`;
@@ -461,7 +454,8 @@
                         continue; // Retry
                     } else {
                         // Max retries reached for network error
-                        return { success: false, message: 'Network error: Could not reach the server after multiple attempts.' };
+                        // CHANGE: Provide a friendlier message for the most common network failure.
+                        return { success: false, message: 'Connection Error: Could not connect to the form server. Please try again later.' };
                     }
                 }
             }
