@@ -15,7 +15,7 @@
             theme: {
                 // Ensure a sensible default font
                 fontFamily: {
-                    sans: ['Arial', 'sans-serif'], 
+                    sans: ['Arial', 'sans-serif'],
                 },
                 screens: {
                     // Customize breakpoints to match original CSS media queries
@@ -49,6 +49,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* FIX: Ensure the root element takes up full height for mobile viewport consistency */
+        html {
+            height: 100%;
         }
 
         /* Styles for dynamic background and layout container (non-Tailwind for `body` due to dynamic style application) */
@@ -113,7 +118,7 @@
                 MIXES
             </div>
             <div class="section-content hidden bg-white">
-                <div class="mixes-grid grid grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-0 w-full bg-gray-200">
+                <div class="mixes-grid grid grid-cols-3 gap-0 w-full bg-gray-200">
                     <div class="mix-item w-full h-[400px]">
                         <iframe width="100%" height="100%" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full h-full border-none block"></iframe>
                     </div>
@@ -203,15 +208,15 @@
             for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
                 try {
                     // CRITICAL FIX: Switched to 'no-cors' mode. This is required for reliably sending data
-                    // to Google Apps Script endpoints from a third-party domain (like this iframe), 
+                    // to Google Apps Script endpoints from a third-party domain (like this iframe),
                     // as it bypasses strict CORS restrictions that often cause a network error (Status 0).
                     const response = await fetch(formURL, {
                         method: 'POST',
                         body: formData,
-                        mode: 'no-cors' 
+                        mode: 'no-cors'
                     });
 
-                    // In 'no-cors' mode, the response is opaque. If the fetch call completes without 
+                    // In 'no-cors' mode, the response is opaque. If the fetch call completes without
                     // throwing a network error, we MUST assume the submission succeeded.
                     return { success: true, message: 'Success! Your message has been sent and logged.' };
                     
@@ -261,7 +266,7 @@
             } else {
                 statusMessage.className = 'form-status error bg-custom-error text-white';
                 // Use a more specific error message based on the retry logic outcome
-                statusMessage.textContent = result.message; 
+                statusMessage.textContent = result.message;
             }
 
             // 4. Reset Button State
@@ -271,7 +276,7 @@
             // Automatically hide the status message after a few seconds
             setTimeout(() => {
                 statusMessage.style.display = 'none';
-            }, 7000); 
+            }, 7000);
         });
     </script>
 </body>
