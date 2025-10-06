@@ -10,30 +10,25 @@
 
     <!-- 2. Tailwind Configuration for Custom Colors and Scale -->
     <script>
-        // Use a config block to define the exact colors used in the original CSS
         tailwind.config = {
             theme: {
-                // Ensure a sensible default font
                 fontFamily: {
                     sans: ['Arial', 'sans-serif'],
                 },
                 screens: {
-                    // Customize breakpoints to match original CSS media queries
-                    'sm': '640px',  // Standard Tailwind sm breakpoint
-                    'md': '768px',  // Match 768px for some mobile changes
-                    'lg': '968px',  // Match 968px for mixes grid change
+                    'sm': '640px',
+                    'md': '768px',
+                    'lg': '968px',
                     'xl': '1280px',
                 },
                 extend: {
                     colors: {
-                        // Custom colors from original CSS
-                        'custom-cyan': '#00D4FF',        // Bright Blue-Cyan for Shows (complements orange-red)
-                        'custom-orange-red': '#FF4500',  // Bold Red-Orange for Contact
-                        'custom-success': '#177317',     // Dark green
-                        'custom-error': '#d9534f',       // Red
-                        'custom-loading': '#f0ad4e',     // Orange/Yellow
+                        'custom-cyan': '#00D4FF',
+                        'custom-orange-red': '#FF4500',
+                        'custom-success': '#177317',
+                        'custom-error': '#d9534f',
+                        'custom-loading': '#f0ad4e',
                     },
-                    // Custom scale for button active effect (was transform: scale(0.98))
                     scale: {
                         '98': '0.98',
                     }
@@ -42,23 +37,16 @@
         }
     </script>
 
-    <!-- 3. Stylesheet now only contains universal resets and required base styles -->
     <style>
-        /* Universal reset via CSS for full compatibility with box-border */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        /* FIX: Ensure the root element takes up full height for mobile viewport consistency */
         html {
             height: 100%;
         }
-
-        /* Styles for dynamic background and layout container (non-Tailwind for `body` due to dynamic style application) */
         body {
-            /* font-family: 'Arial', sans-serif; -> now in tailwind config */
             min-height: 100vh;
             background-size: cover;
             background-position: center;
@@ -66,13 +54,9 @@
             background-attachment: fixed;
             transition: background-image 1s ease-in-out;
         }
-
-        /* Dynamic classes must remain for JS toggling */
         .section-block.expanded .section-content {
             display: block;
         }
-
-        /* Fix for active state scale, as Tailwind active:scale-[0.98] might not be supported in older versions */
         .contact-form button:active {
             transform: scale(0.98);
         }
@@ -80,7 +64,6 @@
 </head>
 <body class="font-sans">
     
-    <!-- --- SCROLLABLE HEADER --- -->
     <header class="w-full bg-black text-white py-8 text-center shadow-none">
         <div class="header-content w-11/12 max-w-5xl mx-auto">
             <div class="header-title text-6xl md:text-[4rem] font-black tracking-widest mb-1">CHORE BOYS</div>
@@ -139,14 +122,12 @@
             </div>
             <div class="section-content hidden contact-section-content bg-custom-orange-red text-white">
                 <div class="text-content p-8">
-                    <!-- ACTION URL IS SET TO THE LATEST DEPLOYED GOOGLE APPS SCRIPT URL -->
-                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto" action="https://script.google.com/macros/s/AKfycbxUKMyDrmUubluDMJDTPSyicEz65RbGffG_vP5QqzlYkBiWR1gCKqRSLg7XadEiQavd/exec" method="POST">
+                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto" action="https://script.google.com/macros/s/AKfycbwP_AfQP4XYp4Nz3B169d_YcheFAgbXh6aOQ-61k6fwntjuobAgcX2F613w0BLvJdnzDA/exec" method="POST">
                         <input type="text" placeholder="Your Name" name="Name" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
                         <input type="email" placeholder="Your Email" name="Email" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
                         <textarea placeholder="Your Message / Booking Inquiry" name="Message" rows="5" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none resize-y"></textarea>
                         <button type="submit" id="submitButton" class="bg-black text-white py-4 px-8 border-none rounded text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-gray-700">SEND MESSAGE</button>
                     </form>
-                    <!-- Status message container for user feedback -->
                     <div id="formStatus" class="form-status text-center text-xl font-bold p-4 rounded mt-4" style="display: none;"></div>
                 </div>
             </div>
@@ -154,9 +135,7 @@
     </div>
 
     <script>
-        // --- Image Background Logic ---
         const backgroundImages = [];
-        // The image links point to a raw GitHub user content URL, which is correct for static assets.
         for (let i = 10047; i <= 10125; i++) {
             backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
         }
@@ -164,16 +143,8 @@
         function toggleSection(header) {
             const section = header.parentElement;
             const wasExpanded = section.classList.contains('expanded');
-            
-            // Close all sections
-            document.querySelectorAll('.section-block').forEach(block => {
-                block.classList.remove('expanded');
-            });
-            
-            // If it wasn't expanded, expand it
-            if (!wasExpanded) {
-                section.classList.add('expanded');
-            }
+            document.querySelectorAll('.section-block').forEach(block => block.classList.remove('expanded'));
+            if (!wasExpanded) section.classList.add('expanded');
         }
 
         function setRandomBackground() {
@@ -181,102 +152,62 @@
             document.body.style.backgroundImage = `url(${randomImage})`;
         }
 
-        // Set random background on page load
         setRandomBackground();
 
-
-        // --- Contact Form Submission Logic (Google Apps Script Ready) ---
         const form = document.getElementById('contactForm');
         const statusMessage = document.getElementById('formStatus');
         const submitButton = document.getElementById('submitButton');
         const MAX_RETRIES = 3;
 
-        /**
-         * Pauses execution for a specified duration.
-         * @param {number} ms - Milliseconds to wait.
-         */
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
 
-        /**
-         * Handles the actual form submission with retry logic.
-         * @param {string} formURL - The Google Apps Script endpoint URL.
-         * @param {FormData} formData - The form data to send.
-         */
         async function submitFormWithRetry(formURL, formData) {
             for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
                 try {
-                    // CRITICAL FIX: Switched to 'no-cors' mode. This is required for reliably sending data
-                    // to Google Apps Script endpoints from a third-party domain (like this iframe),
-                    // as it bypasses strict CORS restrictions that often cause a network error (Status 0).
                     const response = await fetch(formURL, {
                         method: 'POST',
                         body: formData,
                         mode: 'no-cors'
                     });
-
-                    // In 'no-cors' mode, the response is opaque. If the fetch call completes without
-                    // throwing a network error, we MUST assume the submission succeeded.
                     return { success: true, message: 'Success! Your message has been sent and logged.' };
-                    
                 } catch (error) {
-                    // Handle genuine network errors (the error you were seeing)
                     if (attempt < MAX_RETRIES) {
-                        const delay = Math.pow(2, attempt) * 1000; // Exponential delay: 2s, 4s, 8s
-                        
-                        // Update status message for the next retry attempt
+                        const delay = Math.pow(2, attempt) * 1000;
                         statusMessage.className = 'form-status loading bg-custom-loading text-black';
                         statusMessage.textContent = `Network error on attempt ${attempt + 1}. Retrying in ${delay / 1000}s...`;
-                        
                         await sleep(delay);
-                        continue; // Retry
+                        continue;
                     } else {
-                        // Max retries reached for network error
                         return { success: false, message: 'Connection Error: Could not connect to the form server after multiple attempts. Please check the network and try again later.' };
                     }
                 }
             }
-            // Should be unreachable if MAX_RETRIES > 0, but included for completeness.
             return { success: false, message: 'Submission failed after multiple retries.' };
         }
 
-
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-
             const formURL = form.action;
             const formData = new FormData(form);
-
-            // 1. Show Loading State (Attempt 1)
             submitButton.disabled = true;
             submitButton.textContent = 'SENDING...';
             statusMessage.style.display = 'block';
             statusMessage.className = 'form-status loading bg-custom-loading text-black';
             statusMessage.textContent = 'Sending message (attempt 1)...';
-            
-            // 2. Execute Submission with Retry Logic
             const result = await submitFormWithRetry(formURL, formData);
-
-            // 3. Handle Final Result
             if (result.success) {
                 statusMessage.className = 'form-status success bg-custom-success text-white';
-                statusMessage.textContent = result.message; // Use the message set inside submitFormWithRetry
+                statusMessage.textContent = result.message;
                 form.reset();
             } else {
                 statusMessage.className = 'form-status error bg-custom-error text-white';
-                // Use a more specific error message based on the retry logic outcome
                 statusMessage.textContent = result.message;
             }
-
-            // 4. Reset Button State
             submitButton.disabled = false;
             submitButton.textContent = 'SEND MESSAGE';
-            
-            // Automatically hide the status message after a few seconds
-            setTimeout(() => {
-                statusMessage.style.display = 'none';
-            }, 7000);
+            setTimeout(() => { statusMessage.style.display = 'none'; }, 7000);
         });
     </script>
 </body>
