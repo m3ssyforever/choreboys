@@ -82,25 +82,13 @@
             <div class="section-content hidden shows-section-content bg-custom-cyan text-black">
                 <div class="text-content p-8">
                     <ul class="show-list list-none p-0 m-0 text-center">
-                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed">
-                            <strong class="font-bold">OCTOBER 24</strong><br>
-                            Pull a Muscle with Boy Toy and Madspinnz - Poor Boys
-                        </li>
-                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed">
-                            <strong class="font-bold">OCTOBER 31</strong><br>
-                            Nightcrawlers Halloween Dance party with KOKOKO! and Brookiecita - Saturn Bar
-                        </li>
-                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed">
-                            <strong class="font-bold">NOVEMBER 14</strong><br>
-                            Get the Worm early party - The Domino Lounge
-                        </li>
-                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed">
-                            <strong class="font-bold">NOVEMBER 14</strong><br>
-                            Delish da Goddess Birthday Party late party - Family Dollar
+                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
+                            <strong class="font-bold">OCTOBER 4</strong><br>
+                            Fete du Void
                         </li>
                         <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
-                            <strong class="font-bold">DECEMBER 31</strong><br>
-                            New Years Eve with Brookiecita - Saturn Bar
+                            <strong class="font-bold">OCTOBER 31</strong><br>
+                            Nightcrawlers Halloween Dance party with Brookiecita - Saturn Bar
                         </li>
                     </ul>
                 </div>
@@ -134,28 +122,28 @@
             </div>
             <div class="section-content hidden contact-section-content bg-custom-orange-red text-white">
                 <div class="text-content p-8">
-                    <div id="formStatus" class="form-status text-center text-xl font-bold p-4 rounded mb-4 bg-custom-success text-white" style="display: none;">
-                        Thank you! Your message has been sent successfully.
-                    </div>
-                    <!-- 
-                        ACTION URL: This points to the /formResponse endpoint of your Google Form.
-                        The names below (entry.xxxx) are the IDs Google requires for each field.
-                    -->
-                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto" action="https://docs.google.com/forms/d/e/1FAIpQLSc9vf-SXrgzU6C4g4Lq3TWTBDT5dICYne1ZYQJszMI68_fviA/formResponse" method="POST" target="hidden_iframe">
-                        <!-- Name Field ID: entry.1549557470 -->
-                        <input type="text" placeholder="Your Name" name="entry.1549557470" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                    <!-- Status message container -->
+                    <div id="formStatus" class="form-status text-center text-xl font-bold p-4 rounded mt-4" style="display: none;"></div>
+
+                    <!-- FORM SUBMISSION: Using Google Forms method (REVERTED TO IFRAME) -->
+                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto" 
+                          action="https://docs.google.com/forms/d/e/1FAIpQLSc9vf-SXrgzU6C4g4Lq3TWTBDT5dICYne1ZYQJszMI68_fviA/formResponse" 
+                          method="POST" 
+                          target="hidden_iframe"> 
                         
-                        <!-- Email Field ID: entry.1054593856 -->
-                        <input type="email" placeholder="Your Email" name="entry.1054593856" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        <!-- CORRECTED ID: entry.14617025 (Your Name) -->
+                        <input type="text" placeholder="Your Name" name="entry.14617025" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
                         
-                        <!-- Message Field ID: entry.1812674910 -->
-                        <textarea placeholder="Your Message / Booking Inquiry" name="entry.1812674910" rows="5" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none resize-y"></textarea>
+                        <!-- CORRECTED ID: entry.1915870487 (Your Email) -->
+                        <input type="email" placeholder="Your Email" name="entry.1915870487" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        
+                        <!-- CORRECTED ID: entry.2082616783 (Your Message / Booking Inquiry) -->
+                        <textarea placeholder="Your Message / Booking Inquiry" name="entry.2082616783" rows="5" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none resize-y"></textarea>
                         
                         <button type="submit" id="submitButton" class="bg-black text-white py-4 px-8 border-none rounded text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-gray-700">SEND MESSAGE</button>
                     </form>
-                    
+
                     <!-- Hidden iframe to handle the submission without leaving the page -->
-                    <!-- REMOVED inline onload attribute here for scope fix -->
                     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
                 </div>
             </div>
@@ -163,7 +151,7 @@
     </div>
 
     <script>
-        // Global variable to track form submission state (now an internal flag managed by the script)
+        // Global flag to indicate a submission has occurred
         let submitted = false;
         
         const backgroundImages = [];
@@ -186,18 +174,25 @@
         setRandomBackground();
 
         // ----------------------------------------------------------------------
-        // NEW FORM SUBMISSION LOGIC
+        // FORM SUBMISSION LOGIC (using hidden iframe for Google Forms)
         // ----------------------------------------------------------------------
 
         const form = document.getElementById('contactForm');
         const statusMessage = document.getElementById('formStatus');
         const hiddenIframe = document.getElementById('hidden_iframe');
+        const submitButton = document.getElementById('submitButton');
 
         function showSuccessMessage() {
-            // Only execute if a submission was actually attempted
+            // This is called when the hidden iframe finishes loading the Google Forms response page
             if (submitted) {
                 statusMessage.style.display = 'block';
+                statusMessage.className = 'form-status success bg-custom-success text-white';
+                statusMessage.textContent = 'Thank you! Your message has been sent successfully.';
+                
                 form.reset();
+                submitButton.disabled = false;
+                submitButton.textContent = 'SEND MESSAGE';
+
                 // Hide the message after 5 seconds
                 setTimeout(() => {
                     statusMessage.style.display = 'none';
@@ -207,13 +202,19 @@
         }
 
         form.addEventListener('submit', function(e) {
-            // When the form is submitted, set the flag
+            // Set the flag and disable the button immediately
             submitted = true;
-            // The form submission is handled by the hidden iframe
+            submitButton.disabled = true;
+            submitButton.textContent = 'SENDING...';
+            statusMessage.style.display = 'block';
+            statusMessage.className = 'form-status loading bg-custom-loading text-black';
+            statusMessage.textContent = 'Sending message...';
+            
+            // The form submission is handled by the hidden iframe.
+            // The iframe's load event will fire when Google's response is received.
         });
 
-        // FIX: Handle the iframe load event programmatically instead of using the inline onload attribute
-        // This ensures the script is executed in the correct scope after the form submits.
+        // Handle the iframe load event programmatically (this listener fires when the form submits)
         hiddenIframe.addEventListener('load', showSuccessMessage);
         
     </script>
