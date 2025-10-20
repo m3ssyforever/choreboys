@@ -81,14 +81,27 @@
             </div>
             <div class="section-content hidden shows-section-content bg-custom-cyan text-black">
                 <div class="text-content p-8">
+                    <!-- UPDATED SHOW LIST -->
                     <ul class="show-list list-none p-0 m-0 text-center">
-                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
-                            <strong class="font-bold">OCTOBER 4</strong><br>
-                            Fete du Void
+                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed">
+                            <strong class="font-bold">OCTOBER 24</strong><br>
+                            Pull a Muscle with Boy Toy and Madspinnz - Poor Boys
+                        </li>
+                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed">
+                            <strong class="font-bold">OCTOBER 31</strong><br>
+                            Nightcrawlers Halloween Dance party with KOKOKO! and Brookiecita - Saturn Bar
+                        </li>
+                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed">
+                            <strong class="font-bold">NOVEMBER 14</strong><br>
+                            Get the Worm early party - The Domino Lounge
+                        </li>
+                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed">
+                            <strong class="font-bold">NOVEMBER 14</strong><br>
+                            Delish da Goddess Birthday Party late party - Family Dollar
                         </li>
                         <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
-                            <strong class="font-bold">OCTOBER 31</strong><br>
-                            Nightcrawlers Halloween Dance party with Brookiecita - Saturn Bar
+                            <strong class="font-bold">DECEMBER 31</strong><br>
+                            New Years Eve with Brookiecita - Saturn Bar
                         </li>
                     </ul>
                 </div>
@@ -171,7 +184,8 @@
                         body: formData,
                         mode: 'no-cors'
                     });
-                    return { success: true, message: 'Success! Your message has been sent and logged.' };
+                    // Since it's 'no-cors', we assume success if fetch resolves without network error
+                    return { success: true, message: 'Success! Your message has been sent and logged.' }; 
                 } catch (error) {
                     if (attempt < MAX_RETRIES) {
                         const delay = Math.pow(2, attempt) * 1000;
@@ -196,7 +210,9 @@
             statusMessage.style.display = 'block';
             statusMessage.className = 'form-status loading bg-custom-loading text-black';
             statusMessage.textContent = 'Sending message (attempt 1)...';
+            
             const result = await submitFormWithRetry(formURL, formData);
+            
             if (result.success) {
                 statusMessage.className = 'form-status success bg-custom-success text-white';
                 statusMessage.textContent = result.message;
@@ -205,8 +221,10 @@
                 statusMessage.className = 'form-status error bg-custom-error text-white';
                 statusMessage.textContent = result.message;
             }
+            
             submitButton.disabled = false;
             submitButton.textContent = 'SEND MESSAGE';
+            // Clear status message after 7 seconds
             setTimeout(() => { statusMessage.style.display = 'none'; }, 7000);
         });
     </script>
