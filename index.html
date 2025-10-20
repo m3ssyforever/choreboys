@@ -81,7 +81,6 @@
             </div>
             <div class="section-content hidden shows-section-content bg-custom-cyan text-black">
                 <div class="text-content p-8">
-                    <!-- UPDATED SHOW LIST -->
                     <ul class="show-list list-none p-0 m-0 text-center">
                         <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed">
                             <strong class="font-bold">OCTOBER 24</strong><br>
@@ -135,19 +134,38 @@
             </div>
             <div class="section-content hidden contact-section-content bg-custom-orange-red text-white">
                 <div class="text-content p-8">
-                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto" action="https://script.google.com/macros/s/AKfycbwP_AfQP4XYp4Nz3B169d_YcheFAgbXh6aOQ-61k6fwntjuobAgcX2F613w0BLvJdnzDA/exec" method="POST">
-                        <input type="text" placeholder="Your Name" name="Name" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
-                        <input type="email" placeholder="Your Email" name="Email" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
-                        <textarea placeholder="Your Message / Booking Inquiry" name="Message" rows="5" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none resize-y"></textarea>
+                    <div id="formStatus" class="form-status text-center text-xl font-bold p-4 rounded mb-4 bg-custom-success text-white" style="display: none;">
+                        Thank you! Your message has been sent successfully.
+                    </div>
+                    <!-- 
+                        ACTION URL: This points to the /formResponse endpoint of your Google Form.
+                        The names below (entry.xxxx) are the IDs Google requires for each field.
+                    -->
+                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto" action="https://docs.google.com/forms/d/e/1FAIpQLSc9vf-SXrgzU6C4g4Lq3TWTBDT5dICYne1ZYQJszMI68_fviA/formResponse" method="POST" target="hidden_iframe">
+                        <!-- Name Field ID: entry.1549557470 -->
+                        <input type="text" placeholder="Your Name" name="entry.1549557470" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        
+                        <!-- Email Field ID: entry.1054593856 -->
+                        <input type="email" placeholder="Your Email" name="entry.1054593856" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        
+                        <!-- Message Field ID: entry.1812674910 -->
+                        <textarea placeholder="Your Message / Booking Inquiry" name="entry.1812674910" rows="5" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none resize-y"></textarea>
+                        
                         <button type="submit" id="submitButton" class="bg-black text-white py-4 px-8 border-none rounded text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-gray-700">SEND MESSAGE</button>
                     </form>
-                    <div id="formStatus" class="form-status text-center text-xl font-bold p-4 rounded mt-4" style="display: none;"></div>
+                    
+                    <!-- Hidden iframe to handle the submission without leaving the page -->
+                    <!-- REMOVED inline onload attribute here for scope fix -->
+                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Global variable to track form submission state (now an internal flag managed by the script)
+        let submitted = false;
+        
         const backgroundImages = [];
         for (let i = 10047; i <= 10125; i++) {
             backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
@@ -167,66 +185,37 @@
 
         setRandomBackground();
 
+        // ----------------------------------------------------------------------
+        // NEW FORM SUBMISSION LOGIC
+        // ----------------------------------------------------------------------
+
         const form = document.getElementById('contactForm');
         const statusMessage = document.getElementById('formStatus');
-        const submitButton = document.getElementById('submitButton');
-        const MAX_RETRIES = 3;
+        const hiddenIframe = document.getElementById('hidden_iframe');
 
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
-
-        async function submitFormWithRetry(formURL, formData) {
-            for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-                try {
-                    const response = await fetch(formURL, {
-                        method: 'POST',
-                        body: formData,
-                        mode: 'no-cors'
-                    });
-                    // Since it's 'no-cors', we assume success if fetch resolves without network error
-                    return { success: true, message: 'Success! Your message has been sent and logged.' }; 
-                } catch (error) {
-                    if (attempt < MAX_RETRIES) {
-                        const delay = Math.pow(2, attempt) * 1000;
-                        statusMessage.className = 'form-status loading bg-custom-loading text-black';
-                        statusMessage.textContent = `Network error on attempt ${attempt + 1}. Retrying in ${delay / 1000}s...`;
-                        await sleep(delay);
-                        continue;
-                    } else {
-                        return { success: false, message: 'Connection Error: Could not connect to the form server after multiple attempts. Please check the network and try again later.' };
-                    }
-                }
-            }
-            return { success: false, message: 'Submission failed after multiple retries.' };
-        }
-
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const formURL = form.action;
-            const formData = new FormData(form);
-            submitButton.disabled = true;
-            submitButton.textContent = 'SENDING...';
-            statusMessage.style.display = 'block';
-            statusMessage.className = 'form-status loading bg-custom-loading text-black';
-            statusMessage.textContent = 'Sending message (attempt 1)...';
-            
-            const result = await submitFormWithRetry(formURL, formData);
-            
-            if (result.success) {
-                statusMessage.className = 'form-status success bg-custom-success text-white';
-                statusMessage.textContent = result.message;
+        function showSuccessMessage() {
+            // Only execute if a submission was actually attempted
+            if (submitted) {
+                statusMessage.style.display = 'block';
                 form.reset();
-            } else {
-                statusMessage.className = 'form-status error bg-custom-error text-white';
-                statusMessage.textContent = result.message;
+                // Hide the message after 5 seconds
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+                submitted = false; // Reset the submission flag
             }
-            
-            submitButton.disabled = false;
-            submitButton.textContent = 'SEND MESSAGE';
-            // Clear status message after 7 seconds
-            setTimeout(() => { statusMessage.style.display = 'none'; }, 7000);
+        }
+
+        form.addEventListener('submit', function(e) {
+            // When the form is submitted, set the flag
+            submitted = true;
+            // The form submission is handled by the hidden iframe
         });
+
+        // FIX: Handle the iframe load event programmatically instead of using the inline onload attribute
+        // This ensures the script is executed in the correct scope after the form submits.
+        hiddenIframe.addEventListener('load', showSuccessMessage);
+        
     </script>
 </body>
 </html>
