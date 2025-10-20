@@ -63,6 +63,31 @@
         .contact-form button:active {
             transform: scale(0.98);
         }
+        /* Custom styles for the "sexier" show list */
+        .show-list-item {
+            padding: 1.5rem 1rem; /* More vertical space */
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        .show-list-item:hover {
+            background-color: rgba(0, 0, 0, 0.05); /* Slight hover effect */
+        }
+        .show-date {
+            display: inline-block;
+            background-color: black;
+            color: #00D4FF; /* custom-cyan text on black background */
+            padding: 0.25rem 0.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 900; /* font-black */
+            /* Removed border-radius: 0.25rem; */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+        .show-details {
+            font-size: 1.25rem; /* text-xl */
+            line-height: 1.5;
+            font-weight: 500; /* Medium weight for the text */
+        }
     </style>
 </head>
 <body class="font-sans">
@@ -83,28 +108,28 @@
                 UPCOMING SHOWS
             </div>
             <div class="section-content hidden shows-section-content bg-custom-cyan text-black">
-                <div class="text-content p-8">
+                <div class="text-content p-0">
                     <ul class="show-list list-none p-0 m-0 text-center">
-                        <!-- UPDATED SHOWS LIST -->
-                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
-                            <strong class="font-bold">OCTOBER 24</strong><br>
-                            Pull a Muscle with Boy Toy and Madspinnz - Poor Boys
+                        <!-- UPDATED SHOWS LIST - VENUE ON NEW LINE -->
+                        <li class="show-list-item last:border-b-0">
+                            <span class="show-date">OCTOBER 24</span><br>
+                            <span class="show-details">Pull a Muscle with <span class="font-bold">Boy Toy and Madspinnz</span><br><span class="font-bold">Poor Boys</span></span>
                         </li>
-                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
-                            <strong class="font-bold">OCTOBER 31</strong><br>
-                            Nightcrawlers Halloween Dance party with KOKOKO! and Brookiecita - Saturn Bar
+                        <li class="show-list-item last:border-b-0">
+                            <span class="show-date">OCTOBER 31</span><br>
+                            <span class="show-details">Nightcrawlers Halloween Dance party with <span class="font-bold">KOKOKO! and Brookiecita</span><br><span class="font-bold">Saturn Bar</span></span>
                         </li>
-                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
-                            <strong class="font-bold">NOVEMBER 14</strong><br>
-                            Get the Worm early party - The Domino Lounge
+                        <li class="show-list-item last:border-b-0">
+                            <span class="show-date">NOVEMBER 14</span><br>
+                            <span class="show-details">Get the Worm early party<br><span class="font-bold">The Domino Lounge</span></span>
                         </li>
-                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
-                            <strong class="font-bold">NOVEMBER 14</strong><br>
-                            Delish da Goddess Birthday Party late party - Family Dollar
+                        <li class="show-list-item last:border-b-0">
+                            <span class="show-date">NOVEMBER 14</span><br>
+                            <span class="show-details">Delish da Goddess Birthday Party late party<br><span class="font-bold">Family Dollar</span></span>
                         </li>
-                        <li class="py-4 border-b border-black/20 mb-4 text-xl leading-relaxed last:border-b-0 last:mb-0">
-                            <strong class="font-bold">DECEMBER 31</strong><br>
-                            New Years Eve with Brookiecita - Saturn Bar
+                        <li class="show-list-item last:border-b-0">
+                            <span class="show-date">DECEMBER 31</span><br>
+                            <span class="show-details">New Years Eve with <span class="font-bold">Brookiecita</span><br><span class="font-bold">Saturn Bar</span></span>
                         </li>
                     </ul>
                 </div>
