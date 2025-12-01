@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chore Boys</title>
+    
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%2300D4FF%22/><text y=%22.85em%22 font-size=%2275%22 fill=%22black%22 font-weight=%22900%22 font-family=%22Arial, sans-serif%22 text-anchor=%22middle%22 x=%2250%22>CB</text></svg>">
+    
+    <!-- TAILWIND CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CONFIGURATION -->
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    sans: ['Arial', 'sans-serif'],
+                },
+                screens: {
+                    'sm': '640px',
+                    'md': '768px',
+                    'lg': '968px',
+                    'xl': '1280px',
+                },
+                extend: {
+                    colors: {
+                        'custom-cyan': '#00D4FF',
+                        'custom-orange-red': '#FF4500',
+                        'custom-success': '#177317',
+                        'custom-error': '#d9534f',
+                        'custom-loading': '#f0ad4e',
+                    },
+                    scale: {
+                        '98': '0.98',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            height: 100%;
+        }
+        body {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            transition: background-image 1s ease-in-out;
+        }
+        .section-block.expanded .section-content {
+            display: block;
+        }
+        .contact-form button:active {
+            transform: scale(0.98);
+        }
+        .show-list-item {
+            padding: 1.5rem 1rem;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        .show-list-item:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        .show-date {
+            display: inline-block;
+            background-color: black;
+            color: #00D4FF;
+            padding: 0.25rem 0.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 900;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .show-details {
+            font-size: 1.25rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    
+    <header class="w-full bg-black text-white py-8 text-center shadow-none">
+        <div class="header-content w-11/12 max-w-5xl mx-auto">
+            <div class="header-title text-6xl md:text-[4rem] font-black tracking-widest mb-1">CHORE BOYS</div>
+            <div class="header-slogan text-xl md:text-base font-light opacity-80 max-w-xl mx-auto">
+                With a combined 100 years of experience, Chore Boys are the only choice for all of your lifestyle improvement projects.
+            </div>
+        </div>
+    </header>
+    
+    <div class="container relative z-10 w-11/12 max-w-5xl mx-auto pt-16 pb-12">
+        
+        <!-- UPCOMING SHOWS -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                UPCOMING SHOWS
+            </div>
+            <div class="section-content hidden shows-section-content bg-custom-cyan text-black">
+                <div class="text-content p-0">
+                    <ul class="show-list list-none p-0 m-0 text-center">
+                        <li class="show-list-item last:border-b-0">
+                            <span class="show-date">OCTOBER 24</span><br>
+                            <span class="show-details">Pull a Muscle with <span class="font-bold">Boy Toy and Madspinnz</span><br><span class="font-bold">Poor Boys</span></span>
+                        </li>
+                        <li class="show-list-item last:border-b-0">
+                            <span class="show-date">OCTOBER 31</span><br>
+                            <span class="show-details">Nightcrawlers Halloween Dance party with <span class="font-bold">KOKOKO! and Brookiecita</span><br><span class="font-bold">Saturn Bar</span></span>
+                        </li>
+                        <li class="show-list-item last:border-b-0">
+                            <span class="show-date">NOVEMBER 14</span><br>
+                            <span class="show-details">Get the Worm early party<br><span class="font-bold">The Domino Lounge</span></span>
+                        </li>
+                        <li class="show-list-item last:border-b-0">
+                            <span class="show-date">NOVEMBER 14</span><br>
+                            <span class="show-details">Delish da Goddess Birthday Party late party<br><span class="font-bold">Family Dollar</span></span>
+                        </li>
+                        <li class="show-list-item last:border-b-0">
+                            <span class="show-date">DECEMBER 31</span><br>
+                            <span class="show-details">New Years Eve with <span class="font-bold">Brookiecita</span><br><span class="font-bold">Saturn Bar</span></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIXES -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                MIXES
+            </div>
+            <div class="section-content hidden bg-white">
+                <div class="mixes-grid grid grid-cols-1 lg:grid-cols-3 gap-0 w-full bg-gray-200">
+                    <div class="mix-item w-full h-[400px]">
+                        <iframe width="100%" height="100%" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full h-full border-none block"></iframe>
+                    </div>
+                    <div class="mix-item w-full h-[400px]">
+                        <iframe width="100%" height="100%" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchoreplay-mini-mix-2-92bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full h-full border-none block"></iframe>
+                    </div>
+                    <div class="mix-item w-full h-[400px]">
+                        <iframe width="100%" height="100%" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchore-boys-mini-mix-3-live%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full h-full border-none block"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SECTION: REMIXES -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                REMIXES
+            </div>
+            <div class="section-content hidden bg-white">
+                <!-- Split Layout: Stacks on mobile, 2 columns on medium screens and up -->
+                <div class="grid grid-cols-1 md:grid-cols-2 w-full">
+                    
+                    <!-- Left Column: m3ssy -->
+                    <div class="p-8 md:border-r border-b md:border-b-0 border-gray-300">
+                        <h3 class="text-4xl font-black mb-8 text-center tracking-tight uppercase">m3ssy</h3>
+                        <div class="space-y-6">
+                            <!-- Embed Placeholder 1 -->
+                            <div class="w-full h-32 bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-400 text-sm font-bold">
+                                PASTE EMBED CODE HERE
+                            </div>
+                            <!-- Embed Placeholder 2 -->
+                            <div class="w-full h-32 bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-400 text-sm font-bold">
+                                PASTE EMBED CODE HERE
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Rusty Lazer -->
+                    <div class="p-8">
+                        <h3 class="text-4xl font-black mb-8 text-center tracking-tight uppercase">Rusty Lazer</h3>
+                        <div class="space-y-6">
+                             <!-- Embed Placeholder 1 -->
+                             <div class="w-full h-32 bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-400 text-sm font-bold">
+                                PASTE EMBED CODE HERE
+                            </div>
+                            <!-- Embed Placeholder 2 -->
+                            <div class="w-full h-32 bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-400 text-sm font-bold">
+                                PASTE EMBED CODE HERE
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                CONTACT
+            </div>
+            <div class="section-content hidden contact-section-content bg-custom-orange-red text-white">
+                <div class="text-content p-8">
+                    <div id="formStatus" class="form-status text-center text-xl font-bold p-4 rounded mt-4" style="display: none;"></div>
+
+                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto"
+                          action="https://docs.google.com/forms/d/e/1FAIpQLSc9vf-SXrgzU6C4g4Lq3TWTBDT5dICYne1ZYQJszMI68_fviA/formResponse"
+                          method="POST"
+                          target="hidden_iframe">
+                        
+                        <input type="text" placeholder="Your Name" name="entry.14617025" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        
+                        <input type="email" placeholder="Your Email" name="entry.1915870487" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        
+                        <textarea placeholder="Your Message / Booking Inquiry" name="entry.2082616783" rows="5" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none resize-y"></textarea>
+                        
+                        <button type="submit" id="submitButton" class="bg-black text-white py-4 px-8 border-none rounded text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-gray-700">SEND MESSAGE</button>
+                    </form>
+
+                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        let submitted = false;
+        
+        const backgroundImages = [];
+        for (let i = 10047; i <= 10125; i++) {
+            backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
+        }
+
+        function toggleSection(header) {
+            const section = header.parentElement;
+            const wasExpanded = section.classList.contains('expanded');
+            document.querySelectorAll('.section-block').forEach(block => block.classList.remove('expanded'));
+            if (!wasExpanded) section.classList.add('expanded');
+        }
+
+        function setRandomBackground() {
+            const randomImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+            document.body.style.backgroundImage = `url(${randomImage})`;
+        }
+
+        setRandomBackground();
+
+        // Form Submission Logic
+        const form = document.getElementById('contactForm');
+        const statusMessage = document.getElementById('formStatus');
+        const hiddenIframe = document.getElementById('hidden_iframe');
+        const submitButton = document.getElementById('submitButton');
+
+        function showSuccessMessage() {
+            if (submitted) {
+                statusMessage.style.display = 'block';
+                statusMessage.className = 'form-status success bg-custom-success text-white';
+                statusMessage.textContent = 'Thank you! Your message has been sent successfully.';
+                
+                form.reset();
+                submitButton.disabled = false;
+                submitButton.textContent = 'SEND MESSAGE';
+
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+                submitted = false;
+            }
+        }
+
+        form.addEventListener('submit', function(e) {
+            submitted = true;
+            submitButton.disabled = true;
+            submitButton.textContent = 'SENDING...';
+            statusMessage.style.display = 'block';
+            statusMessage.className = 'form-status loading bg-custom-loading text-black';
+            statusMessage.textContent = 'Sending message...';
+        });
+
+        hiddenIframe.addEventListener('load', showSuccessMessage);
+    </script>
+</body>
+</html>

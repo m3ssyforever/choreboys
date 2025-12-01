@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHORECLOUD</title>
+    
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%2300D4FF%22/><text y=%22.85em%22 font-size=%2275%22 fill=%22black%22 font-weight=%22900%22 font-family=%22Arial, sans-serif%22 text-anchor=%22middle%22 x=%2250%22>CC</text></svg>">
+    
+    <!-- TAILWIND CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CONFIGURATION -->
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    sans: ['Arial', 'sans-serif'],
+                    mono: ['"Courier New"', 'Courier', 'monospace'],
+                },
+                screens: {
+                    'sm': '640px',
+                    'md': '768px',
+                    'lg': '968px',
+                    'xl': '1280px',
+                },
+                extend: {
+                    colors: {
+                        'custom-cyan': '#00D4FF',
+                        'custom-gray': '#E5E5E5',
+                    },
+                    boxShadow: {
+                        'hard': '4px 4px 0px 0px rgba(0,0,0,1)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            height: 100%;
+        }
+        body {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            transition: background-image 1s ease-in-out;
+            /* Fallback color while image loads */
+            background-color: #333;
+        }
+        
+        /* Custom Audio Player Styling to look 'native' and retro */
+        audio {
+            width: 100%;
+            height: 40px;
+            border-radius: 0;
+        }
+        audio::-webkit-media-controls-panel {
+            background-color: #f3f4f6;
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    
+    <!-- HEADER -->
+    <header class="w-full bg-black text-white py-8 text-center shadow-hard mb-8 relative z-20">
+        <div class="header-content w-11/12 max-w-7xl mx-auto">
+            <div class="header-title text-5xl md:text-7xl font-black tracking-widest mb-2">CHORECLOUD</div>
+            <div class="header-slogan text-lg font-mono text-custom-cyan opacity-100 max-w-xl mx-auto uppercase tracking-wide">
+                archive // stream // download
+            </div>
+        </div>
+    </header>
+    
+    <!-- MAIN GRID CONTAINER -->
+    <div class="container relative z-10 w-11/12 max-w-7xl mx-auto pb-24">
+        
+        <div class="bg-custom-gray/90 backdrop-blur-sm p-4 sm:p-8 border-2 border-black shadow-hard">
+            
+            <!--
+               GRID LAYOUT
+               1 column on mobile, 2 on medium, 3 on large screens.
+            -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- CARD 1 -->
+                <div class="audio-card bg-white border-2 border-black shadow-hard transform hover:-translate-y-1 transition-transform duration-200">
+                    <div class="card-header bg-black text-white p-3 border-b-2 border-black">
+                        <h3 class="font-bold text-lg uppercase tracking-wide">Choreplay Mini Mix 1</h3>
+                        <div class="text-xs font-mono text-custom-cyan">150 BPM • OCT 2024</div>
+                    </div>
+                    <div class="p-4 flex flex-col gap-4">
+                        <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10100.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                        </div>
+                        <div class="text-sm font-mono leading-tight">
+                            High energy techno cuts for the morning commute.
+                        </div>
+                        <audio controls preload="none" class="w-full border border-gray-400">
+                            <source src="YOUR_NEXTCLOUD_LINK_HERE/download" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <a href="YOUR_NEXTCLOUD_LINK_HERE/download" class="text-xs font-bold text-blue-600 hover:bg-blue-600 hover:text-white border border-blue-600 px-2 py-1 self-start uppercase">
+                            ↓ Download MP3
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 2 -->
+                <div class="audio-card bg-white border-2 border-black shadow-hard transform hover:-translate-y-1 transition-transform duration-200">
+                    <div class="card-header bg-black text-white p-3 border-b-2 border-black">
+                        <h3 class="font-bold text-lg uppercase tracking-wide">Choreplay Mini Mix 2</h3>
+                        <div class="text-xs font-mono text-custom-cyan">92 BPM • SEP 2024</div>
+                    </div>
+                    <div class="p-4 flex flex-col gap-4">
+                        <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10105.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                        </div>
+                        <div class="text-sm font-mono leading-tight">
+                            Slow chuggers and acid basslines.
+                        </div>
+                        <audio controls preload="none" class="w-full border border-gray-400">
+                            <source src="YOUR_NEXTCLOUD_LINK_HERE/download" type="audio/mpeg">
+                        </audio>
+                        <a href="#" class="text-xs font-bold text-blue-600 hover:bg-blue-600 hover:text-white border border-blue-600 px-2 py-1 self-start uppercase">
+                            ↓ Download MP3
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 3 -->
+                <div class="audio-card bg-white border-2 border-black shadow-hard transform hover:-translate-y-1 transition-transform duration-200">
+                    <div class="card-header bg-black text-white p-3 border-b-2 border-black">
+                        <h3 class="font-bold text-lg uppercase tracking-wide">Live at The Domino</h3>
+                        <div class="text-xs font-mono text-custom-cyan">LIVE SET • AUG 2024</div>
+                    </div>
+                    <div class="p-4 flex flex-col gap-4">
+                        <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10049.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                        </div>
+                        <div class="text-sm font-mono leading-tight">
+                            Full recording of the opening set.
+                        </div>
+                        <audio controls preload="none" class="w-full border border-gray-400">
+                            <source src="YOUR_NEXTCLOUD_LINK_HERE/download" type="audio/mpeg">
+                        </audio>
+                        <a href="#" class="text-xs font-bold text-blue-600 hover:bg-blue-600 hover:text-white border border-blue-600 px-2 py-1 self-start uppercase">
+                            ↓ Download MP3
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 4 -->
+                 <div class="audio-card bg-white border-2 border-black shadow-hard transform hover:-translate-y-1 transition-transform duration-200">
+                    <div class="card-header bg-black text-white p-3 border-b-2 border-black">
+                        <h3 class="font-bold text-lg uppercase tracking-wide">Deep Cuts Vol 1</h3>
+                        <div class="text-xs font-mono text-custom-cyan">VARIOUS • JUL 2024</div>
+                    </div>
+                    <div class="p-4 flex flex-col gap-4">
+                        <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10055.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                        </div>
+                        <div class="text-sm font-mono leading-tight">
+                            Selections from the crate.
+                        </div>
+                        <audio controls preload="none" class="w-full border border-gray-400">
+                            <source src="YOUR_NEXTCLOUD_LINK_HERE/download" type="audio/mpeg">
+                        </audio>
+                        <a href="#" class="text-xs font-bold text-blue-600 hover:bg-blue-600 hover:text-white border border-blue-600 px-2 py-1 self-start uppercase">
+                            ↓ Download MP3
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 5 (Placeholder) -->
+                <div class="audio-card bg-white border-2 border-black shadow-hard transform hover:-translate-y-1 transition-transform duration-200">
+                    <div class="card-header bg-black text-white p-3 border-b-2 border-black">
+                        <h3 class="font-bold text-lg uppercase tracking-wide">Private Event 004</h3>
+                        <div class="text-xs font-mono text-custom-cyan">120 BPM • JUN 2024</div>
+                    </div>
+                    <div class="p-4 flex flex-col gap-4">
+                        <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10060.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                        </div>
+                        <div class="text-sm font-mono leading-tight">
+                            Disco edits and rare grooves.
+                        </div>
+                        <audio controls preload="none" class="w-full border border-gray-400">
+                            <source src="YOUR_NEXTCLOUD_LINK_HERE/download" type="audio/mpeg">
+                        </audio>
+                        <a href="#" class="text-xs font-bold text-blue-600 hover:bg-blue-600 hover:text-white border border-blue-600 px-2 py-1 self-start uppercase">
+                            ↓ Download MP3
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 6 (Placeholder) -->
+                <div class="audio-card bg-white border-2 border-black shadow-hard transform hover:-translate-y-1 transition-transform duration-200">
+                    <div class="card-header bg-black text-white p-3 border-b-2 border-black">
+                        <h3 class="font-bold text-lg uppercase tracking-wide">Ambient Works</h3>
+                        <div class="text-xs font-mono text-custom-cyan">N/A BPM • MAY 2024</div>
+                    </div>
+                    <div class="p-4 flex flex-col gap-4">
+                        <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10072.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                        </div>
+                        <div class="text-sm font-mono leading-tight">
+                            Synthesizer explorations.
+                        </div>
+                        <audio controls preload="none" class="w-full border border-gray-400">
+                            <source src="YOUR_NEXTCLOUD_LINK_HERE/download" type="audio/mpeg">
+                        </audio>
+                        <a href="#" class="text-xs font-bold text-blue-600 hover:bg-blue-600 hover:text-white border border-blue-600 px-2 py-1 self-start uppercase">
+                            ↓ Download MP3
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        const backgroundImages = [];
+        // Pulling from the same repo/image set as the original site
+        for (let i = 10047; i <= 10125; i++) {
+            backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
+        }
+
+        function setRandomBackground() {
+            const randomImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+            document.body.style.backgroundImage = `url(${randomImage})`;
+        }
+
+        setRandomBackground();
+    </script>
+</body>
+</html>
