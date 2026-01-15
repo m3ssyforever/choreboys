@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chore Boys - Electronic Press Kit</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%2300D4FF%22/><text y=%22.85em%22 font-size=%2275%22 fill=%22black%22 font-weight=%22900%22 font-family=%22Arial, sans-serif%22 text-anchor=%22middle%22 x=%2250%22>CB</text></svg>">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    sans: ['Arial', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        'custom-cyan': '#00D4FF',
+                        'custom-orange-red': '#FF4500',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            height: 100%;
+        }
+        body {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            transition: background-image 1s ease-in-out;
+        }
+        .section-block.expanded .section-content {
+            display: block;
+        }
+        .bio-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+        @media (min-width: 768px) {
+            .bio-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .bio-card {
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        }
+        @media (min-width: 768px) {
+            .bio-card:nth-child(odd) {
+                border-right: 2px solid rgba(0, 0, 0, 0.1);
+            }
+            .bio-card:nth-last-child(-n+2) {
+                border-bottom: none;
+            }
+        }
+        .bio-card:last-child {
+            border-bottom: none;
+        }
+        .link-button {
+            display: inline-block;
+            background-color: black;
+            color: #00D4FF;
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            font-weight: 900;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .link-button:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .image-placeholder {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            color: rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    
+    <header class="w-full bg-black text-white py-8 text-center shadow-none">
+        <div class="header-content w-11/12 max-w-5xl mx-auto">
+            <div class="header-title text-6xl md:text-[4rem] font-black tracking-widest mb-1">CHORE BOYS</div>
+            <div class="header-slogan text-xl md:text-base font-light opacity-80 max-w-xl mx-auto">
+                Electronic Press Kit
+            </div>
+        </div>
+    </header>
+    
+    <div class="container relative z-10 w-11/12 max-w-5xl mx-auto pt-16 pb-12">
+        
+        <!-- VIDEOS -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                VIDEOS
+            </div>
+            <div class="section-content hidden bg-white">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-0 w-full">
+                    <div class="w-full aspect-video">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/a6yigJwEYi4?si=f7HS8AENw1FU7VbH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
+                    </div>
+                    <div class="w-full aspect-video">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/8_V6s2lpuV4?si=cvYEGHMuB6eTCSqk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABOUT -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                ABOUT
+            </div>
+            <div class="section-content hidden bg-custom-cyan text-black">
+                <div class="p-8 md:p-12">
+                    <p class="text-xl md:text-2xl leading-relaxed mb-6">
+                        Chore Boys are a New Orleans-based DJ duo bringing high-energy dance music to venues across the city. With a combined 100 years of experience in lifestyle improvement projects, they've become known for their eclectic sets that blend genres and keep dance floors moving.
+                    </p>
+                    <p class="text-xl md:text-2xl leading-relaxed">
+                        From intimate club nights to massive dance parties, Chore Boys deliver curated experiences that showcase their deep knowledge of electronic music and commitment to creating unforgettable moments on the dance floor.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- THE BOYS -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                THE BOYS
+            </div>
+            <div class="section-content hidden bg-white">
+                <div class="bio-grid">
+                    <!-- m3ssy -->
+                    <div class="bio-card p-8">
+                        <div class="image-placeholder mb-6">
+                            PHOTO: m3ssy
+                        </div>
+                        <h3 class="text-3xl font-black mb-4 uppercase">m3ssy</h3>
+                        <p class="text-lg leading-relaxed">
+                            Known for pushing boundaries and blending unexpected sounds, m3ssy brings an experimental edge to the Chore Boys sound. With roots in underground electronic music, his sets are characterized by bold track selections and seamless transitions that keep audiences guessing.
+                        </p>
+                    </div>
+
+                    <!-- Rusty Lazer -->
+                    <div class="bio-card p-8">
+                        <div class="image-placeholder mb-6">
+                            PHOTO: Rusty Lazer
+                        </div>
+                        <h3 class="text-3xl font-black mb-4 uppercase">Rusty Lazer</h3>
+                        <p class="text-lg leading-relaxed">
+                            A veteran of New Orleans nightlife, Rusty Lazer brings decades of DJ experience and an encyclopedic knowledge of dance music. His technical precision and deep crate-digging skills complement m3ssy's experimental approach, creating the perfect balance in the Chore Boys sound.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIXES -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                FEATURED MIXES
+            </div>
+            <div class="section-content hidden bg-white">
+                <div class="p-8 space-y-4">
+                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
+                    
+                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchoreplay-mini-mix-2-92bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
+                    
+                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchore-boys-mini-mix-3-live%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRESS PHOTOS -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                PRESS PHOTOS
+            </div>
+            <div class="section-content hidden bg-custom-orange-red">
+                <div class="p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="image-placeholder aspect-[4/3]">
+                            HIGH RES PHOTO 1
+                        </div>
+                        <div class="image-placeholder aspect-[4/3]">
+                            HIGH RES PHOTO 2
+                        </div>
+                        <div class="image-placeholder aspect-[4/3]">
+                            HIGH RES PHOTO 3
+                        </div>
+                        <div class="image-placeholder aspect-[4/3]">
+                            HIGH RES PHOTO 4
+                        </div>
+                    </div>
+                    <p class="text-white text-center mt-6 text-lg">
+                        High resolution images available for download
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LINKS -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                LINKS
+            </div>
+            <div class="section-content hidden bg-custom-cyan">
+                <div class="p-8 md:p-12 text-center">
+                    <div class="flex flex-col md:flex-row gap-6 justify-center items-center flex-wrap">
+                        <a href="https://bandcamp.com" target="_blank" class="link-button">
+                            BANDCAMP
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="link-button">
+                            INSTAGRAM
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="link-button">
+                            YOUTUBE
+                        </a>
+                        <a href="https://mixcloud.com/choreboys" target="_blank" class="link-button">
+                            MIXCLOUD
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOOKING -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                BOOKING
+            </div>
+            <div class="section-content hidden bg-white">
+                <div class="p-8 md:p-12 text-center">
+                    <p class="text-2xl mb-6">
+                        For booking inquiries, please contact:
+                    </p>
+                    <a href="mailto:booking@choreboys.com" class="text-3xl font-black text-custom-orange-red hover:text-black transition-colors">
+                        booking@choreboys.com
+                    </a>
+                    <p class="text-xl mt-8 text-gray-600">
+                        Available for club nights, festivals, private events, and special performances throughout New Orleans and beyond.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const backgroundImages = [];
+        for (let i = 10047; i <= 10125; i++) {
+            backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
+        }
+
+        function preloadImages() {
+            backgroundImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
+
+        preloadImages();
+
+        function toggleSection(header) {
+            const section = header.parentElement;
+            const wasExpanded = section.classList.contains('expanded');
+            document.querySelectorAll('.section-block').forEach(block => block.classList.remove('expanded'));
+            if (!wasExpanded) section.classList.add('expanded');
+        }
+
+        function setRandomBackground() {
+            const randomImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+            document.body.style.backgroundImage = `url(${randomImage})`;
+        }
+
+        setRandomBackground();
+    </script>
+</body>
+</html>
