@@ -19,6 +19,9 @@
                     colors: {
                         'custom-cyan': '#00D4FF',
                         'custom-orange-red': '#FF4500',
+                        'custom-success': '#177317',
+                        'custom-error': '#d9534f',
+                        'custom-loading': '#f0ad4e',
                     }
                 }
             }
@@ -96,6 +99,9 @@
             color: rgba(0, 0, 0, 0.4);
             font-weight: bold;
         }
+        .contact-form button:active {
+            transform: scale(0.98);
+        }
     </style>
 </head>
 <body class="font-sans">
@@ -123,27 +129,54 @@
             </div>
         </div>
 
-        <!-- ABOUT -->
-        <div class="section-block w-full mb-6">
-            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
-                ABOUT
+        <!-- MIXES (PERMANENTLY OPEN) -->
+        <div class="section-block w-full mb-6 expanded">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
+                FEATURED MIXES
             </div>
-            <div class="section-content hidden bg-custom-cyan text-black">
-                <div class="p-8 md:p-12">
-                    <p class="text-xl md:text-2xl leading-relaxed mb-6">
-                        Chore Boys are a New Orleans-based DJ duo bringing high-energy dance music to venues across the city. With a combined 100 years of experience in lifestyle improvement projects, they've become known for their eclectic sets that blend genres and keep dance floors moving.
-                    </p>
-                    <p class="text-xl md:text-2xl leading-relaxed">
-                        From intimate club nights to massive dance parties, Chore Boys deliver curated experiences that showcase their deep knowledge of electronic music and commitment to creating unforgettable moments on the dance floor.
-                    </p>
+            <div class="section-content bg-white">
+                <div class="p-8 space-y-4">
+                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
+                    
+                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchoreplay-mini-mix-2-92bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
+                    
+                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchore-boys-mini-mix-3-live%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
                 </div>
             </div>
         </div>
 
-        <!-- THE BOYS -->
+        <!-- LINKS (PERMANENTLY OPEN) -->
+        <div class="section-block w-full mb-6 expanded">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
+                LINKS
+            </div>
+            <div class="section-content bg-custom-cyan">
+                <div class="p-8 md:p-12 text-center">
+                    <div class="flex flex-col md:flex-row gap-6 justify-center items-center flex-wrap">
+                        <a href="mailto:booking@choreboys.com" class="link-button">
+                            BOOKING
+                        </a>
+                        <a href="https://bandcamp.com" target="_blank" class="link-button">
+                            BANDCAMP
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="link-button">
+                            INSTAGRAM
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="link-button">
+                            YOUTUBE
+                        </a>
+                        <a href="https://mixcloud.com/choreboys" target="_blank" class="link-button">
+                            MIXCLOUD
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WHO THE BOYS ARE -->
         <div class="section-block w-full mb-6">
             <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
-                THE BOYS
+                WHO THE BOYS ARE
             </div>
             <div class="section-content hidden bg-white">
                 <div class="bio-grid">
@@ -172,26 +205,41 @@
             </div>
         </div>
 
-        <!-- MIXES -->
+        <!-- KEEP UP -->
         <div class="section-block w-full mb-6">
             <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
-                FEATURED MIXES
+                KEEP UP
             </div>
-            <div class="section-content hidden bg-white">
-                <div class="p-8 space-y-4">
-                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
-                    
-                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchoreplay-mini-mix-2-92bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
-                    
-                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchore-boys-mini-mix-3-live%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
+            <div class="section-content hidden contact-section-content bg-custom-orange-red text-white">
+                <div class="text-content p-8">
+                    <!-- Status message container -->
+                    <div id="formStatus" class="form-status text-center text-xl font-bold p-4 rounded mt-4" style="display: none;"></div>
+
+                    <!-- FORM SUBMISSION: Using Google Forms method -->
+                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto"
+                          action="https://docs.google.com/forms/d/e/1FAIpQLSc9vf-SXrgzU6C4g4Lq3TWTBDT5dICYne1ZYQJszMI68_fviA/formResponse"
+                          method="POST"
+                          target="hidden_iframe">
+                        
+                        <input type="text" placeholder="Your Name" name="entry.14617025" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        
+                        <input type="email" placeholder="Your Email" name="entry.1915870487" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        
+                        <textarea placeholder="Your Message / Booking Inquiry" name="entry.2082616783" rows="5" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none resize-y"></textarea>
+                        
+                        <button type="submit" id="submitButton" class="bg-black text-white py-4 px-8 border-none rounded text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-gray-700">SEND MESSAGE</button>
+                    </form>
+
+                    <!-- Hidden iframe to handle the submission without leaving the page -->
+                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
                 </div>
             </div>
         </div>
 
-        <!-- PRESS PHOTOS -->
+        <!-- PHOTOS -->
         <div class="section-block w-full mb-6">
             <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
-                PRESS PHOTOS
+                PHOTOS
             </div>
             <div class="section-content hidden bg-custom-orange-red">
                 <div class="p-8">
@@ -216,67 +264,16 @@
             </div>
         </div>
 
-        <!-- LINKS -->
-        <div class="section-block w-full mb-6">
-            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
-                LINKS
-            </div>
-            <div class="section-content hidden bg-custom-cyan">
-                <div class="p-8 md:p-12 text-center">
-                    <div class="flex flex-col md:flex-row gap-6 justify-center items-center flex-wrap">
-                        <a href="https://bandcamp.com" target="_blank" class="link-button">
-                            BANDCAMP
-                        </a>
-                        <a href="https://instagram.com" target="_blank" class="link-button">
-                            INSTAGRAM
-                        </a>
-                        <a href="https://youtube.com" target="_blank" class="link-button">
-                            YOUTUBE
-                        </a>
-                        <a href="https://mixcloud.com/choreboys" target="_blank" class="link-button">
-                            MIXCLOUD
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- BOOKING -->
-        <div class="section-block w-full mb-6">
-            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
-                BOOKING
-            </div>
-            <div class="section-content hidden bg-white">
-                <div class="p-8 md:p-12 text-center">
-                    <p class="text-2xl mb-6">
-                        For booking inquiries, please contact:
-                    </p>
-                    <a href="mailto:booking@choreboys.com" class="text-3xl font-black text-custom-orange-red hover:text-black transition-colors">
-                        booking@choreboys.com
-                    </a>
-                    <p class="text-xl mt-8 text-gray-600">
-                        Available for club nights, festivals, private events, and special performances throughout New Orleans and beyond.
-                    </p>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <script>
+        // Global flag to indicate a submission has occurred
+        let submitted = false;
+        
         const backgroundImages = [];
         for (let i = 10047; i <= 10125; i++) {
             backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
         }
-
-        function preloadImages() {
-            backgroundImages.forEach(src => {
-                const img = new Image();
-                img.src = src;
-            });
-        }
-
-        preloadImages();
 
         function toggleSection(header) {
             const section = header.parentElement;
@@ -291,6 +288,40 @@
         }
 
         setRandomBackground();
+
+        // FORM SUBMISSION LOGIC
+        const form = document.getElementById('contactForm');
+        const statusMessage = document.getElementById('formStatus');
+        const hiddenIframe = document.getElementById('hidden_iframe');
+        const submitButton = document.getElementById('submitButton');
+
+        function showSuccessMessage() {
+            if (submitted) {
+                statusMessage.style.display = 'block';
+                statusMessage.className = 'form-status success bg-custom-success text-white';
+                statusMessage.textContent = 'Thank you! Your message has been sent successfully.';
+                
+                form.reset();
+                submitButton.disabled = false;
+                submitButton.textContent = 'SEND MESSAGE';
+
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+                submitted = false;
+            }
+        }
+
+        form.addEventListener('submit', function(e) {
+            submitted = true;
+            submitButton.disabled = true;
+            submitButton.textContent = 'SENDING...';
+            statusMessage.style.display = 'block';
+            statusMessage.className = 'form-status loading bg-custom-loading text-black';
+            statusMessage.textContent = 'Sending message...';
+        });
+
+        hiddenIframe.addEventListener('load', showSuccessMessage);
     </script>
 </body>
 </html>
