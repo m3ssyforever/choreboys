@@ -5,24 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chore Boys</title>
     
-    <!-- FAVICON: Updated to custom 'CB' initials in black on a cyan background. -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%2300D4FF%22/><text y=%22.85em%22 font-size=%2275%22 fill=%22black%22 font-weight=%22900%22 font-family=%22Arial, sans-serif%22 text-anchor=%22middle%22 x=%2250%22>CB</text></svg>">
     
-    <!-- 1. Include Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- 2. Tailwind Configuration for Custom Colors and Scale -->
     <script>
         tailwind.config = {
             theme: {
                 fontFamily: {
                     sans: ['Arial', 'sans-serif'],
-                },
-                screens: {
-                    'sm': '640px',
-                    'md': '768px',
-                    'lg': '968px',
-                    'xl': '1280px',
                 },
                 extend: {
                     colors: {
@@ -31,9 +22,6 @@
                         'custom-success': '#177317',
                         'custom-error': '#d9534f',
                         'custom-loading': '#f0ad4e',
-                    },
-                    scale: {
-                        '98': '0.98',
                     }
                 }
             }
@@ -60,33 +48,60 @@
         .section-block.expanded .section-content {
             display: block;
         }
+        .link-button {
+            display: inline-block;
+            background-color: black;
+            color: #00D4FF;
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            font-weight: 900;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .link-button:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .image-placeholder {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            color: rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+        }
         .contact-form button:active {
             transform: scale(0.98);
         }
-        /* Custom styles for the "sexier" show list */
+
+        /* Show List Styles from index.html */
         .show-list-item {
-            padding: 1.5rem 1rem; /* More vertical space */
+            padding: 1.5rem 1rem;
             border-bottom: 2px solid rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease;
         }
         .show-list-item:hover {
-            background-color: rgba(0, 0, 0, 0.05); /* Slight hover effect */
+            background-color: rgba(0, 0, 0, 0.05);
         }
         .show-date {
             display: inline-block;
             background-color: black;
-            color: #00D4FF; /* custom-cyan text on black background */
+            color: #00D4FF;
             padding: 0.25rem 0.75rem;
             margin-bottom: 0.5rem;
-            font-size: 1.25rem; /* text-xl */
-            font-weight: 900; /* font-black */
-            /* Removed border-radius: 0.25rem; */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            font-size: 1.25rem;
+            font-weight: 900;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .show-details {
-            font-size: 1.25rem; /* text-xl */
+            font-size: 1.25rem;
             line-height: 1.5;
-            font-weight: 500; /* Medium weight for the text */
+            font-weight: 500;
         }
     </style>
 </head>
@@ -96,13 +111,14 @@
         <div class="header-content w-11/12 max-w-5xl mx-auto">
             <div class="header-title text-6xl md:text-[4rem] font-black tracking-widest mb-1">CHORE BOYS</div>
             <div class="header-slogan text-xl md:text-base font-light opacity-80 max-w-xl mx-auto">
-                With a combined 100 years of experience, Chore Boys are the only choice for all of your lifestyle improvement projects.
+                 With a combined 100 years of life experience, Chore Boys are the only choice for all of your lifestyle improvement projects.
             </div>
         </div>
     </header>
     
     <div class="container relative z-10 w-11/12 max-w-5xl mx-auto pt-16 pb-12">
-        <!-- Upcoming Shows -->
+        
+        <!-- UPCOMING SHOWS -->
         <div class="section-block w-full mb-6">
             <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
                 UPCOMING SHOWS
@@ -110,90 +126,139 @@
             <div class="section-content hidden shows-section-content bg-custom-cyan text-black">
                 <div class="text-content p-0">
                     <ul class="show-list list-none p-0 m-0 text-center">
-                        <!-- UPDATED SHOWS LIST - VENUE ON NEW LINE -->
                         <li class="show-list-item last:border-b-0">
-                            <span class="show-date">OCTOBER 24</span><br>
-                            <span class="show-details">Pull a Muscle with <span class="font-bold">Boy Toy and Madspinnz</span><br><span class="font-bold">Poor Boys</span></span>
+                            <span class="show-date">JANUARY 24</span><br>
+                            <span class="show-details">AFTER CHEWBACCHUS 10:00PM - TIL WITH <span class="font-bold">BROOKIECITA & OUTER HEAVEN DISCO CLUB</span><br><span class="font-bold">SATURN BAR</span></span>
                         </li>
                         <li class="show-list-item last:border-b-0">
-                            <span class="show-date">OCTOBER 31</span><br>
-                            <span class="show-details">Nightcrawlers Halloween Dance party with <span class="font-bold">KOKOKO! and Brookiecita</span><br><span class="font-bold">Saturn Bar</span></span>
+                            <span class="show-date">JANUARY 31</span><br>
+                            <span class="show-details">AFTER KDV 9:00PM - 1:00AM<br><span class="font-bold">ANNA'S</span></span>
                         </li>
                         <li class="show-list-item last:border-b-0">
-                            <span class="show-date">NOVEMBER 14</span><br>
-                            <span class="show-details">Get the Worm early party<br><span class="font-bold">The Domino Lounge</span></span>
+                            <span class="show-date">FEBRUARY 6</span><br>
+                            <span class="show-details">GET THE WORM WITH <span class="font-bold">SHOWTIME GOMA & EVERYTHING FOREVER</span> 7:00PM - 2:00AM<br><span class="font-bold">DOMINO LOUNGE</span></span>
                         </li>
                         <li class="show-list-item last:border-b-0">
-                            <span class="show-date">NOVEMBER 14</span><br>
-                            <span class="show-details">Delish da Goddess Birthday Party late party<br><span class="font-bold">Family Dollar</span></span>
+                            <span class="show-date">FEBRUARY 12</span><br>
+                            <span class="show-details">AFTER MUSES 10:00PM - TIL<br><span class="font-bold">NO DICE</span></span>
                         </li>
                         <li class="show-list-item last:border-b-0">
-                            <span class="show-date">DECEMBER 31</span><br>
-                            <span class="show-details">New Years Eve with <span class="font-bold">Brookiecita</span><br><span class="font-bold">Saturn Bar</span></span>
+                            <span class="show-date">FEBRUARY 13</span><br>
+                            <span class="show-details">KREWE DE LUNE SPACEBALL 12:00AM - 1:00AM<br><span class="font-bold"></span></span>
+                        </li>
+                        <li class="show-list-item last:border-b-0">
+                            <span class="show-date">FEBRUARY 15</span><br>
+                            <span class="show-details">AFTER ERIS WITH <span class="font-bold">BROOKIECITA</span><br><span class="font-bold">SATURN BAR</span></span>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- Mixes -->
-        <div class="section-block w-full mb-6">
-            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
-                MIXES
+        <!-- EMBEDDED VIDEOS -->
+        <div class="w-full mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full bg-white p-4">
+                <div class="w-full aspect-video">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/a6yigJwEYi4?si=f7HS8AENw1FU7VbH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
+                </div>
+                <div class="w-full aspect-video">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/8_V6s2lpuV4?si=cvYEGHMuB6eTCSqk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
+                </div>
             </div>
-            <div class="section-content hidden bg-white">
-                <!-- MODIFIED: Changed grid-cols-3 to grid-cols-1 on mobile, lg:grid-cols-3 on desktop -->
-                <div class="mixes-grid grid grid-cols-1 lg:grid-cols-3 gap-0 w-full bg-gray-200">
-                    <div class="mix-item w-full h-[400px]">
-                        <iframe width="100%" height="100%" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full h-full border-none block"></iframe>
-                    </div>
-                    <div class="mix-item w-full h-[400px]">
-                        <iframe width="100%" height="100%" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchoreplay-mini-mix-2-92bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full h-full border-none block"></iframe>
-                    </div>
-                    <div class="mix-item w-full h-[400px]">
-                        <iframe width="100%" height="100%" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2Fchoreboys%2Fchore-boys-mini-mix-3-live%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full h-full border-none block"></iframe>
+        </div>
+
+        <!-- LINKS -->
+        <div class="section-block w-full mb-6 expanded">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
+                LINKS
+            </div>
+            <div class="section-content bg-custom-cyan">
+                <div class="p-8 md:p-12 text-center">
+                    <div class="flex flex-col md:flex-row gap-6 justify-center items-center flex-wrap">
+                        <a href="mailto:choreboys@gmail.com" class="link-button">
+                            BOOKING
+                        </a>
+                        <a href="https://choreboys.bandcamp.com/" target="_blank" class="link-button">
+                            BANDCAMP
+                        </a>
+                        <a href="http://instagram.com/choreboys.pary" target="_blank" class="link-button">
+                            INSTAGRAM
+                        </a>
+                        <a href="https://www.youtube.com/@choreboys.offical" target="_blank" class="link-button">
+                            YOUTUBE
+                        </a>
+                        <a href="https://www.mixcloud.com/choreboys/" target="_blank" class="link-button">
+                            MIXCLOUD
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Contact -->
+        <!-- MIXES -->
+        <div class="section-block w-full mb-6 expanded">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
+                FEATURED MIXES
+            </div>
+            <div class="section-content bg-white">
+                <div class="p-8 space-y-4">
+                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
+                    
+                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchoreplay-mini-mix-2-92bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
+                    
+                    <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchore-boys-mini-mix-3-live%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- WHO THE BOYS ARE -->
         <div class="section-block w-full mb-6">
             <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
-                CONTACT
+                WHO THE BOYS ARE
+            </div>
+            <div class="section-content hidden bg-white">
+                <div class="p-8 md:p-12">
+                    <div class="mb-8 flex justify-center">
+                        <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/CB images/CB_Glarbo_01.png" alt="Chore Boys" class="w-full md:max-w-2xl aspect-video object-cover grayscale hover:grayscale-0 transition-all duration-500 shadow-xl">
+                    </div>
+                    <p class="text-xl md:text-2xl leading-relaxed text-gray-800">
+                        Chore Boys is the newest project of DJs Messy and Rusty Lazer. They met on a video shoot for Bounce artist Big Freedia not long after Hurricane Katrina. Rusty was DJ’ing and managing Big Freedia and Nicky Da B and Casey was producing Beasts of the Southern Wild. In 2024 life conspired to deepen their friendship and they bonded over mutual support and music. They’re friends first, musicians second, and DJ’s most recently, performing and producing for a combined 31 years. Their sets are on-the-fly hand-crafted remixes and experiments sourced from every genre, era, decade, texture, fashion and emotion they’ve absorbed along the way.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- KEEP UP -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+                KEEP UP
             </div>
             <div class="section-content hidden contact-section-content bg-custom-orange-red text-white">
                 <div class="text-content p-8">
-                    <!-- Status message container -->
                     <div id="formStatus" class="form-status text-center text-xl font-bold p-4 rounded mt-4" style="display: none;"></div>
 
-                    <!-- FORM SUBMISSION: Using Google Forms method (REVERTED TO IFRAME) -->
-                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto" 
-                          action="https://docs.google.com/forms/d/e/1FAIpQLSc9vf-SXrgzU6C4g4Lq3TWTBDT5dICYne1ZYQJszMI68_fviA/formResponse" 
-                          method="POST" 
-                          target="hidden_iframe"> 
+                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto"
+                          action="https://docs.google.com/forms/d/e/1FAIpQLSc9vf-SXrgzU6C4g4Lq3TWTBDT5dICYne1ZYQJszMI68_fviA/formResponse"
+                          method="POST"
+                          target="hidden_iframe">
                         
-                        <!-- CORRECTED ID: entry.14617025 (Your Name) -->
                         <input type="text" placeholder="Your Name" name="entry.14617025" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
                         
-                        <!-- CORRECTED ID: entry.1915870487 (Your Email) -->
                         <input type="email" placeholder="Your Email" name="entry.1915870487" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
                         
-                        <!-- CORRECTED ID: entry.2082616783 (Your Message / Booking Inquiry) -->
                         <textarea placeholder="Your Message / Booking Inquiry" name="entry.2082616783" rows="5" required class="p-4 border border-gray-300 rounded text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none resize-y"></textarea>
                         
                         <button type="submit" id="submitButton" class="bg-black text-white py-4 px-8 border-none rounded text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-gray-700">SEND MESSAGE</button>
                     </form>
 
-                    <!-- Hidden iframe to handle the submission without leaving the page -->
                     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
                 </div>
             </div>
         </div>
+
     </div>
 
     <script>
-        // Global flag to indicate a submission has occurred
         let submitted = false;
         
         const backgroundImages = [];
@@ -215,17 +280,12 @@
 
         setRandomBackground();
 
-        // ----------------------------------------------------------------------
-        // FORM SUBMISSION LOGIC (using hidden iframe for Google Forms)
-        // ----------------------------------------------------------------------
-
         const form = document.getElementById('contactForm');
         const statusMessage = document.getElementById('formStatus');
         const hiddenIframe = document.getElementById('hidden_iframe');
         const submitButton = document.getElementById('submitButton');
 
         function showSuccessMessage() {
-            // This is called when the hidden iframe finishes loading the Google Forms response page
             if (submitted) {
                 statusMessage.style.display = 'block';
                 statusMessage.className = 'form-status success bg-custom-success text-white';
@@ -235,30 +295,23 @@
                 submitButton.disabled = false;
                 submitButton.textContent = 'SEND MESSAGE';
 
-                // Hide the message after 5 seconds
                 setTimeout(() => {
                     statusMessage.style.display = 'none';
                 }, 5000);
-                submitted = false; // Reset the submission flag
+                submitted = false;
             }
         }
 
         form.addEventListener('submit', function(e) {
-            // Set the flag and disable the button immediately
             submitted = true;
             submitButton.disabled = true;
             submitButton.textContent = 'SENDING...';
             statusMessage.style.display = 'block';
             statusMessage.className = 'form-status loading bg-custom-loading text-black';
             statusMessage.textContent = 'Sending message...';
-            
-            // The form submission is handled by the hidden iframe.
-            // The iframe's load event will fire when Google's response is received.
         });
 
-        // Handle the iframe load event programmatically (this listener fires when the form submits)
         hiddenIframe.addEventListener('load', showSuccessMessage);
-        
     </script>
 </body>
 </html>
