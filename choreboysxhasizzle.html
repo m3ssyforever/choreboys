@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHORE BOYS x HA SIZZLE</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FF007F%22/><text y=%22.85em%22 font-size=%2275%22 fill=%22white%22 font-weight=%22900%22 font-family=%22Arial, sans-serif%22 text-anchor=%22middle%22 x=%2250%22>XS</text></svg>">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    sans: ['Arial', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        'palette-blue': '#007BFF',
+                        'palette-pink': '#FF007F',
+                        'palette-acid': '#DFFF00',
+                        'palette-dark': '#121212',
+                        'palette-gray': '#E5E5E5',
+                        'custom-success': '#177317',
+                        'custom-error': '#d9534f',
+                        'custom-loading': '#f0ad4e',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background-image: url('https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10105.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .link-button {
+            display: block;
+            background-color: black;
+            color: white;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 900;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            text-transform: uppercase;
+            width: 100%;
+        }
+        .link-button:hover {
+            background-color: white;
+            color: black;
+            transform: translateY(-2px);
+        }
+        .section-header {
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    
+    <header class="w-full bg-black text-white py-12 text-center">
+        <div class="w-11/12 max-w-5xl mx-auto">
+            <div class="text-5xl md:text-[5rem] font-black tracking-[0.05em] leading-none mb-2">CHORE BOYS <span class="text-palette-pink">x</span> HA SIZZLE</div>
+        </div>
+    </header>
+    
+    <div class="container relative z-10 w-11/12 max-w-5xl mx-auto pt-12 pb-12">
+        
+        <!-- SIDE BY SIDE VIDEOS -->
+        <div class="w-full mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full bg-palette-dark p-4 border-b-8 border-palette-blue">
+                <!-- Chore Boys Video -->
+                <div class="w-full">
+                    <div class="bg-black text-white text-xs font-bold p-2 uppercase tracking-widest">Chore Boys Live</div>
+                    <div class="aspect-video">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/a6yigJwEYi4" frameborder="0" allowfullscreen class="w-full h-full"></iframe>
+                    </div>
+                </div>
+                <!-- Ha Sizzle Video -->
+                <div class="w-full">
+                    <div class="bg-black text-white text-xs font-bold p-2 uppercase tracking-widest">Ha Sizzle - King of the Party</div>
+                    <div class="aspect-video">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/r_m_kam2wLY" frameborder="0" allowfullscreen class="w-full h-full"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LINKS SECTION (SPLIT) -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl font-light tracking-wider text-center py-8">
+                EPK & SOCIALS
+            </div>
+            <div class="section-content grid grid-cols-1 md:grid-cols-2">
+                <!-- Chore Boys Links -->
+                <div class="bg-palette-blue p-8 md:p-12 border-r-0 md:border-r-2 border-black flex flex-col justify-between min-h-[300px] md:min-h-[350px]">
+                    <h3 class="text-2xl font-black mb-8 text-white text-center">CHORE BOYS</h3>
+                    <div class="flex flex-col space-y-3">
+                        <a href="https://choreboys.bandcamp.com/" target="_blank" class="link-button">Bandcamp</a>
+                        <a href="http://instagram.com/choreboys.pary" target="_blank" class="link-button">Instagram</a>
+                        <a href="https://www.youtube.com/@choreboys.offical" target="_blank" class="link-button">YouTube</a>
+                        <a href="https://www.mixcloud.com/choreboys/" target="_blank" class="link-button">Mixcloud</a>
+                    </div>
+                </div>
+                <!-- Ha Sizzle Links -->
+                <div class="bg-palette-pink p-8 md:p-12 flex flex-col justify-between min-h-[300px] md:min-h-[350px]">
+                    <h3 class="text-2xl font-black mb-8 text-white text-center">HA SIZZLE</h3>
+                    <div class="flex flex-col space-y-3">
+                        <a href="https://www.instagram.com/hasizzlethevoice/" target="_blank" class="link-button">Instagram</a>
+                        <a href="https://open.spotify.com/artist/22mB4zQKJDI9I7ZnYs80iX?si=f9ptHeRnQgOf9MTdFrraiw" target="_blank" class="link-button">Spotify</a>
+                        <a href="https://www.youtube.com/@hasizzlethevoice" target="_blank" class="link-button">YouTube</a>
+                        <a href="https://soundcloud.com/hasizzlethevoice" target="_blank" class="link-button">Soundcloud</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLLABORATION BIO -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl font-light tracking-wider text-center py-10">
+                THE COLLABORATION
+            </div>
+            <div class="section-content bg-palette-gray border-t-4 border-palette-acid p-8 md:p-16">
+                <div class="max-w-3xl mx-auto space-y-6">
+                    <p class="text-xl md:text-2xl leading-relaxed text-black font-bold italic">
+                        "Chore Boys X Ha Sizzle" is an adventure in cross-cultural collaboration and play.
+                    </p>
+                    <p class="text-lg md:text-xl leading-relaxed text-black">
+                        Rusty Lazer (1/2 of live-remix duo Chore Boys) and New Orleans Bounce legend Ha Sizzle met years ago during Rusty's time managing, DJ'ing and touring globally with Big Freedia, Katey Red and Nicky Da B. In 2019 they traveled to Europe together for a series of festival and club shows around France and Belgium that deepened their friendship and creative bond.
+                    </p>
+                    <p class="text-lg md:text-xl leading-relaxed text-black">
+                        The members of Chore Boys, Rusty and Messy, met in 2010 on a Big Freedia video shoot that Messy was producing (while also working on the Oscar nominated film Beasts of the Southern Wild). Their ties strengthened recently through shared musicianship (drums and guitar respectively) and the development of a rapid fire style of dance floor mayhem punctuated by elements of classic dance floor hits and obscure personal faves. They played several sets at Glastonbury in 2025 and Rusty has toured as a solo artist in Europe, the U.S. and Asia repeatedly since 2011.
+                    </p>
+                    <div class="bg-black text-white p-8 my-8 transform -rotate-1">
+                        <p class="text-lg md:text-xl leading-relaxed">
+                            A "Chore Boys X Ha Sizzle" performance features hours of dynamic improvised live-remixing across dozens of genres, styles and eras by Rusty and Messy, with Ha Sizzle on the mic hyping the crowd. No one can turn a group of strangers into friends and convert wallflowers into dancing machines like Ha Sizzle.
+                        </p>
+                    </div>
+                    <p class="text-lg md:text-xl leading-relaxed text-black">
+                        Every show also features Ha Sizzle performing a set of his own iconic work from 30 years in New Orleans Bounce Music, including collaborations and samples from projects with Drake, City Girls, Sexyy Red, Missy Elliot and many more.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOOKING / CONTACT -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-palette-acid text-black text-3xl font-black tracking-wider text-center py-12">
+                FOR BOOKING INQUIRIES: <br class="md:hidden">
+                <a href="mailto:choreboys504@gmail.com" class="underline hover:text-palette-pink transition-colors">CHOREBOYS504@GMAIL.COM</a>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
