@@ -110,16 +110,16 @@
         }
 
         /* Bio Transitions */
-        #individual-bios {
+        .individual-bio-panel {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
             opacity: 0;
         }
-        #individual-bios.active {
-            max-height: 2000px;
+        .individual-bio-panel.active {
+            max-height: 1000px;
             opacity: 1;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         /* Name Toggle Box Styling */
@@ -128,9 +128,30 @@
             border: 1px solid rgba(0,0,0,0.1);
             padding: 0.4rem 1.2rem;
             transition: all 0.2s ease;
+            cursor: pointer;
         }
-        .name-box:hover {
+        
+        /* Specific Hover Colors */
+        .name-box-messy:hover {
             background: rgba(255, 255, 255, 0.8);
+            border-color: #007BFF;
+            color: #007BFF;
+        }
+        .name-box-rusty:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: #FF007F;
+            color: #FF007F;
+        }
+        
+        /* Active States */
+        .name-box-messy.active {
+            background: #007BFF;
+            color: white;
+            border-color: #007BFF;
+        }
+        .name-box-rusty.active {
+            background: #FF007F;
+            color: white;
             border-color: #FF007F;
         }
     </style>
@@ -266,46 +287,62 @@
                     </div>
 
                     <!-- Interactive Name Toggles -->
-                    <div class="flex flex-row justify-center gap-4 md:gap-6 mb-4">
-                        <div class="cursor-pointer group text-center name-box" onclick="toggleIndividualBios()">
-                            <h3 class="text-lg md:text-xl font-black uppercase tracking-tighter group-hover:text-palette-pink transition-colors">Messy</h3>
+                    <div class="flex flex-row justify-center gap-4 md:gap-6 mb-8">
+                        <div id="btn-messy" class="name-box name-box-messy group text-center" onclick="toggleBio('messy')">
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-tighter transition-colors">Messy</h3>
                         </div>
-                        <div class="cursor-pointer group text-center name-box" onclick="toggleIndividualBios()">
-                            <h3 class="text-lg md:text-xl font-black uppercase tracking-tighter group-hover:text-palette-pink transition-colors">Rusty Lazer</h3>
+                        <div id="btn-rusty" class="name-box name-box-rusty group text-center" onclick="toggleBio('rusty')">
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-tighter transition-colors">Rusty Lazer</h3>
                         </div>
                     </div>
 
-                    <!-- Hidden Individual Bios (Columned) -->
-                    <div id="individual-bios" class="border-b-2 border-black/10">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
-                            <div class="bg-white/50 p-6 border border-black/5">
-                                <h4 class="text-lg font-bold mb-4 uppercase tracking-widest text-palette-blue">Messy</h4>
-                                <p class="text-base leading-relaxed text-black italic mb-4">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    <!-- Messy Bio Panel -->
+                    <div id="bio-messy" class="individual-bio-panel">
+                        <div class="bg-white/50 p-6 md:p-8 border-l-4 border-palette-blue shadow-sm">
+                            <h4 class="text-xl font-black mb-4 uppercase tracking-widest text-palette-blue">Messy</h4>
+                            <div class="space-y-4 text-lg leading-relaxed text-black">
+                                <p class="italic font-medium">
+                                    In 2005, Messy arrived in New Orleans to study film, sparking a twenty-year love affair with the city and the art of the celebrating together. Messy had the privilege to work as Associate Producer on the Oscar-nominated Beasts of the Southern Wild and went on to co-found the non-profit Court 13 Arts to keep that creative fire burning in Louisiana.
                                 </p>
-                                <p class="text-base leading-relaxed text-black">
-                                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                <p>
+                                    Along the way, he discovered that his true medium wasn't just film and art-making, it was the party itself. Whether he was launching the Always for Pleasure festival, to helping run the legendary Carhenge field at Glastonbury, or producing high-octane events for Bonnaroo and Sundance via his company event production company Everything Forever, Messy learned that a dance floor is a place where we can all truly be free.
                                 </p>
-                            </div>
-                            <div class="bg-white/50 p-6 border border-black/5">
-                                <h4 class="text-lg font-bold mb-4 uppercase tracking-widest text-palette-pink">Rusty Lazer</h4>
-                                <p class="text-base leading-relaxed text-black italic mb-4">
-                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-                                </p>
-                                <p class="text-base leading-relaxed text-black">
-                                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.
+                                <p>
+                                    After a decade-long semi-party-hiatus spent raising a now nine-year-old son, Messy is stepping back into the booth as one-half of Chore Boys. He returns to the nightlife not just as a DJ, but as a believer in the restorative power of a shared rhythm. He’s here to play the music that makes the work of being human feel like celebration.
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Original Combined Bio -->
-                    <div class="pt-1">
+                    <!-- Rusty Bio Panel -->
+                    <div id="bio-rusty" class="individual-bio-panel">
+                        <div class="bg-white/50 p-6 md:p-8 border-l-4 border-palette-pink shadow-sm">
+                            <h4 class="text-xl font-black mb-4 uppercase tracking-widest text-palette-pink">Rusty Lazer</h4>
+                            <div class="space-y-4 text-lg leading-relaxed text-black">
+                                <p class="italic font-medium">
+                                    Rusty Lazer is a DJ, Producer, Artist Manager and Non-Profit founder who has called New Orleans home since the mid 90’s, when he arrived with his drums and a lifetime of performing an eclectic range of music from jazz to classical, and punk to new wave.
+                                </p>
+                                <p>
+                                    In the upheaval and loss after Katrina, he transitioned from playing in 5 active touring bands to DJ’ing. His first set in 2007 was at an ex-girlfriend and bandmate’s birthday, and just a couple of years later he was managing, DJ’ing and touring the world many times over with Bounce Music legends Big Freedia, Katey Red, Nicky Da B and Ha Sizzle. Nicky Da B’s track on Diplo’s first solo record, “Express Yourself”, remains one of the most enduring creations from this period. His sets at the time were dubbed “a sweaty, mega-mix crash course in the sound of New Orleans,” These days his tastes encompass a spectrum that includes the music of his adopted hometown blended with genres beyond the generational and geographical, and always 100% dance party focused.
+                                </p>
+                                <p>
+                                    In addition to his work as an artist, in 2008 he co-founded the artist exchange non-profit New Orleans Airlift in an effort to create opportunities for local artists to engage with the wider world through global travel. He’s a founding creator of its flagship project, Music Box Village, a “village of musical architecture” that still hosts cross-culture collaborations in New Orleans’ Bywater neighborhood.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Updated Combined Bio with Paragraph Breaks -->
+                    <div class="pt-2 space-y-6">
                         <p class="text-lg md:text-xl leading-relaxed text-black font-medium">
                         Chore Boys is the newest project of New Orleans DJs Messy and Rusty Lazer, a live-remixing duo whose partnership began on a video shoot for Bounce artist Big Freedia not long after Hurricane Katrina. Rusty was DJ’ing, managing and touring globally with Big Freedia, Katey Red and Nicky Da B, and Casey was producing alongside his work on the Oscar-nominated film Beasts of the Southern Wild.
-
+                        </p>
+                        
+                        <p class="text-lg md:text-xl leading-relaxed text-black font-medium">
                         In 2024 their friendship turned a corner as they bonded over shared musicianship (guitar and drums respectively). With a combined 31 years of performing and producing experience, they think of themselves as friends first, musicians second, and DJ’s most recently. Their sets are live-remixed, improvised, rapid-fire adventures in dance floor mayhem punctuated by elements of intense classic hits and obscure personal faves. Sounds swing wildly from Soulja Boy to Laurie Anderson and The Prodigy to Shabba Ranks, among hundreds more.
+                        </p>
 
+                        <p class="text-lg md:text-xl leading-relaxed text-black font-medium">
                         Following several sets at Glastonbury Festival in 2025, and building on Rusty’s extensive touring across Europe, the U.S., and Asia since 2011, the duo continues to push the boundaries of the traditional DJ set.
                         </p>
                     </div>
@@ -351,9 +388,37 @@
             backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
         }
 
-        function toggleIndividualBios() {
-            const bios = document.getElementById('individual-bios');
-            bios.classList.toggle('active');
+        function toggleBio(dj) {
+            const bioMessy = document.getElementById('bio-messy');
+            const bioRusty = document.getElementById('bio-rusty');
+            const btnMessy = document.getElementById('btn-messy');
+            const btnRusty = document.getElementById('btn-rusty');
+
+            if (dj === 'messy') {
+                const isActive = bioMessy.classList.contains('active');
+                bioRusty.classList.remove('active');
+                btnRusty.classList.remove('active');
+                
+                if (isActive) {
+                    bioMessy.classList.remove('active');
+                    btnMessy.classList.remove('active');
+                } else {
+                    bioMessy.classList.add('active');
+                    btnMessy.classList.add('active');
+                }
+            } else if (dj === 'rusty') {
+                const isActive = bioRusty.classList.contains('active');
+                bioMessy.classList.remove('active');
+                btnMessy.classList.remove('active');
+
+                if (isActive) {
+                    bioRusty.classList.remove('active');
+                    btnRusty.classList.remove('active');
+                } else {
+                    bioRusty.classList.add('active');
+                    btnRusty.classList.add('active');
+                }
+            }
         }
 
         function setRandomBackground() {
