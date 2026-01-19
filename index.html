@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chore Boys</title>
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%2300D4FF%22/><text y=%22.85em%22 font-size=%2275%22 fill=%22black%22 font-weight=%22900%22 font-family=%22Arial, sans-serif%22 text-anchor=%22middle%22 x=%2250%22>CB</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23007BFF%22/><text y=%22.85em%22 font-size=%2275%22 fill=%22white%22 font-weight=%22900%22 font-family=%22Arial, sans-serif%22 text-anchor=%22middle%22 x=%2250%22>CB</text></svg>">
     
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -17,8 +17,11 @@
                 },
                 extend: {
                     colors: {
-                        'custom-cyan': '#00D4FF',
-                        'custom-orange-red': '#FF4500',
+                        'palette-blue': '#007BFF',
+                        'palette-pink': '#FF007F',
+                        'palette-acid': '#DFFF00',
+                        'palette-dark': '#121212',
+                        'palette-gray': '#E5E5E5',
                         'custom-success': '#177317',
                         'custom-error': '#d9534f',
                         'custom-loading': '#f0ad4e',
@@ -45,9 +48,6 @@
             background-attachment: fixed;
             transition: background-image 1s ease-in-out;
         }
-        .section-block.expanded .section-content {
-            display: block;
-        }
         .link-button {
             display: inline-block;
             background-color: black;
@@ -60,53 +60,59 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .link-button:hover {
-            background-color: #333;
+            background-color: #FF007F;
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
-        .image-placeholder {
-            width: 100%;
-            aspect-ratio: 1;
-            background-color: rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.875rem;
-            color: rgba(0, 0, 0, 0.4);
-            font-weight: bold;
         }
         .contact-form button:active {
             transform: scale(0.98);
         }
 
-        /* Show List Styles from index.html */
+        /* Show List Styles */
         .show-list-item {
-            padding: 1.5rem 1rem;
-            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            padding: 2.5rem 1rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
             transition: background-color 0.3s ease;
         }
         .show-list-item:hover {
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: rgba(255, 255, 255, 0.05);
         }
         .show-date {
             display: inline-block;
-            background-color: black;
+            background-color: #007BFF;
             color: white;
             padding: 0.25rem 0.75rem;
-            margin-bottom: 0.5rem;
-            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
             font-weight: 900;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        .show-details {
+        .show-info {
             font-size: 1.25rem;
-            line-height: 1.5;
-            font-weight: 500;
+            line-height: 1.4;
+            font-weight: 400;
+            display: block;
+            text-transform: uppercase;
+        }
+        .show-time {
+            font-size: 1.25rem;
+            line-height: 1.4;
+            font-weight: 400;
+            display: block;
+            margin-top: 0.25rem;
+        }
+        .show-venue {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-top: 0.25rem;
+            display: block;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body class="font-sans">
     
+    <!-- Top banner permanently black -->
     <header class="w-full bg-black text-white py-8 text-center shadow-none">
         <div class="header-content w-11/12 max-w-5xl mx-auto">
             <div class="header-title text-6xl md:text-[4rem] font-black tracking-widest mb-1">CHORE BOYS</div>
@@ -120,7 +126,7 @@
         
         <!-- EMBEDDED VIDEOS -->
         <div class="w-full mb-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full bg-white p-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full bg-palette-dark p-4">
                 <div class="w-full aspect-video">
                     <iframe width="100%" height="100%" src="https://www.youtube.com/embed/a6yigJwEYi4?si=f7HS8AENw1FU7VbH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
                 </div>
@@ -131,36 +137,48 @@
         </div>
 
         <!-- UPCOMING SHOWS -->
-        <div class="section-block w-full mb-6 expanded">
+        <div class="section-block w-full mb-6">
             <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
                 UPCOMING SHOWS
             </div>
-            <div class="section-content shows-section-content bg-custom-cyan text-black">
+            <div class="section-content bg-palette-dark text-white border-t-4 border-palette-blue">
                 <div class="text-content p-0">
                     <ul class="show-list list-none p-0 m-0 text-center">
-                        <li class="show-list-item last:border-b-0">
-                            <span class="show-date">JANUARY 24</span><br>
-                            <span class="show-details">AFTER CHEWBACCHUS 10:00PM - TIL WITH <span class="font-bold">BROOKIECITA & OUTER HEAVEN DISCO CLUB</span><br><span class="font-bold">SATURN BAR</span></span>
+                        <li class="show-list-item">
+                            <span class="show-date">JANUARY 24</span>
+                            <span class="show-info">AFTER CHEWBACCHUS WITH <span class="font-bold text-palette-pink">BROOKIECITA & OUTER HEAVEN DISCO CLUB</span></span>
+                            <span class="show-time">10:00PM - TIL</span>
+                            <span class="show-venue">SATURN BAR</span>
                         </li>
-                        <li class="show-list-item last:border-b-0">
-                            <span class="show-date">JANUARY 31</span><br>
-                            <span class="show-details">AFTER KDV 9:00PM - 1:00AM<br><span class="font-bold">ANNA'S</span></span>
+                        <li class="show-list-item">
+                            <span class="show-date">JANUARY 31</span>
+                            <span class="show-info">AFTER KDV</span>
+                            <span class="show-time">9:00PM - 1:00AM</span>
+                            <span class="show-venue">ANNA'S</span>
                         </li>
-                        <li class="show-list-item last:border-b-0">
-                            <span class="show-date">FEBRUARY 6</span><br>
-                            <span class="show-details">GET THE WORM WITH <span class="font-bold">SHOWTIME GOMA & EVERYTHING FOREVER</span> 7:00PM - 2:00AM<br><span class="font-bold">DOMINO LOUNGE</span></span>
+                        <li class="show-list-item">
+                            <span class="show-date">FEBRUARY 6</span>
+                            <span class="show-info">GET THE WORM WITH <span class="font-bold text-palette-pink">SHOWTIME GOMA & EVERYTHING FOREVER</span></span>
+                            <span class="show-time">7:00PM - 2:00AM</span>
+                            <span class="show-venue">DOMINO LOUNGE</span>
                         </li>
-                        <li class="show-list-item last:border-b-0">
-                            <span class="show-date">FEBRUARY 12</span><br>
-                            <span class="show-details">AFTER MUSES 10:00PM - TIL<br><span class="font-bold">NO DICE</span></span>
+                        <li class="show-list-item">
+                            <span class="show-date">FEBRUARY 12</span>
+                            <span class="show-info">AFTER MUSES WITH <span class="font-bold text-palette-pink">ALIYUHHH</span></span>
+                            <span class="show-time">10:00PM - TIL</span>
+                            <span class="show-venue">NO DICE</span>
                         </li>
-                        <li class="show-list-item last:border-b-0">
-                            <span class="show-date">FEBRUARY 13</span><br>
-                            <span class="show-details">KREWE DE LUNE SPACEBALL 12:00AM - 1:00AM<br><span class="font-bold"></span></span>
+                        <li class="show-list-item">
+                            <span class="show-date">FEBRUARY 13</span>
+                            <span class="show-info">KREWE DE LUNE SPACEBALL</span>
+                            <span class="show-time">12:00AM - 1:00AM</span>
+                            <span class="show-venue"></span>
                         </li>
-                        <li class="show-list-item last:border-b-0">
-                            <span class="show-date">FEBRUARY 15</span><br>
-                            <span class="show-details">AFTER ERIS WITH <span class="font-bold">BROOKIECITA</span><br><span class="font-bold">SATURN BAR</span></span>
+                        <li class="show-list-item">
+                            <span class="show-date">FEBRUARY 15</span>
+                            <span class="show-info">AFTER ERIS WITH <span class="font-bold text-palette-pink">BROOKIECITA</span></span>
+                            <span class="show-time">10:00PM - TIL</span>
+                            <span class="show-venue">SATURN BAR</span>
                         </li>
                     </ul>
                 </div>
@@ -168,11 +186,11 @@
         </div>
 
         <!-- LINKS -->
-        <div class="section-block w-full mb-6 expanded">
+        <div class="section-block w-full mb-6">
             <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
                 LINKS
             </div>
-            <div class="section-content bg-orange-500">
+            <div class="section-content bg-palette-pink">
                 <div class="p-8 md:p-12 text-center">
                     <div class="flex flex-row gap-3 justify-center items-center flex-wrap">
                         <a href="mailto:choreboys@gmail.com" class="link-button">
@@ -196,11 +214,11 @@
         </div>
 
         <!-- MIXES -->
-        <div class="section-block w-full mb-6 expanded">
+        <div class="section-block w-full mb-6">
             <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
                 FEATURED MIXES
             </div>
-            <div class="section-content bg-white">
+            <div class="section-content bg-palette-blue">
                 <div class="p-8 space-y-4">
                     <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
                     
@@ -213,16 +231,16 @@
 
         <!-- WHO THE BOYS ARE -->
         <div class="section-block w-full mb-6">
-            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
                 WHO THE BOYS ARE
             </div>
-            <div class="section-content hidden bg-white">
+            <div class="section-content bg-palette-gray">
                 <div class="p-8 md:p-12">
                     <div class="mb-8 flex justify-center">
-                        <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/CB images/CB_Glarbo_01.png" alt="Chore Boys" class="w-full md:max-w-2xl aspect-video object-cover grayscale hover:grayscale-0 transition-all duration-500 shadow-xl">
+                        <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/CB images/CB_Glarbo_01.png" alt="Chore Boys" class="w-full md:max-w-2xl aspect-video object-cover grayscale hover:grayscale-0 transition-all duration-500 shadow-xl border-2 border-black">
                     </div>
-                    <p class="text-xl md:text-2xl leading-relaxed text-gray-800">
-                        Chore Boys is the newest project of DJs Messy and Rusty Lazer. They met on a video shoot for Bounce artist Big Freedia not long after Hurricane Katrina. Rusty was DJâ€™ing and managing Big Freedia and Nicky Da B and Casey was producing Beasts of the Southern Wild. In 2024 life conspired to deepen their friendship and they bonded over mutual support and music. Theyâ€™re friends first, musicians second, and DJâ€™s most recently, performing and producing for a combined 31 years. Their sets are on-the-fly hand-crafted remixes and experiments sourced from every genre, era, decade, texture, fashion and emotion theyâ€™ve absorbed along the way.
+                    <p class="text-xl md:text-2xl leading-relaxed text-black">
+                        Chore Boys is the newest project of DJs Messy and Rusty Lazer. They met on a video shoot for Bounce artist Big Freedia not long after Hurricane Katrina. Rusty was DJ’ing and managing Big Freedia and Nicky Da B and Casey was producing Beasts of the Southern Wild. In 2024 life conspired to deepen their friendship and they bonded over mutual support and music. They’re friends first, musicians second, and DJ’s most recently, performing and producing for a combined 31 years. Their sets are on-the-fly hand-crafted remixes and experiments sourced from every genre, era, decade, texture, fashion and emotion they’ve absorbed along the way.
                     </p>
                 </div>
             </div>
@@ -230,10 +248,10 @@
 
         <!-- KEEP UP -->
         <div class="section-block w-full mb-6">
-            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10 cursor-pointer transition-colors duration-300 hover:bg-gray-700" onclick="toggleSection(this)">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
                 KEEP UP
             </div>
-            <div class="section-content hidden contact-section-content bg-purple-600 text-white">
+            <div class="section-content bg-palette-acid text-black">
                 <div class="text-content p-8">
                     <div id="formStatus" class="form-status text-center text-xl font-bold p-4 mt-4" style="display: none;"></div>
 
@@ -242,13 +260,13 @@
                           method="POST"
                           target="hidden_iframe">
                         
-                        <input type="text" placeholder="Your Name" name="entry.14617025" required class="p-4 border border-gray-300 text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        <input type="text" placeholder="Your Name" name="entry.14617025" required class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
                         
-                        <input type="email" placeholder="Your Email" name="entry.1915870487" required class="p-4 border border-gray-300 text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none">
+                        <input type="email" placeholder="Your Email" name="entry.1915870487" required class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
                         
-                        <textarea placeholder="Your Message / Booking Inquiry" name="entry.2082616783" rows="5" required class="p-4 border border-gray-300 text-base w-full transition-colors bg-white/90 text-gray-800 border-2 border-white focus:border-black focus:outline-none resize-y"></textarea>
+                        <textarea placeholder="Your Message / Booking Inquiry" name="entry.2082616783" rows="5" required class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none resize-y"></textarea>
                         
-                        <button type="submit" id="submitButton" class="bg-black text-white py-4 px-8 border-none text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-gray-700">SEND MESSAGE</button>
+                        <button type="submit" id="submitButton" class="bg-black text-white py-4 px-8 border-none text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-palette-pink hover:scale-105">SEND MESSAGE</button>
                     </form>
 
                     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
@@ -264,13 +282,6 @@
         const backgroundImages = [];
         for (let i = 10047; i <= 10125; i++) {
             backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
-        }
-
-        function toggleSection(header) {
-            const section = header.parentElement;
-            const wasExpanded = section.classList.contains('expanded');
-            document.querySelectorAll('.section-block').forEach(block => block.classList.remove('expanded'));
-            if (!wasExpanded) section.classList.add('expanded');
         }
 
         function setRandomBackground() {
