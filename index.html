@@ -109,6 +109,11 @@
             text-transform: uppercase;
         }
 
+        /* Tour Group Collapsibles */
+        .tour-group {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
         /* Bio Transitions */
         .individual-bio-panel {
             max-height: 0;
@@ -155,6 +160,48 @@
             border-color: #FF007F;
         }
     </style>
+
+    <script>
+        function toggleGroup(id) {
+            var body = document.getElementById(id);
+            var arrow = document.getElementById(id + '-arrow');
+            if (!body) return;
+            var isOpen = body.style.maxHeight !== '0px' && body.style.maxHeight !== '';
+            body.style.maxHeight = isOpen ? '0px' : '1200px';
+            if (arrow) arrow.style.transform = isOpen ? '' : 'rotate(180deg)';
+        }
+
+        function toggleBio(dj) {
+            const bioMessy = document.getElementById('bio-messy');
+            const bioRusty = document.getElementById('bio-rusty');
+            const btnMessy = document.getElementById('btn-messy');
+            const btnRusty = document.getElementById('btn-rusty');
+
+            if (dj === 'messy') {
+                const isActive = bioMessy.classList.contains('active');
+                bioRusty.classList.remove('active');
+                btnRusty.classList.remove('active');
+                if (isActive) {
+                    bioMessy.classList.remove('active');
+                    btnMessy.classList.remove('active');
+                } else {
+                    bioMessy.classList.add('active');
+                    btnMessy.classList.add('active');
+                }
+            } else if (dj === 'rusty') {
+                const isActive = bioRusty.classList.contains('active');
+                bioMessy.classList.remove('active');
+                btnMessy.classList.remove('active');
+                if (isActive) {
+                    bioRusty.classList.remove('active');
+                    btnRusty.classList.remove('active');
+                } else {
+                    bioRusty.classList.add('active');
+                    btnRusty.classList.add('active');
+                }
+            }
+        }
+    </script>
 </head>
 <body class="font-sans">
     
@@ -181,72 +228,6 @@
             </div>
         </div>
 
-        <!-- UPCOMING SHOWS -->
-        <div class="section-block w-full mb-6">
-                    <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
-                        UPCOMING SHOWS
-                    </div>
-                    <div class="section-content bg-palette-dark text-white border-t-4 border-palette-blue">
-                        <div class="text-content p-0">
-                            <ul class="show-list list-none p-0 m-0 text-center">
-                                <li class="show-list-item">
-                                    <span class="show-date">MARCH 17</span>
-                                    <span class="show-info">WITH <span class="font-bold text-palette-pink">FOU FOU HA</span></span>
-                                    <span class="show-venue">CHEER UP CHARLIE'S</span>
-                                    <span class="show-time">900 Red River St — Austin, TX</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">MARCH 20</span>
-                                    <span class="show-info"></span>
-                                    <span class="show-venue">THE GREMLIN</span>
-                                    <span class="show-time">322 S. 16th St — McAllen, TX</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">MARCH 24</span>
-                                    <span class="show-info">CRACK WHORE'S BALL <span class="font-bold text-palette-pink">(PHOENIX)</span> / ELYSE'S BIRTHDAY <span class="font-bold text-palette-pink">(VAUGHAN'S)</span></span>
-                                    <span class="show-venue">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">MARCH 27</span>
-                                    <span class="show-info">ELECTRIC SPRING</span>
-                                    <span class="show-venue">MUSIC BOX VILLAGE</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">MARCH 27</span>
-                                    <span class="show-info">WITH <span class="font-bold text-palette-pink">BROOKIECITA</span></span>
-                                    <span class="show-venue">THE SATURN BAR</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">APRIL 3</span>
-                                    <span class="show-info"></span>
-                                    <span class="show-venue">POOR BOYS</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">APRIL 10</span>
-                                    <span class="show-info"></span>
-                                    <span class="show-venue">ANNA'S</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">APRIL 17</span>
-                                    <span class="show-info"></span>
-                                    <span class="show-venue">BLUE NILE</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">APRIL 25</span>
-                                    <span class="show-info">WITH <span class="font-bold text-palette-pink">BROOKIECITA</span></span>
-                                    <span class="show-venue">THE SATURN BAR</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
         <!-- LINKS -->
         <div class="section-block w-full mb-6">
             <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
@@ -255,7 +236,7 @@
             <div class="section-content bg-palette-pink">
                 <div class="p-8 md:p-12 text-center">
                     <div class="flex flex-row gap-3 justify-center items-center flex-wrap">
-                        <a href="mailto:choreboys@gmail.com" class="link-button">
+                        <a href="/cdn-cgi/l/email-protection#395a51564b5c5b56404a795e54585055175a5654" class="link-button">
                             BOOKING
                         </a>
                         <a href="https://choreboys.bandcamp.com/" target="_blank" class="link-button">
@@ -271,6 +252,174 @@
                             MIXCLOUD
                         </a>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UPCOMING SHOWS -->
+        <div class="section-block w-full mb-6">
+            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
+                UPCOMING SHOWS
+            </div>
+            <div class="section-content bg-palette-dark text-white border-t-4 border-palette-blue">
+                <div class="text-content p-0">
+
+                    <!-- APRIL -->
+                    <div class="tour-group">
+                        <div class="tour-group-header w-full flex items-center justify-between px-6 py-5 bg-palette-blue text-white cursor-pointer" onclick="toggleGroup('april')">
+                            <div class="flex items-center gap-4">
+                                <span class="text-2xl font-black tracking-widest">APRIL</span>
+                                <span class="text-sm font-light opacity-75 uppercase tracking-wider">New Orleans, LA</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-sm opacity-60">3 shows</span>
+                                <span id="april-arrow" class="text-xl" style="display:inline-block; transition: transform 0.3s;">▼</span>
+                            </div>
+                        </div>
+                        <div id="april" class="tour-group-body" style="max-height: 0; overflow: hidden; transition: max-height 0.45s ease;">
+                            <ul class="show-list list-none p-0 m-0 text-center">
+                                <li class="show-list-item">
+                                    <span class="show-date">APRIL 25</span>
+                                    <span class="show-info">WITH <span class="font-bold text-palette-pink">BROOKIECITA</span> & <span class="font-bold text-palette-pink">GRANDMASTER</span></span>
+                                    <span class="show-venue">THE SATURN BAR</span>
+                                    <span class="show-time">New Orleans, LA</span>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">APRIL 26</span>
+                                    <span class="show-info">OPENING FOR <span class="font-bold text-palette-pink">SYLVAN ESSO</span> (DJ SET)</span>
+                                    <span class="show-time">New Orleans, LA</span>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">APRIL 27</span>
+                                    <span class="show-info">SUNSET SESSION</span>
+                                    <span class="show-venue">ANNA'S</span>
+                                    <span class="show-time">New Orleans, LA</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- MAY -->
+                    <div class="tour-group">
+                        <div class="tour-group-header w-full flex items-center justify-between px-6 py-5 bg-palette-blue text-white cursor-pointer" onclick="toggleGroup('may')">
+                            <div class="flex items-center gap-4">
+                                <span class="text-2xl font-black tracking-widest">MAY</span>
+                                <span class="text-sm font-light opacity-75 uppercase tracking-wider">New Orleans, LA</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-sm opacity-60">5 shows</span>
+                                <span id="may-arrow" class="text-xl" style="display:inline-block; transition: transform 0.3s;">▼</span>
+                            </div>
+                        </div>
+                        <div id="may" class="tour-group-body" style="max-height: 0; overflow: hidden; transition: max-height 0.45s ease;">
+                            <ul class="show-list list-none p-0 m-0 text-center">
+                                <li class="show-list-item">
+                                    <span class="show-date">MAY 7</span>
+                                    <span class="show-info">JAY'S BDAY</span>
+                                    <span class="show-venue">ANNA'S</span>
+                                    <span class="show-time">New Orleans, LA</span>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">MAY 9</span>
+                                    <span class="show-info">HOOD HOUSE</span>
+                                    <span class="show-venue">ARORA</span>
+                                    <span class="show-time">New Orleans, LA</span>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">MAY 16</span>
+                                    <span class="show-info">WEDDING AFTERS — MORGAN</span>
+                                    <span class="show-venue">OKAY BAR</span>
+                                    <span class="show-time">New Orleans, LA</span>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">MAY 24</span>
+                                    <span class="show-venue">VIRGIN POOL</span>
+                                    <span class="show-time">New Orleans, LA · 3–7PM</span>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">MAY 30</span>
+                                    <span class="show-venue">ANNA'S</span>
+                                    <span class="show-time">New Orleans, LA</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- JUNE — BONNAROO + EUROPE TOUR -->
+                    <div class="tour-group">
+                        <div class="tour-group-header w-full flex items-center justify-between px-6 py-5 bg-palette-pink text-white cursor-pointer" onclick="toggleGroup('june')">
+                            <div class="flex items-center gap-4">
+                                <span class="text-2xl font-black tracking-widest">JUNE</span>
+                                <span class="text-sm font-light opacity-90 uppercase tracking-wider">Bonnaroo · Europe Tour</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-sm opacity-75">4 shows</span>
+                                <span id="june-arrow" class="text-xl" style="display:inline-block; transition: transform 0.3s;">▼</span>
+                            </div>
+                        </div>
+                        <div id="june" class="tour-group-body" style="max-height: 0; overflow: hidden; transition: max-height 0.45s ease;">
+                            <ul class="show-list list-none p-0 m-0 text-center">
+                                <li class="show-list-item">
+                                    <span class="show-date">JUNE 12</span>
+                                    <span class="show-info">SNAKE & JAKE'S AT BONNAROO</span>
+                                    <span class="show-venue">BONNAROO MUSIC FESTIVAL</span>
+                                    <span class="show-time">Manchester, TN</span>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">JUNE 13</span>
+                                    <span class="show-info">SILENT DISCO</span>
+                                    <span class="show-venue">BONNAROO MUSIC FESTIVAL</span>
+                                    <span class="show-time">Manchester, TN</span>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">JUNE 20</span>
+                                    <span class="show-info">WITH <span class="font-bold text-palette-pink">HA SIZZLE</span></span>
+                                    <span class="show-venue">TBA</span>
+                                    <span class="show-time">Rouen, France</span>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">JUNE 21</span>
+                                    <span class="show-info">WITH <span class="font-bold text-palette-pink">HA SIZZLE</span></span>
+                                    <span class="show-venue">TBA</span>
+                                    <span class="show-time">Orléans, France</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- JULY — Northeast Run -->
+                    <div class="tour-group">
+                        <div class="tour-group-header w-full flex items-center justify-between px-6 py-5 bg-palette-pink text-white cursor-pointer" onclick="toggleGroup('july')">
+                            <div class="flex items-center gap-4">
+                                <span class="text-2xl font-black tracking-widest">JULY</span>
+                                <span class="text-sm font-light opacity-90 uppercase tracking-wider">Northeast Run</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-sm opacity-75">3 shows</span>
+                                <span id="july-arrow" class="text-xl" style="display:inline-block; transition: transform 0.3s;">▼</span>
+                            </div>
+                        </div>
+                        <div id="july" class="tour-group-body" style="max-height: 0; overflow: hidden; transition: max-height 0.45s ease;">
+                            <ul class="show-list list-none p-0 m-0 text-center">
+                                <li class="show-list-item">
+                                    <span class="show-date">JULY 2</span>
+                                    <span class="show-venue">RODEO</span>
+                                    <span class="show-time">Brooklyn, NY</span>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">JULY 3</span>
+                                    <span class="show-venue">THE AVALON LOUNGE</span>
+                                    <span class="show-time">Catskill, NY</span>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">JULY 4</span>
+                                    <span class="show-info">STRAWBERRY SHORTCAKE</span>
+                                    <span class="show-venue">SOMEWHERE NEAR NORTHAMPTON, MA</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -397,45 +546,12 @@
 
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         let submitted = false;
         
         const backgroundImages = [];
         for (let i = 10047; i <= 10125; i++) {
             backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
-        }
-
-        function toggleBio(dj) {
-            const bioMessy = document.getElementById('bio-messy');
-            const bioRusty = document.getElementById('bio-rusty');
-            const btnMessy = document.getElementById('btn-messy');
-            const btnRusty = document.getElementById('btn-rusty');
-
-            if (dj === 'messy') {
-                const isActive = bioMessy.classList.contains('active');
-                bioRusty.classList.remove('active');
-                btnRusty.classList.remove('active');
-                
-                if (isActive) {
-                    bioMessy.classList.remove('active');
-                    btnMessy.classList.remove('active');
-                } else {
-                    bioMessy.classList.add('active');
-                    btnMessy.classList.add('active');
-                }
-            } else if (dj === 'rusty') {
-                const isActive = bioRusty.classList.contains('active');
-                bioMessy.classList.remove('active');
-                btnMessy.classList.remove('active');
-
-                if (isActive) {
-                    bioRusty.classList.remove('active');
-                    btnRusty.classList.remove('active');
-                } else {
-                    bioRusty.classList.add('active');
-                    btnRusty.classList.add('active');
-                }
-            }
         }
 
         function setRandomBackground() {
@@ -473,10 +589,4 @@
             submitButton.textContent = 'SENDING...';
             statusMessage.style.display = 'block';
             statusMessage.className = 'form-status loading bg-custom-loading text-black';
-            statusMessage.textContent = 'Sending message...';
-        });
-
-        hiddenIframe.addEventListener('load', showSuccessMessage);
-    </script>
-</body>
-</html>
+            statusMess
