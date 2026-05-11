@@ -101,7 +101,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10100.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img data-cb-image-id="10100" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             High energy techno cuts for the morning commute.
@@ -124,7 +124,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10105.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img data-cb-image-id="10105" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             Slow chuggers and acid basslines.
@@ -146,7 +146,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10049.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img data-cb-image-id="10049" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             Full recording of the opening set.
@@ -168,7 +168,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10055.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img data-cb-image-id="10055" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             Selections from the crate.
@@ -190,7 +190,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10060.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img data-cb-image-id="10060" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             Disco edits and rare grooves.
@@ -212,7 +212,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/10072.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img data-cb-image-id="10072" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             Synthesizer explorations.
@@ -231,19 +231,18 @@
     </div>
 
     <!-- SCRIPTS -->
+    <script src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images.js"></script>
     <script>
-        const backgroundImages = [];
-        // Pulling from the same repo/image set as the original site
-        for (let i = 10047; i <= 10125; i++) {
-            backgroundImages.push(`https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/${i}.jpg`);
-        }
+        // Random background pulled from the shared manifest (images.js).
+        // To add more photos, see comments at the top of images.js.
+        CB_IMAGES.setRandomBackground();
 
-        function setRandomBackground() {
-            const randomImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
-            document.body.style.backgroundImage = `url(${randomImage})`;
-        }
-
-        setRandomBackground();
+        // Resolve the per-card thumbnails listed via data-cb-image-id="…"
+        // attributes. Lets the card images come from the same manifest
+        // instead of hardcoded URLs scattered through the markup.
+        document.querySelectorAll('img[data-cb-image-id]').forEach(function (img) {
+            img.src = CB_IMAGES.url(img.dataset.cbImageId);
+        });
     </script>
 </body>
 </html>
