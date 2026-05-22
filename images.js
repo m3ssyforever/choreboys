@@ -17,7 +17,10 @@
    ============================================================= */
 
 window.CB_IMAGES = (function () {
-    var base = 'https://raw.githubusercontent.com/m3ssyforever/choreboys/main/images/';
+    // Same-origin path: images load straight from this site (choreboys.party),
+    // which is fast and reliable. (Avoid raw.githubusercontent.com here — GitHub
+    // throttles it and doesn't allow hotlinking assets in production.)
+    var base = 'images/';
     var first = 10047;
     var last = 10355;
 

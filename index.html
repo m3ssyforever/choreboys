@@ -477,13 +477,13 @@
     </div>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="images.js"></script>
+    <script src="images.js?v=2"></script>
     <script>
         let submitted = false;
 
         // Pull a random background photo from the shared manifest (images.js).
         // To add more photos, see comments in images.js.
-        CB_IMAGES.setRandomBackground();
+        if (window.CB_IMAGES) CB_IMAGES.setRandomBackground();
 
         const form = document.getElementById('contactForm');
         const statusMessage = document.getElementById('formStatus');

@@ -231,18 +231,20 @@
     </div>
 
     <!-- SCRIPTS -->
-    <script src="images.js"></script>
+    <script src="images.js?v=2"></script>
     <script>
-        // Random background pulled from the shared manifest (images.js).
-        // To add more photos, see comments at the top of images.js.
-        CB_IMAGES.setRandomBackground();
+        if (window.CB_IMAGES) {
+            // Random background pulled from the shared manifest (images.js).
+            // To add more photos, see comments at the top of images.js.
+            CB_IMAGES.setRandomBackground();
 
-        // Resolve the per-card thumbnails listed via data-cb-image-id="…"
-        // attributes. Lets the card images come from the same manifest
-        // instead of hardcoded URLs scattered through the markup.
-        document.querySelectorAll('img[data-cb-image-id]').forEach(function (img) {
-            img.src = CB_IMAGES.url(img.dataset.cbImageId);
-        });
+            // Resolve the per-card thumbnails listed via data-cb-image-id="…"
+            // attributes. Lets the card images come from the same manifest
+            // instead of hardcoded URLs scattered through the markup.
+            document.querySelectorAll('img[data-cb-image-id]').forEach(function (img) {
+                img.src = CB_IMAGES.url(img.dataset.cbImageId);
+            });
+        }
     </script>
 </body>
 </html>

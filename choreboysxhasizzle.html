@@ -171,11 +171,13 @@
     </div>
 
     <!-- Shared image manifest (single source of truth for photo URLs) -->
-    <script src="images.js"></script>
+    <script src="images.js?v=2"></script>
     <script>
         // Page background. Change the id below to swap the photo —
         // any id in /images/ works (range is defined in images.js).
-        document.body.style.backgroundImage = "url('" + CB_IMAGES.url(10105) + "')";
+        if (window.CB_IMAGES) {
+            document.body.style.backgroundImage = "url('" + CB_IMAGES.url(10105) + "')";
+        }
     </script>
 </body>
 </html>
