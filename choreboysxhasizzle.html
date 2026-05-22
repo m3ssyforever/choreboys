@@ -39,9 +39,9 @@
         }
         body {
             min-height: 100vh;
-            /* Background photo is set by JS using the shared image manifest.
-               To change which photo loads, edit the CB_IMAGES.url() call near
-               the bottom of this file. */
+            /* Background photo. To swap it, change the filename below to any
+               photo in the images/ folder. */
+            background-image: url('images/10105.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -169,15 +169,5 @@
         </div>
 
     </div>
-
-    <!-- Shared image manifest (single source of truth for photo URLs) -->
-    <script src="images.js?v=2"></script>
-    <script>
-        // Page background. Change the id below to swap the photo —
-        // any id in /images/ works (range is defined in images.js).
-        if (window.CB_IMAGES) {
-            document.body.style.backgroundImage = "url('" + CB_IMAGES.url(10105) + "')";
-        }
-    </script>
 </body>
 </html>

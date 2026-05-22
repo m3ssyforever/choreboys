@@ -101,7 +101,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img data-cb-image-id="10100" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img src="images/10100.jpg" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             High energy techno cuts for the morning commute.
@@ -124,7 +124,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img data-cb-image-id="10105" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img src="images/10105.jpg" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             Slow chuggers and acid basslines.
@@ -146,7 +146,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img data-cb-image-id="10049" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img src="images/10049.jpg" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             Full recording of the opening set.
@@ -168,7 +168,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img data-cb-image-id="10055" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img src="images/10055.jpg" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             Selections from the crate.
@@ -190,7 +190,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img data-cb-image-id="10060" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img src="images/10060.jpg" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             Disco edits and rare grooves.
@@ -212,7 +212,7 @@
                     </div>
                     <div class="p-4 flex flex-col gap-4">
                         <div class="w-full h-48 bg-gray-200 border border-black flex items-center justify-center overflow-hidden">
-                            <img data-cb-image-id="10072" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <img src="images/10072.jpg" alt="" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                         <div class="text-sm font-mono leading-tight">
                             Synthesizer explorations.
@@ -231,20 +231,19 @@
     </div>
 
     <!-- SCRIPTS -->
-    <script src="images.js?v=2"></script>
-    <script>
-        if (window.CB_IMAGES) {
-            // Random background pulled from the shared manifest (images.js).
-            // To add more photos, see comments at the top of images.js.
-            CB_IMAGES.setRandomBackground();
-
-            // Resolve the per-card thumbnails listed via data-cb-image-id="…"
-            // attributes. Lets the card images come from the same manifest
-            // instead of hardcoded URLs scattered through the markup.
-            document.querySelectorAll('img[data-cb-image-id]').forEach(function (img) {
-                img.src = CB_IMAGES.url(img.dataset.cbImageId);
-            });
-        }
+    <script data-cfasync="false">
+        /* ===== BACKGROUND PHOTO =====
+           Random photo from the images/ folder, one per page load.
+           TO ADD MORE PHOTOS: drop {number}.jpg files into the images/ folder,
+           then set IMG_LAST below to the highest number you added.
+           (index.html has an identical block — update it there too.) */
+        (function () {
+            var IMG_FIRST = 10047;
+            var IMG_LAST  = 10355;
+            var n = IMG_FIRST + Math.floor(Math.random() * (IMG_LAST - IMG_FIRST + 1));
+            var file = (n === 10102) ? n + '.png' : n + '.jpg';
+            document.body.style.backgroundImage = "url('images/" + file + "')";
+        })();
     </script>
 </body>
 </html>

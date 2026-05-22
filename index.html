@@ -477,13 +477,22 @@
     </div>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="images.js?v=2"></script>
+    <script data-cfasync="false">
+        /* ===== BACKGROUND PHOTO =====
+           Shows a random photo from the images/ folder, one per page load.
+           TO ADD MORE PHOTOS: drop {number}.jpg files into the images/ folder,
+           then set IMG_LAST below to the highest number you added.
+           (chorecloud.html has an identical block — update it there too.) */
+        (function () {
+            var IMG_FIRST = 10047;
+            var IMG_LAST  = 10355;
+            var n = IMG_FIRST + Math.floor(Math.random() * (IMG_LAST - IMG_FIRST + 1));
+            var file = (n === 10102) ? n + '.png' : n + '.jpg';
+            document.body.style.backgroundImage = "url('images/" + file + "')";
+        })();
+    </script>
     <script>
         let submitted = false;
-
-        // Pull a random background photo from the shared manifest (images.js).
-        // To add more photos, see comments in images.js.
-        if (window.CB_IMAGES) CB_IMAGES.setRandomBackground();
 
         const form = document.getElementById('contactForm');
         const statusMessage = document.getElementById('formStatus');
