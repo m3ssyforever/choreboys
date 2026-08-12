@@ -107,6 +107,31 @@
         }
 
         /* Hero */
+        .hero-band {
+            height: 56vh;
+            min-height: 320px;
+            max-height: 640px;
+            background: #000;
+        }
+        @media (max-width: 640px) {
+            .hero-band { height: 46vh; min-height: 280px; }
+        }
+        .hero-band > img {
+            /* swap to grayscale(100%) contrast(1.08) for the B&W version */
+            filter: none;
+            /* oversized box gives the parallax room to travel in both directions */
+            top: -20%;
+            height: 140%;
+            will-change: transform;
+            /* 14.2857% of the image box == 20% of the band, i.e. the resting
+               position the parallax script starts from. Keeps framing identical
+               before the script runs and for reduced-motion visitors. */
+            transform: translate3d(0, 14.2857%, 0);
+        }
+        .hero-logo {
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.45));
+        }
+
         .btn-hard {
             display: inline-block;
             font-family: 'Archivo Black', Arial, sans-serif;
@@ -227,23 +252,29 @@
     </nav>
 
     <!-- HERO -->
-    <header id="top" class="w-full bg-black text-white py-12 md:py-16">
-        <div class="w-11/12 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div class="text-center md:text-left">
-                <div class="font-display text-5xl md:text-7xl leading-none tracking-tight mb-4">CHORE<br>BOYS</div>
-                <p class="text-lg md:text-xl font-light opacity-90 mb-3 max-w-md mx-auto md:mx-0">
-                    With a combined 100 years of life experience, Chore Boys are the only choice for all of your lifestyle improvement projects.
-                </p>
-                <p class="text-sm uppercase tracking-widest text-palette-acid font-bold mb-8">New Orleans · Live-Remixing DJ Duo</p>
-                <div class="flex gap-4 justify-center md:justify-start flex-wrap">
-                    <a href="#shows" class="btn-hard btn-acid">NEXT SHOW ↓</a>
-                    <a href="#contact" class="btn-hard btn-pink">BOOK US</a>
-                </div>
+    <header id="top" class="w-full bg-black text-white">
+
+        <!-- full-bleed photo band -->
+        <div class="hero-band relative w-full overflow-hidden">
+            <img id="heroImg" src="CB images/hero-1.jpg" alt="Chore Boys — Messy and Rusty Lazer"
+                 class="absolute left-0 w-full object-cover"
+                 style="object-position: center top;"
+                 onerror="this.style.display='none'">
+            <div class="absolute inset-0 flex items-center justify-center px-6">
+                <img src="CB images/chore-boys-logo.png" alt="Chore Boys"
+                     class="hero-logo w-auto max-w-[86%] max-h-[74%]">
             </div>
-            <div class="flex justify-center">
-                <img id="heroImg" src="CB images/hero-1.jpg" alt="Chore Boys — Messy and Rusty Lazer"
-                     class="w-full max-w-sm border-4 border-white shadow-2xl"
-                     onerror="this.style.display='none'">
+        </div>
+
+        <!-- copy + calls to action -->
+        <div class="w-11/12 max-w-2xl mx-auto text-center pt-10 md:pt-12 pb-12 md:pb-16">
+            <p class="text-lg md:text-xl font-light opacity-90 mb-3">
+                With a combined 100 years of life experience, Chore Boys are the only choice for all of your lifestyle improvement projects.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-palette-acid font-bold mb-8">New Orleans · Live-Remixing DJ Duo</p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <a href="#shows" class="btn-hard btn-acid">NEXT SHOW ↓</a>
+                <a href="#contact" class="btn-hard btn-pink">BOOK US</a>
             </div>
         </div>
     </header>
@@ -495,11 +526,45 @@
         (function () {
             var HEROES = [
                 'CB images/hero-1.jpg',
-                'CB images/hero-2.jpg',
-                'CB images/hero-3.jpg'
+                'CB images/hero-2.jpg'
             ];
             var img = document.getElementById('heroImg');
             if (img) img.src = HEROES[Math.floor(Math.random() * HEROES.length)];
+        })();
+
+        /* ===== HERO PARALLAX =====
+           The photo drifts at ~30% of scroll speed while the header is on screen.
+           TO TUNE: change RATE (higher = more drift). The CSS gives the image
+           20% of headroom above and below the band, which caps the travel. */
+        (function () {
+            var RATE = 0.3;
+            var band = document.querySelector('.hero-band');
+            var img  = document.getElementById('heroImg');
+            if (!band || !img) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            var limit = 0, ticking = false;
+
+            function measure() {
+                limit = band.offsetHeight * 0.2;
+                update();
+            }
+            function update() {
+                ticking = false;
+                var y = window.pageYOffset || document.documentElement.scrollTop;
+                if (y > band.offsetHeight + 200) return;   // header is gone, stop working
+                var offset = limit - (y * RATE);
+                if (offset > limit) offset = limit;
+                if (offset < -limit) offset = -limit;
+                img.style.transform = 'translate3d(0,' + offset.toFixed(1) + 'px,0)';
+            }
+            function onScroll() {
+                if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+            }
+
+            measure();
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', measure);
         })();
     </script>
     <script data-cfasync="false">
