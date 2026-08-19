@@ -109,6 +109,31 @@
             display: block;
             text-transform: uppercase;
         }
+        .ticket-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            background: #DFFF00;
+            color: black;
+            font-weight: 900;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            border: 3px solid black;
+            box-shadow: 4px 4px 0 #000;
+            transition: all 0.2s ease;
+        }
+        .ticket-btn:hover {
+            background: #FF007F;
+            color: white;
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 #000;
+        }
+        .ticket-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #000;
+        }
 
         /* Tour Group Collapsibles */
         .tour-group {
@@ -273,18 +298,12 @@
                                 <span class="text-sm font-light opacity-90 uppercase tracking-wider">New Orleans, LA</span>
                             </div>
                             <div class="flex items-center gap-3">
-                                <span class="text-sm opacity-75">3 shows</span>
+                                <span class="text-sm opacity-75">2 shows</span>
                                 <span id="august-arrow" class="text-xl" style="display:inline-block; transition: transform 0.3s;">▼</span>
                             </div>
                         </div>
                         <div id="august" class="tour-group-body" style="max-height: 0; overflow: hidden; transition: max-height 0.45s ease;">
                             <ul class="show-list list-none p-0 m-0 text-center">
-                                <li class="show-list-item">
-                                    <span class="show-date">AUG 14</span>
-                                    <span class="show-info">NITE SESH</span>
-                                    <span class="show-venue">GASA GASA</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
                                 <li class="show-list-item">
                                     <span class="show-date">AUG 20</span>
                                     <span class="show-info">W/ HEELTURN</span>
@@ -336,12 +355,24 @@
                                 <span class="text-sm font-light opacity-90 uppercase tracking-wider">New Orleans, LA + Round Top, TX</span>
                             </div>
                             <div class="flex items-center gap-3">
-                                <span class="text-sm opacity-75">3 shows</span>
+                                <span class="text-sm opacity-75">5 shows</span>
                                 <span id="october-arrow" class="text-xl" style="display:inline-block; transition: transform 0.3s;">▼</span>
                             </div>
                         </div>
                         <div id="october" class="tour-group-body" style="max-height: 0; overflow: hidden; transition: max-height 0.45s ease;">
                             <ul class="show-list list-none p-0 m-0 text-center">
+                                <li class="show-list-item">
+                                    <span class="show-date">OCT 8</span>
+                                    <span class="show-info">SHERELLE W/ TOKI DOKI HO, FREAK POV</span>
+                                    <span class="show-venue">ARORA</span>
+                                    <span class="show-time">New Orleans, LA</span>
+                                    <a href="https://www.tixr.com/e/203792" target="_blank" rel="noopener" class="ticket-btn">Buy Tickets Now!</a>
+                                </li>
+                                <li class="show-list-item">
+                                    <span class="show-date">OCT 16</span>
+                                    <span class="show-venue">THE SAINT</span>
+                                    <span class="show-time">New Orleans, LA</span>
+                                </li>
                                 <li class="show-list-item">
                                     <span class="show-date">OCT 17</span>
                                     <span class="show-venue">ANNA'S</span>
@@ -418,6 +449,10 @@
                                 </li>
                             </ul>
                         </div>
+                    </div>
+
+                    <div class="text-center py-8 border-t-2 border-white/10">
+                        <a href="shows.html" class="link-button">ALL SHOWS &amp; TICKETS</a>
                     </div>
 
                 </div>
@@ -593,3 +628,10 @@
             statusMessage.style.display = 'block';
             statusMessage.className = 'form-status loading bg-custom-loading text-black';
             statusMess
+age.textContent = 'Sending your message...';
+        });
+
+        hiddenIframe.addEventListener('load', showSuccessMessage);
+    </script>
+</body>
+</html>

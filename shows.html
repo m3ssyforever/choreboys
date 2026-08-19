@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chore Boys — Upcoming Shows</title>
+    <meta name="description" content="Upcoming Chore Boys shows in New Orleans and beyond. Dates, venues, and tickets.">
+
+    <!-- Open Graph / social sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://choreboys.party/shows.html">
+    <meta property="og:title" content="Chore Boys — Upcoming Shows">
+    <meta property="og:description" content="Dates, venues, and tickets for upcoming Chore Boys shows.">
+    <meta property="og:image" content="https://choreboys.party/images/CB_Double_Exp.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23121212%22/><text y=%22.85em%22 font-size=%2260%22 fill=%22%23DFFF00%22 font-weight=%22900%22 font-family=%22Arial, sans-serif%22 text-anchor=%22middle%22 x=%2250%22>CB</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    sans: ['Arial', 'sans-serif'],
+                    display: ['"Archivo Black"', 'Arial', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        'palette-blue': '#007BFF',
+                        'palette-pink': '#FF007F',
+                        'palette-acid': '#DFFF00',
+                        'palette-dark': '#121212',
+                        'palette-gray': '#E5E5E5',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { height: 100%; scroll-behavior: smooth; }
+        body {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .section-header {
+            font-family: 'Archivo Black', Arial, sans-serif;
+            background: black;
+            color: white;
+            font-size: 1.6rem;
+            letter-spacing: 0.15em;
+            text-align: center;
+            padding: 1.4rem 1rem;
+        }
+
+        .show-list-item {
+            padding: 1.75rem 1.5rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            text-align: left;
+        }
+        .show-list-item:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .show-date {
+            flex-shrink: 0;
+            display: inline-block;
+            background-color: #007BFF;
+            color: white;
+            padding: 0.5rem 0.9rem;
+            font-size: 1.25rem;
+            font-weight: 900;
+            text-align: center;
+            min-width: 7rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .show-list-item:nth-child(even) .show-date { background-color: #FF007F; }
+        .show-info {
+            font-size: 1rem;
+            display: block;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+        .show-venue {
+            font-size: 1.4rem;
+            font-weight: 900;
+            display: block;
+            text-transform: uppercase;
+        }
+        .show-city {
+            font-size: 1rem;
+            display: block;
+            margin-top: 0.15rem;
+            opacity: 0.75;
+        }
+        .next-up { border-left: 8px solid #DFFF00; }
+        .next-up-tag {
+            display: inline-block;
+            background: #DFFF00;
+            color: black;
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            padding: 0.2rem 0.6rem;
+            margin-bottom: 0.35rem;
+        }
+        .month-bar {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 0.9rem 1.5rem;
+            color: white;
+        }
+
+        .ticket-btn {
+            margin-left: auto;
+            flex-shrink: 0;
+            display: inline-block;
+            background: #DFFF00;
+            color: black;
+            font-weight: 900;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.7rem 1.1rem;
+            border: 3px solid black;
+            box-shadow: 4px 4px 0 #000;
+            transition: all 0.2s ease;
+        }
+        .ticket-btn:hover {
+            background: #FF007F;
+            color: white;
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 #000;
+        }
+        .ticket-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #000;
+        }
+        @media (max-width: 640px) {
+            .ticket-btn { margin-left: 0; width: 100%; text-align: center; }
+        }
+
+        .link-button {
+            display: inline-block;
+            background-color: black;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 900;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .link-button:hover {
+            background-color: #FF007F;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+    <!-- HEADER -->
+    <header class="w-full bg-black text-white border-b-4 border-palette-acid">
+        <div class="w-11/12 max-w-3xl mx-auto py-10 text-center">
+            <a href="index.html" class="font-display text-3xl md:text-4xl tracking-widest no-underline text-white">CHORE <span class="text-palette-acid">BOYS</span></a>
+            <p class="text-sm uppercase tracking-widest opacity-70 mt-3">New Orleans · Live-Remixing DJ Duo</p>
+        </div>
+    </header>
+
+    <main class="relative z-10 w-11/12 max-w-3xl mx-auto py-10">
+
+        <div class="section-block w-full mb-6">
+            <div class="section-header border-b-4 border-palette-pink">UPCOMING SHOWS</div>
+            <div class="section-content bg-palette-dark text-white">
+
+                <!-- AUGUST -->
+                <div class="month-bar bg-palette-blue">
+                    <span class="font-display text-xl tracking-widest">AUGUST</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                </div>
+                <ul class="list-none p-0 m-0">
+                    <li class="show-list-item next-up">
+                        <span class="show-date">AUG 20</span>
+                        <span>
+                            <span class="next-up-tag">NEXT UP</span>
+                            <span class="show-info">w/ Heelturn</span>
+                            <span class="show-venue">Saturn Bar</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">AUG 22</span>
+                        <span>
+                            <span class="show-venue">Anna's</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                </ul>
+
+                <!-- SEPTEMBER -->
+                <div class="month-bar bg-palette-pink">
+                    <span class="font-display text-xl tracking-widest">SEPTEMBER</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                </div>
+                <ul class="list-none p-0 m-0">
+                    <li class="show-list-item">
+                        <span class="show-date">SEPT 5</span>
+                        <span>
+                            <span class="show-venue">Anna's</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">SEPT 6</span>
+                        <span>
+                            <span class="show-venue">Virgin Hotel Pool</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                </ul>
+
+                <!-- OCTOBER -->
+                <div class="month-bar bg-palette-blue">
+                    <span class="font-display text-xl tracking-widest">OCTOBER</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA + Round Top, TX</span>
+                </div>
+                <ul class="list-none p-0 m-0">
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 8</span>
+                        <span>
+                            <span class="show-info">Sherelle w/ Toki Doki Ho, FREAK POV</span>
+                            <span class="show-venue">ARORA</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                        <a href="https://www.tixr.com/e/203792" target="_blank" rel="noopener" class="ticket-btn">Buy Tickets Now!</a>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 16</span>
+                        <span>
+                            <span class="show-venue">The Saint</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 17</span>
+                        <span>
+                            <span class="show-venue">Anna's</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 29</span>
+                        <span>
+                            <span class="show-info">Monster Mash!</span>
+                            <span class="show-venue">Round Top</span>
+                            <span class="show-city">Round Top, TX</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 31</span>
+                        <span>
+                            <span class="show-info">w/ Brooke</span>
+                            <span class="show-venue">Saturn Bar</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                </ul>
+
+                <!-- NOVEMBER -->
+                <div class="month-bar bg-palette-pink">
+                    <span class="font-display text-xl tracking-widest">NOVEMBER</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                </div>
+                <ul class="list-none p-0 m-0">
+                    <li class="show-list-item">
+                        <span class="show-date">NOV 7</span>
+                        <span>
+                            <span class="show-venue">Anna's</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">NOV 13</span>
+                        <span>
+                            <span class="show-venue">Blue Nile</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">NOV 28</span>
+                        <span>
+                            <span class="show-venue">Anna's</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                </ul>
+
+                <!-- DECEMBER -->
+                <div class="month-bar bg-palette-blue">
+                    <span class="font-display text-xl tracking-widest">DECEMBER</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                </div>
+                <ul class="list-none p-0 m-0">
+                    <li class="show-list-item">
+                        <span class="show-date">DEC 31</span>
+                        <span>
+                            <span class="show-info">w/ Brookiecita</span>
+                            <span class="show-venue">Saturn Bar</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <!-- BOOKING PROMPT -->
+        <div class="section-block w-full">
+            <div class="section-content bg-palette-acid text-black p-8 text-center">
+                <p class="font-display text-xl mb-3">WANT US AT YOUR PARTY?</p>
+                <p class="text-base mb-6 max-w-md mx-auto">Weddings, festivals, backyard mayhem. Tell us about your lifestyle improvement project.</p>
+                <a href="index.html#contact" class="link-button">BOOK THE BOYS</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 bg-black text-white border-t-4 border-palette-acid">
+        <div class="w-11/12 max-w-3xl mx-auto py-10 text-center">
+            <div class="flex flex-row gap-3 justify-center items-center flex-wrap mb-6">
+                <a href="index.html" class="link-button">HOME</a>
+                <a href="https://choreboys.bandcamp.com/" target="_blank" rel="noopener" class="link-button">BANDCAMP</a>
+                <a href="http://instagram.com/choreboys.party" target="_blank" rel="noopener" class="link-button">INSTAGRAM</a>
+                <a href="https://www.youtube.com/@choreboys.offical" target="_blank" rel="noopener" class="link-button">YOUTUBE</a>
+                <a href="https://www.mixcloud.com/choreboys/" target="_blank" rel="noopener" class="link-button">MIXCLOUD</a>
+            </div>
+            <p class="text-sm opacity-70 mb-2">New Orleans, LA · friends first, musicians second, DJs most recently</p>
+            <p class="text-xs opacity-50">&copy; 2026 Chore Boys · choreboys.party</p>
+        </div>
+    </footer>
+
+    <script data-cfasync="false">
+        /* ===== BACKGROUND PHOTO =====
+           Shows a random photo from the images/ folder, one per page load.
+           TO ADD MORE PHOTOS: drop {number}.jpg files into the images/ folder,
+           then set IMG_LAST below to the highest number you added.
+           (index.html and chorecloud.html have identical blocks — update them too.) */
+        (function () {
+            var IMG_FIRST = 10047;
+            var IMG_LAST  = 10355;
+            var n = IMG_FIRST + Math.floor(Math.random() * (IMG_LAST - IMG_FIRST + 1));
+            var file = (n === 10102) ? n + '.png' : n + '.jpg';
+            document.body.style.backgroundImage = "url('images/" + file + "')";
+        })();
+    </script>
+</body>
+</html>
