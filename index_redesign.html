@@ -107,26 +107,31 @@
         }
 
         /* Hero */
+        /* Taller band than a typical hero: the banner photo is 2:1 but the band is
+           much wider, so height is what keeps the faces from getting cropped out. */
         .hero-band {
-            height: 56vh;
-            min-height: 320px;
-            max-height: 640px;
+            height: 68vh;
+            min-height: 360px;
+            max-height: 720px;
             background: #000;
         }
         @media (max-width: 640px) {
-            .hero-band { height: 46vh; min-height: 280px; }
+            .hero-band { height: 52vh; min-height: 300px; }
         }
         .hero-band > img {
             /* swap to grayscale(100%) contrast(1.08) for the B&W version */
             filter: none;
-            /* oversized box gives the parallax room to travel in both directions */
-            top: -20%;
-            height: 140%;
+            /* oversized box gives the parallax room to travel; 10% of headroom
+               on each side, trimmed from the old 20% so less of the photo is
+               pushed out of frame. */
+            top: -10%;
+            height: 120%;
             will-change: transform;
-            /* 14.2857% of the image box == 20% of the band, i.e. the resting
-               position the parallax script starts from. Keeps framing identical
-               before the script runs and for reduced-motion visitors. */
-            transform: translate3d(0, 14.2857%, 0);
+            /* -8.3333% of the image box == -10% of the band, which pulls the box
+               up so the BOTTOM edge of the photo sits flush with the bottom of
+               the band. That is the resting frame the parallax starts from, and
+               what reduced-motion visitors see. */
+            transform: translate3d(0, -8.3333%, 0);
         }
         .hero-logo {
             filter: drop-shadow(0 1px 2px rgba(0,0,0,0.45));
@@ -251,8 +256,18 @@
             display: flex;
             align-items: baseline;
             justify-content: space-between;
+            gap: 0.25rem 1rem;
             padding: 0.9rem 1.5rem;
             color: white;
+        }
+        /* On narrow screens the month and the city list fight for one line and
+           collide. Stack them instead. */
+        @media (max-width: 640px) {
+            .month-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.9rem 1rem;
+            }
         }
 
         /* Section headers — slimmer, harder */
@@ -290,7 +305,7 @@
         <div class="hero-band relative w-full overflow-hidden">
             <img id="heroImg" src="images/CB_Banner.jpg" alt="Chore Boys — Messy and Rusty Lazer"
                  class="absolute left-0 w-full object-cover"
-                 style="object-position: center 45%;"
+                 style="object-position: center bottom;"
                  onerror="this.style.display='none'">
             <div class="absolute inset-0 flex items-center justify-center px-6">
                 <img src="CB images/chore-boys-logo.png" alt="Chore Boys"
@@ -380,17 +395,24 @@
                 <!-- OCTOBER -->
                 <div class="month-bar bg-palette-blue">
                     <span class="font-display text-xl tracking-widest">OCTOBER</span>
-                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA + Round Top, TX</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA + Austin &amp; Round Top, TX</span>
                 </div>
                 <ul class="list-none p-0 m-0">
                     <li class="show-list-item">
                         <span class="show-date">OCT 8</span>
                         <span>
-                            <span class="show-info">Sherelle w/ Toki Doki Ho, FREAK POV</span>
+                            <span class="show-info">Sherelle w/ Toki Doki Hoe, FREAK POV</span>
                             <span class="show-venue">ARORA</span>
                             <span class="show-city">New Orleans, LA</span>
                         </span>
                         <a href="https://www.tixr.com/e/203792" target="_blank" rel="noopener" class="ticket-btn">Buy Tickets Now!</a>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 9</span>
+                        <span>
+                            <span class="show-venue">Brushy St. Commons</span>
+                            <span class="show-city">Austin, TX</span>
+                        </span>
                     </li>
                     <li class="show-list-item">
                         <span class="show-date">OCT 16</span>
@@ -624,8 +646,10 @@
 
         /* ===== HERO PARALLAX =====
            The photo drifts at ~30% of scroll speed while the header is on screen.
-           TO TUNE: change RATE (higher = more drift). The CSS gives the image
-           20% of headroom above and below the band, which caps the travel. */
+           It STARTS bottom-justified (offset -limit, matching the CSS resting
+           transform) and drifts down as you scroll, revealing more of the top of
+           the photo. TO TUNE: change RATE (higher = more drift). The CSS gives
+           the image 10% of headroom above and below the band, capping travel. */
         (function () {
             var RATE = 0.3;
             var band = document.querySelector('.hero-band');
@@ -636,14 +660,14 @@
             var limit = 0, ticking = false;
 
             function measure() {
-                limit = band.offsetHeight * 0.2;
+                limit = band.offsetHeight * 0.1;
                 update();
             }
             function update() {
                 ticking = false;
                 var y = window.pageYOffset || document.documentElement.scrollTop;
                 if (y > band.offsetHeight + 200) return;   // header is gone, stop working
-                var offset = limit - (y * RATE);
+                var offset = -limit + (y * RATE);
                 if (offset > limit) offset = limit;
                 if (offset < -limit) offset = -limit;
                 img.style.transform = 'translate3d(0,' + offset.toFixed(1) + 'px,0)';

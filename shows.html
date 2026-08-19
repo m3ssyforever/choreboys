@@ -119,8 +119,18 @@
             display: flex;
             align-items: baseline;
             justify-content: space-between;
+            gap: 0.25rem 1rem;
             padding: 0.9rem 1.5rem;
             color: white;
+        }
+        /* On narrow screens the month and the city list fight for one line and
+           collide. Stack them instead. */
+        @media (max-width: 640px) {
+            .month-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.9rem 1rem;
+            }
         }
 
         .ticket-btn {
@@ -235,17 +245,24 @@
                 <!-- OCTOBER -->
                 <div class="month-bar bg-palette-blue">
                     <span class="font-display text-xl tracking-widest">OCTOBER</span>
-                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA + Round Top, TX</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA + Austin &amp; Round Top, TX</span>
                 </div>
                 <ul class="list-none p-0 m-0">
                     <li class="show-list-item">
                         <span class="show-date">OCT 8</span>
                         <span>
-                            <span class="show-info">Sherelle w/ Toki Doki Ho, FREAK POV</span>
+                            <span class="show-info">Sherelle w/ Toki Doki Hoe, FREAK POV</span>
                             <span class="show-venue">ARORA</span>
                             <span class="show-city">New Orleans, LA</span>
                         </span>
                         <a href="https://www.tixr.com/e/203792" target="_blank" rel="noopener" class="ticket-btn">Buy Tickets Now!</a>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 9</span>
+                        <span>
+                            <span class="show-venue">Brushy St. Commons</span>
+                            <span class="show-city">Austin, TX</span>
+                        </span>
                     </li>
                     <li class="show-list-item">
                         <span class="show-date">OCT 16</span>
