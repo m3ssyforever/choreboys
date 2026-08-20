@@ -24,6 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
     <script>
         tailwind.config = {
@@ -635,21 +636,50 @@
                     <p class="text-center text-lg font-bold max-w-xl mx-auto mb-6">Weddings, festivals, backyard mayhem — tell us about your lifestyle improvement project.</p>
                     <div id="formStatus" class="form-status text-center text-xl font-bold p-4 mt-4" style="display: none;"></div>
 
-                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto"
-                          action="https://docs.google.com/forms/d/e/1FAIpQLSc9vf-SXrgzU6C4g4Lq3TWTBDT5dICYne1ZYQJszMI68_fviA/formResponse"
-                          method="POST"
-                          target="hidden_iframe">
+                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto">
 
-                        <input type="text" placeholder="Your Name" name="entry.14617025" required class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
+                        <input type="text" placeholder="Your Name" name="name" required
+                               class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
 
-                        <input type="email" placeholder="Your Email" name="entry.1915870487" required class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
+                        <input type="email" placeholder="Your Email" name="email" required
+                               class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
 
-                        <textarea placeholder="Your Message / Booking Inquiry" name="entry.2082616783" rows="5" required class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none resize-y"></textarea>
+                        <textarea placeholder="Your Message / Booking Inquiry" name="message" rows="5" required
+                                  class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none resize-y"></textarea>
 
-                        <button type="submit" id="submitButton" class="bg-black text-white py-4 px-8 border-none text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-palette-pink hover:scale-105">SEND MESSAGE</button>
+                        <!-- Honeypot: hidden from real users via CSS, bots often fill every field -->
+                        <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+                            <label for="website">Leave this field blank</label>
+                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        <!-- SMS opt-in block -->
+                        <div class="border-2 border-black bg-white p-4 space-y-3">
+                            <input type="tel" placeholder="Mobile Phone Number (optional)" name="phone"
+                                   class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
+
+                            <label class="flex items-start gap-3 text-sm leading-snug cursor-pointer">
+                                <input type="checkbox" name="smsOptIn" value="yes"
+                                       class="mt-1 w-5 h-5 flex-shrink-0 border-2 border-black">
+                                <span>
+                                    Yes, I'd like to receive SMS updates from Chore Boys (show announcements, releases, drops).
+                                    Up to 6 msgs/month. Msg &amp; data rates may apply. Reply STOP to cancel, HELP for help.
+                                    <a href="terms.html" class="underline" target="_blank">Terms</a> &middot;
+                                    <a href="privacy.html" class="underline" target="_blank">Privacy</a>.
+                                    Consent is not a condition of any purchase.
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- Cloudflare Turnstile widget — auto-renders into this div -->
+                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAEW_doaB_G35ogOq"></div>
+
+                        <button type="submit" id="submitButton"
+                                class="bg-black text-white py-4 px-8 border-none text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-palette-pink hover:scale-105">
+                            SEND MESSAGE
+                        </button>
+
                     </form>
-
-                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
                 </div>
             </div>
         </div>
@@ -761,40 +791,63 @@
         })();
     </script>
     <script data-cfasync="false">
-        let submitted = false;
+        /* Posts to the Cloudflare Worker, which verifies Turnstile and the
+           honeypot before forwarding the message. Replaced the old
+           Google-Forms-via-hidden-iframe handler. */
+
+        const WORKER_URL = "https://choreboys-contact.choreboys.workers.dev";
 
         const form = document.getElementById('contactForm');
         const statusMessage = document.getElementById('formStatus');
-        const hiddenIframe = document.getElementById('hidden_iframe');
         const submitButton = document.getElementById('submitButton');
 
-        function showSuccessMessage() {
-            if (submitted) {
-                statusMessage.style.display = 'block';
-                statusMessage.className = 'form-status success bg-custom-success text-white';
-                statusMessage.textContent = 'Thank you! Your message has been sent successfully.';
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-                form.reset();
-                submitButton.disabled = false;
-                submitButton.textContent = 'SEND MESSAGE';
-
-                setTimeout(() => {
-                    statusMessage.style.display = 'none';
-                }, 5000);
-                submitted = false;
-            }
-        }
-
-        form.addEventListener('submit', function(e) {
-            submitted = true;
             submitButton.disabled = true;
             submitButton.textContent = 'SENDING...';
             statusMessage.style.display = 'block';
             statusMessage.className = 'form-status loading bg-custom-loading text-black';
             statusMessage.textContent = 'Sending your message...';
-        });
 
-        hiddenIframe.addEventListener('load', showSuccessMessage);
+            const formData = new FormData(form);
+            const turnstileToken = formData.get('cf-turnstile-response');
+
+            const payload = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                message: formData.get('message'),
+                phone: formData.get('phone') || null,
+                smsOptIn: formData.get('smsOptIn') === 'yes',
+                website: formData.get('website'), // honeypot
+                turnstileToken: turnstileToken,
+            };
+
+            try {
+                const res = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    statusMessage.className = 'form-status success bg-custom-success text-white';
+                    statusMessage.textContent = 'Thank you! Your message has been sent successfully.';
+                    form.reset();
+                    if (window.turnstile) window.turnstile.reset();
+                } else {
+                    throw new Error(data.error || 'Something went wrong');
+                }
+            } catch (err) {
+                statusMessage.className = 'form-status error bg-custom-error text-white';
+                statusMessage.textContent = 'Sorry, something went wrong. Please try again or email us directly.';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'SEND MESSAGE';
+                setTimeout(() => { statusMessage.style.display = 'none'; }, 5000);
+            }
+        });
     </script>
 </body>
 </html>
