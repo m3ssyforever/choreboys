@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chore Boys</title>
+    <title>Chore Boys — New Orleans Live-Remixing DJ Duo</title>
     <meta name="description" content="Chore Boys are Messy and Rusty Lazer, a New Orleans live-remixing DJ duo. With a combined 100 years of life experience, they're the only choice for all of your lifestyle improvement projects.">
 
-    <!-- Open Graph / social sharing — controls the image shown when the link is pasted -->
+    <!-- Open Graph / social sharing -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://choreboys.party/">
-    <meta property="og:title" content="Chore Boys">
+    <meta property="og:title" content="Chore Boys — New Orleans Live-Remixing DJ Duo">
     <meta property="og:description" content="With a combined 100 years of life experience, Chore Boys are the only choice for all of your lifestyle improvement projects.">
     <meta property="og:image" content="https://choreboys.party/images/CB_Double_Exp_og.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
 
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23007BFF%22/><text y=%22.85em%22 font-size=%2275%22 fill=%22white%22 font-weight=%22900%22 font-family=%22Arial, sans-serif%22 text-anchor=%22middle%22 x=%2250%22>CB</text></svg>">
-    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23121212%22/><text y=%22.85em%22 font-size=%2260%22 fill=%22%23DFFF00%22 font-weight=%22900%22 font-family=%22Arial, sans-serif%22 text-anchor=%22middle%22 x=%2250%22>CB</text></svg>">
+
+    <!-- Fonts: Archivo Black for headline punch, Arial stays for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
     <script>
         tailwind.config = {
             theme: {
                 fontFamily: {
                     sans: ['Arial', 'sans-serif'],
+                    display: ['"Archivo Black"', 'Arial', 'sans-serif'],
                 },
                 extend: {
                     colors: {
@@ -80,57 +87,199 @@
             transform: scale(0.98);
         }
 
-        /* Show List Styles */
+        /* Nav */
+        .nav-link {
+            color: white;
+            font-weight: 900;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            padding: 0.4rem 0.7rem;
+            transition: all 0.2s ease;
+        }
+        .nav-link:hover {
+            background: #FF007F;
+        }
+        .nav-cta {
+            background: #DFFF00;
+            color: black;
+        }
+        .nav-cta:hover {
+            background: #FF007F;
+            color: white;
+        }
+
+        /* Hero */
+        /* Taller band than a typical hero: the banner photo is 2:1 but the band is
+           much wider, so height is what keeps the faces from getting cropped out. */
+        .hero-band {
+            height: 68vh;
+            min-height: 360px;
+            max-height: 720px;
+            background: #000;
+        }
+        @media (max-width: 640px) {
+            .hero-band { height: 52vh; min-height: 300px; }
+        }
+        .hero-band > img {
+            /* swap to grayscale(100%) contrast(1.08) for the B&W version */
+            filter: none;
+            /* oversized box gives the parallax room to travel; 10% of headroom
+               on each side, trimmed from the old 20% so less of the photo is
+               pushed out of frame. */
+            top: -10%;
+            height: 120%;
+            will-change: transform;
+            /* -8.3333% of the image box == -10% of the band, which pulls the box
+               up so the BOTTOM edge of the photo sits flush with the bottom of
+               the band. That is the resting frame the parallax starts from, and
+               what reduced-motion visitors see. */
+            transform: translate3d(0, -8.3333%, 0);
+        }
+        .hero-logo {
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.45));
+        }
+
+        /* Bio Transitions */
+        .individual-bio-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            opacity: 0;
+        }
+        .individual-bio-panel.active {
+            max-height: 1200px;
+            opacity: 1;
+            margin-bottom: 2rem;
+        }
+
+        /* Name Toggle Box Styling */
+        .name-box {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 0.4rem 1.2rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .name-box-messy:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: #007BFF;
+            color: #007BFF;
+        }
+        .name-box-rusty:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: #FF007F;
+            color: #FF007F;
+        }
+        .name-box-messy.active {
+            background: #007BFF;
+            color: white;
+            border-color: #007BFF;
+        }
+        .name-box-rusty.active {
+            background: #FF007F;
+            color: white;
+            border-color: #FF007F;
+        }
+
+        .btn-hard {
+            display: inline-block;
+            font-family: 'Archivo Black', Arial, sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            padding: 0.9rem 1.6rem;
+            border: 3px solid black;
+            transition: all 0.2s ease;
+            box-shadow: 5px 5px 0 black;
+        }
+        .btn-hard:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0 black;
+        }
+        .btn-hard:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 black;
+        }
+        .btn-acid { background: #DFFF00; color: black; }
+        .btn-acid:hover { background: #FF007F; color: white; }
+        .btn-pink { background: #FF007F; color: white; }
+        .btn-pink:hover { background: #DFFF00; color: black; }
+
+        /* Show List */
         .show-list-item {
-            padding: 2.5rem 1rem;
+            padding: 1.75rem 1.5rem;
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
             transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            text-align: left;
         }
         .show-list-item:hover {
             background-color: rgba(255, 255, 255, 0.05);
         }
         .show-date {
+            flex-shrink: 0;
             display: inline-block;
             background-color: #007BFF;
             color: white;
-            padding: 0.25rem 0.75rem;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
+            padding: 0.5rem 0.9rem;
+            font-size: 1.25rem;
             font-weight: 900;
+            text-align: center;
+            min-width: 7rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
+        .show-list-item:nth-child(even) .show-date {
+            background-color: #FF007F;
+        }
         .show-info {
-            font-size: 1.25rem;
-            line-height: 1.4;
-            font-weight: 400;
+            font-size: 1rem;
             display: block;
             text-transform: uppercase;
-        }
-        .show-time {
-            font-size: 1.25rem;
-            line-height: 1.4;
-            font-weight: 400;
-            display: block;
-            margin-top: 0.25rem;
+            opacity: 0.9;
         }
         .show-venue {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 900;
-            margin-top: 0.25rem;
             display: block;
             text-transform: uppercase;
         }
-        .ticket-btn {
+        .show-city {
+            font-size: 1rem;
+            display: block;
+            margin-top: 0.15rem;
+            opacity: 0.75;
+        }
+        .next-up {
+            border-left: 8px solid #DFFF00;
+        }
+        .next-up-tag {
             display: inline-block;
-            margin-top: 1rem;
+            background: #DFFF00;
+            color: black;
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            padding: 0.2rem 0.6rem;
+            margin-bottom: 0.35rem;
+        }
+        .show-list-item {
+            flex-wrap: wrap;
+        }
+        .ticket-btn {
+            margin-left: auto;
+            flex-shrink: 0;
+            display: inline-block;
             background: #DFFF00;
             color: black;
             font-weight: 900;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             text-decoration: none;
-            padding: 0.75rem 1.25rem;
+            padding: 0.7rem 1.1rem;
             border: 3px solid black;
             box-shadow: 4px 4px 0 #000;
             transition: all 0.2s ease;
@@ -145,361 +294,276 @@
             transform: translate(2px, 2px);
             box-shadow: 2px 2px 0 #000;
         }
-
-        /* Tour Group Collapsibles */
-        .tour-group {
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+        @media (max-width: 640px) {
+            .ticket-btn { margin-left: 0; width: 100%; text-align: center; }
         }
-
-        /* Bio Transitions */
-        .individual-bio-panel {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
-            opacity: 0;
-        }
-        .individual-bio-panel.active {
-            max-height: 1000px;
-            opacity: 1;
-            margin-bottom: 2rem;
-        }
-
-        /* Name Toggle Box Styling */
-        .name-box {
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(0,0,0,0.1);
-            padding: 0.4rem 1.2rem;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-        
-        /* Specific Hover Colors */
-        .name-box-messy:hover {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: #007BFF;
-            color: #007BFF;
-        }
-        .name-box-rusty:hover {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: #FF007F;
-            color: #FF007F;
-        }
-        
-        /* Active States */
-        .name-box-messy.active {
-            background: #007BFF;
+        .month-bar {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.25rem 1rem;
+            padding: 0.9rem 1.5rem;
             color: white;
-            border-color: #007BFF;
         }
-        .name-box-rusty.active {
-            background: #FF007F;
-            color: white;
-            border-color: #FF007F;
-        }
-    </style>
-
-    <script>
-        function toggleGroup(id) {
-            var body = document.getElementById(id);
-            var arrow = document.getElementById(id + '-arrow');
-            if (!body) return;
-            var isOpen = body.style.maxHeight !== '0px' && body.style.maxHeight !== '';
-            body.style.maxHeight = isOpen ? '0px' : '1200px';
-            if (arrow) arrow.style.transform = isOpen ? '' : 'rotate(180deg)';
-        }
-
-        function toggleBio(dj) {
-            const bioMessy = document.getElementById('bio-messy');
-            const bioRusty = document.getElementById('bio-rusty');
-            const btnMessy = document.getElementById('btn-messy');
-            const btnRusty = document.getElementById('btn-rusty');
-
-            if (dj === 'messy') {
-                const isActive = bioMessy.classList.contains('active');
-                bioRusty.classList.remove('active');
-                btnRusty.classList.remove('active');
-                if (isActive) {
-                    bioMessy.classList.remove('active');
-                    btnMessy.classList.remove('active');
-                } else {
-                    bioMessy.classList.add('active');
-                    btnMessy.classList.add('active');
-                }
-            } else if (dj === 'rusty') {
-                const isActive = bioRusty.classList.contains('active');
-                bioMessy.classList.remove('active');
-                btnMessy.classList.remove('active');
-                if (isActive) {
-                    bioRusty.classList.remove('active');
-                    btnRusty.classList.remove('active');
-                } else {
-                    bioRusty.classList.add('active');
-                    btnRusty.classList.add('active');
-                }
+        /* On narrow screens the month and the city list fight for one line and
+           collide. Stack them instead. */
+        @media (max-width: 640px) {
+            .month-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.9rem 1rem;
             }
         }
-    </script>
+
+        /* Section headers — slimmer, harder */
+        .section-header {
+            font-family: 'Archivo Black', Arial, sans-serif;
+            background: black;
+            color: white;
+            font-size: 1.6rem;
+            letter-spacing: 0.15em;
+            text-align: center;
+            padding: 1.4rem 1rem;
+        }
+    </style>
 </head>
 <body class="font-sans">
-    
-    <header class="w-full bg-black text-white py-8 text-center shadow-none">
-        <div class="header-content w-11/12 max-w-5xl mx-auto">
-            <div class="header-title text-6xl md:text-[4rem] font-black tracking-widest mb-1">CHORE BOYS</div>
-            <div class="header-slogan text-xl md:text-base font-light opacity-80 max-w-xl mx-auto">
-                 With a combined 100 years of life experience, Chore Boys are the only choice for all of your lifestyle improvement projects.
+
+    <!-- STICKY NAV -->
+    <nav class="sticky top-0 z-50 bg-black border-b-4 border-palette-acid">
+        <div class="w-11/12 max-w-5xl mx-auto flex items-center justify-between py-3 flex-wrap gap-2">
+            <a href="#top" class="font-display text-white text-lg tracking-widest no-underline">CHORE <span class="text-palette-acid">BOYS</span></a>
+            <div class="flex flex-wrap gap-1 items-center">
+                <a href="#watch" class="nav-link">WATCH</a>
+                <a href="#shows" class="nav-link">SHOWS</a>
+                <a href="#mixes" class="nav-link">MIXES</a>
+                <a href="#boys" class="nav-link">THE BOYS</a>
+                <a href="#contact" class="nav-link nav-cta">BOOKING</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header id="top" class="w-full bg-black text-white">
+
+        <!-- full-bleed photo band -->
+        <div class="hero-band relative w-full overflow-hidden">
+            <img id="heroImg" src="images/CB_Banner.jpg" alt="Chore Boys — Messy and Rusty Lazer"
+                 class="absolute left-0 w-full object-cover"
+                 style="object-position: center bottom;"
+                 onerror="this.style.display='none'">
+            <div class="absolute inset-0 flex items-center justify-center px-6">
+                <img src="CB images/chore-boys-logo.png" alt="Chore Boys"
+                     class="hero-logo w-auto max-w-[86%] max-h-[74%]">
+            </div>
+        </div>
+
+        <!-- copy + calls to action -->
+        <div class="w-11/12 max-w-2xl mx-auto text-center pt-10 md:pt-12 pb-12 md:pb-16">
+            <p class="text-lg md:text-xl font-light opacity-90 mb-3">
+                With a combined 100 years of life experience, Chore Boys are the only choice for all of your lifestyle improvement projects.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-palette-acid font-bold mb-8">New Orleans · Live-Remixing DJ Duo</p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <a href="#shows" class="btn-hard btn-acid">NEXT SHOW ↓</a>
+                <a href="#contact" class="btn-hard btn-pink">BOOK US</a>
             </div>
         </div>
     </header>
-    
-    <div class="container relative z-10 w-11/12 max-w-5xl mx-auto pt-16 pb-12">
-        
+
+    <div class="container relative z-10 w-11/12 max-w-5xl mx-auto pt-12 pb-12">
+
         <!-- EMBEDDED VIDEOS -->
-        <div class="w-full mb-6">
+        <div id="watch" class="section-block w-full mb-6 scroll-mt-20">
+            <div class="section-header border-b-4 border-palette-blue">WATCH</div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full bg-palette-dark p-4">
                 <div class="w-full aspect-video">
                     <iframe width="100%" height="100%" src="https://www.youtube.com/embed/a6yigJwEYi4?si=f7HS8AENw1FU7VbH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
                 </div>
                 <div class="w-full aspect-video">
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/lrIGdKMwzpE" title="Chore Boys &quot;All Ask'd 4 U 2&quot; LIVE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
-                </div>
-            </div>
-        </div>
-
-        <!-- LINKS -->
-        <div class="section-block w-full mb-6">
-            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
-                LINKS
-            </div>
-            <div class="section-content bg-palette-pink">
-                <div class="p-8 md:p-12 text-center">
-                    <div class="flex flex-row gap-3 justify-center items-center flex-wrap">
-                        <a href="#contact" class="link-button">
-                            BOOKING
-                        </a>
-                        <a href="https://choreboys.bandcamp.com/" target="_blank" class="link-button">
-                            BANDCAMP
-                        </a>
-                        <a href="http://instagram.com/choreboys.party" target="_blank" class="link-button">
-                            INSTAGRAM
-                        </a>
-                        <a href="https://www.youtube.com/@choreboys.offical" target="_blank" class="link-button">
-                            YOUTUBE
-                        </a>
-                        <a href="https://www.mixcloud.com/choreboys/" target="_blank" class="link-button">
-                            MIXCLOUD
-                        </a>
-                    </div>
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/lrIGdKMwzpE?si=MpVBXtVrTwlaid1Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
                 </div>
             </div>
         </div>
 
         <!-- UPCOMING SHOWS -->
-        <div class="section-block w-full mb-6">
-            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
-                UPCOMING SHOWS
-            </div>
-            <div class="section-content bg-palette-dark text-white border-t-4 border-palette-blue">
-                <div class="text-content p-0">
+        <div id="shows" class="section-block w-full mb-6 scroll-mt-20">
+            <div class="section-header border-b-4 border-palette-pink">UPCOMING SHOWS</div>
+            <div class="section-content bg-palette-dark text-white">
 
-                    <!-- AUGUST -->
-                    <div class="tour-group">
-                        <div class="tour-group-header w-full flex items-center justify-between gap-4 px-4 sm:px-6 py-5 bg-palette-pink text-white cursor-pointer" onclick="toggleGroup('august')">
-                            <div class="flex flex-col items-start gap-1 sm:flex-row sm:items-baseline sm:gap-4 min-w-0">
-                                <span class="text-2xl font-black tracking-widest">AUGUST</span>
-                                <span class="text-sm font-light opacity-90 uppercase tracking-wider">New Orleans, LA</span>
-                            </div>
-                            <div class="flex items-center gap-3 flex-shrink-0">
-                                <span class="text-sm opacity-75">2 shows</span>
-                                <span id="august-arrow" class="text-xl" style="display:inline-block; transition: transform 0.3s;">▼</span>
-                            </div>
-                        </div>
-                        <div id="august" class="tour-group-body" style="max-height: 0; overflow: hidden; transition: max-height 0.45s ease;">
-                            <ul class="show-list list-none p-0 m-0 text-center">
-                                <li class="show-list-item">
-                                    <span class="show-date">AUG 20</span>
-                                    <span class="show-info">W/ HEELTURN</span>
-                                    <span class="show-venue">SATURN BAR</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">AUG 22</span>
-                                    <span class="show-venue">ANNA'S</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- SEPTEMBER -->
-                    <div class="tour-group">
-                        <div class="tour-group-header w-full flex items-center justify-between gap-4 px-4 sm:px-6 py-5 bg-palette-blue text-white cursor-pointer" onclick="toggleGroup('september')">
-                            <div class="flex flex-col items-start gap-1 sm:flex-row sm:items-baseline sm:gap-4 min-w-0">
-                                <span class="text-2xl font-black tracking-widest">SEPTEMBER</span>
-                                <span class="text-sm font-light opacity-75 uppercase tracking-wider">New Orleans, LA</span>
-                            </div>
-                            <div class="flex items-center gap-3 flex-shrink-0">
-                                <span class="text-sm opacity-60">2 shows</span>
-                                <span id="september-arrow" class="text-xl" style="display:inline-block; transition: transform 0.3s;">▼</span>
-                            </div>
-                        </div>
-                        <div id="september" class="tour-group-body" style="max-height: 0; overflow: hidden; transition: max-height 0.45s ease;">
-                            <ul class="show-list list-none p-0 m-0 text-center">
-                                <li class="show-list-item">
-                                    <span class="show-date">SEPT 5</span>
-                                    <span class="show-venue">ANNA'S</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">SEPT 6</span>
-                                    <span class="show-venue">VIRGIN HOTEL POOL</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- OCTOBER -->
-                    <div class="tour-group">
-                        <div class="tour-group-header w-full flex items-center justify-between gap-4 px-4 sm:px-6 py-5 bg-palette-pink text-white cursor-pointer" onclick="toggleGroup('october')">
-                            <div class="flex flex-col items-start gap-1 sm:flex-row sm:items-baseline sm:gap-4 min-w-0">
-                                <span class="text-2xl font-black tracking-widest">OCTOBER</span>
-                                <span class="text-sm font-light opacity-90 uppercase tracking-wider">New Orleans, LA + Austin &amp; Round Top, TX</span>
-                            </div>
-                            <div class="flex items-center gap-3 flex-shrink-0">
-                                <span class="text-sm opacity-75">6 shows</span>
-                                <span id="october-arrow" class="text-xl" style="display:inline-block; transition: transform 0.3s;">▼</span>
-                            </div>
-                        </div>
-                        <div id="october" class="tour-group-body" style="max-height: 0; overflow: hidden; transition: max-height 0.45s ease;">
-                            <ul class="show-list list-none p-0 m-0 text-center">
-                                <li class="show-list-item">
-                                    <span class="show-date">OCT 8</span>
-                                    <span class="show-info">SHERELLE W/ TOKI DOKI HOE, FREAK POV</span>
-                                    <span class="show-venue">ARORA</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                    <a href="https://www.tixr.com/e/203792" target="_blank" rel="noopener" class="ticket-btn">Buy Tickets Now!</a>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">OCT 9</span>
-                                    <span class="show-venue">BRUSHY ST. COMMONS</span>
-                                    <span class="show-time">Austin, TX</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">OCT 16</span>
-                                    <span class="show-venue">THE SAINT</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">OCT 17</span>
-                                    <span class="show-venue">ANNA'S</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">OCT 29</span>
-                                    <span class="show-info">MONSTER MASH!</span>
-                                    <span class="show-venue">ROUND TOP</span>
-                                    <span class="show-time">Round Top, TX</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">OCT 31</span>
-                                    <span class="show-info">W/ BROOKE</span>
-                                    <span class="show-venue">SATURN BAR</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- NOVEMBER -->
-                    <div class="tour-group">
-                        <div class="tour-group-header w-full flex items-center justify-between gap-4 px-4 sm:px-6 py-5 bg-palette-blue text-white cursor-pointer" onclick="toggleGroup('november')">
-                            <div class="flex flex-col items-start gap-1 sm:flex-row sm:items-baseline sm:gap-4 min-w-0">
-                                <span class="text-2xl font-black tracking-widest">NOVEMBER</span>
-                                <span class="text-sm font-light opacity-75 uppercase tracking-wider">New Orleans, LA</span>
-                            </div>
-                            <div class="flex items-center gap-3 flex-shrink-0">
-                                <span class="text-sm opacity-60">3 shows</span>
-                                <span id="november-arrow" class="text-xl" style="display:inline-block; transition: transform 0.3s;">▼</span>
-                            </div>
-                        </div>
-                        <div id="november" class="tour-group-body" style="max-height: 0; overflow: hidden; transition: max-height 0.45s ease;">
-                            <ul class="show-list list-none p-0 m-0 text-center">
-                                <li class="show-list-item">
-                                    <span class="show-date">NOV 7</span>
-                                    <span class="show-venue">ANNA'S</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">NOV 13</span>
-                                    <span class="show-venue">BLUE NILE</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                                <li class="show-list-item">
-                                    <span class="show-date">NOV 28</span>
-                                    <span class="show-venue">ANNA'S</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- DECEMBER -->
-                    <div class="tour-group">
-                        <div class="tour-group-header w-full flex items-center justify-between gap-4 px-4 sm:px-6 py-5 bg-palette-pink text-white cursor-pointer" onclick="toggleGroup('december')">
-                            <div class="flex flex-col items-start gap-1 sm:flex-row sm:items-baseline sm:gap-4 min-w-0">
-                                <span class="text-2xl font-black tracking-widest">DECEMBER</span>
-                                <span class="text-sm font-light opacity-90 uppercase tracking-wider">New Orleans, LA</span>
-                            </div>
-                            <div class="flex items-center gap-3 flex-shrink-0">
-                                <span class="text-sm opacity-75">1 show</span>
-                                <span id="december-arrow" class="text-xl" style="display:inline-block; transition: transform 0.3s;">▼</span>
-                            </div>
-                        </div>
-                        <div id="december" class="tour-group-body" style="max-height: 0; overflow: hidden; transition: max-height 0.45s ease;">
-                            <ul class="show-list list-none p-0 m-0 text-center">
-                                <li class="show-list-item">
-                                    <span class="show-date">DEC 31</span>
-                                    <span class="show-info">W/ BROOKIECITA</span>
-                                    <span class="show-venue">SATURN BAR</span>
-                                    <span class="show-time">New Orleans, LA</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="text-center py-8 border-t-2 border-white/10">
-                        <a href="shows.html" class="link-button">ALL SHOWS &amp; TICKETS</a>
-                    </div>
-
+                <!-- AUGUST -->
+                <div class="month-bar bg-palette-blue">
+                    <span class="font-display text-xl tracking-widest">AUGUST</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
                 </div>
+                <ul class="list-none p-0 m-0">
+                    <li class="show-list-item next-up">
+                        <span class="show-date">AUG 20</span>
+                        <span>
+                            <span class="next-up-tag">NEXT UP</span>
+                            <span class="show-info">w/ Heelturn</span>
+                            <span class="show-venue">Saturn Bar</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">AUG 22</span>
+                        <span>
+                            <span class="show-venue">Anna's</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                </ul>
+
+                <!-- SEPTEMBER -->
+                <div class="month-bar bg-palette-pink">
+                    <span class="font-display text-xl tracking-widest">SEPTEMBER</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                </div>
+                <ul class="list-none p-0 m-0">
+                    <li class="show-list-item">
+                        <span class="show-date">SEPT 5</span>
+                        <span>
+                            <span class="show-venue">Anna's</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">SEPT 6</span>
+                        <span>
+                            <span class="show-venue">Virgin Hotel Pool</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                </ul>
+
+                <!-- OCTOBER -->
+                <div class="month-bar bg-palette-blue">
+                    <span class="font-display text-xl tracking-widest">OCTOBER</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA + Austin &amp; Round Top, TX</span>
+                </div>
+                <ul class="list-none p-0 m-0">
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 8</span>
+                        <span>
+                            <span class="show-info">Sherelle w/ Toki Doki Hoe, FREAK POV</span>
+                            <span class="show-venue">ARORA</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                        <a href="https://www.tixr.com/e/203792" target="_blank" rel="noopener" class="ticket-btn">Buy Tickets Now!</a>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 9</span>
+                        <span>
+                            <span class="show-venue">Brushy St. Commons</span>
+                            <span class="show-city">Austin, TX</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 16</span>
+                        <span>
+                            <span class="show-venue">The Saint</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 17</span>
+                        <span>
+                            <span class="show-venue">Anna's</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 29</span>
+                        <span>
+                            <span class="show-info">Monster Mash!</span>
+                            <span class="show-venue">Round Top</span>
+                            <span class="show-city">Round Top, TX</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">OCT 31</span>
+                        <span>
+                            <span class="show-info">w/ Brooke</span>
+                            <span class="show-venue">Saturn Bar</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                </ul>
+
+                <!-- NOVEMBER -->
+                <div class="month-bar bg-palette-pink">
+                    <span class="font-display text-xl tracking-widest">NOVEMBER</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                </div>
+                <ul class="list-none p-0 m-0">
+                    <li class="show-list-item">
+                        <span class="show-date">NOV 7</span>
+                        <span>
+                            <span class="show-venue">Anna's</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">NOV 13</span>
+                        <span>
+                            <span class="show-venue">Blue Nile</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                    <li class="show-list-item">
+                        <span class="show-date">NOV 28</span>
+                        <span>
+                            <span class="show-venue">Anna's</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                </ul>
+
+                <!-- DECEMBER -->
+                <div class="month-bar bg-palette-blue">
+                    <span class="font-display text-xl tracking-widest">DECEMBER</span>
+                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                </div>
+                <ul class="list-none p-0 m-0">
+                    <li class="show-list-item">
+                        <span class="show-date">DEC 31</span>
+                        <span>
+                            <span class="show-info">w/ Brookiecita</span>
+                            <span class="show-venue">Saturn Bar</span>
+                            <span class="show-city">New Orleans, LA</span>
+                        </span>
+                    </li>
+                </ul>
+
+                <div class="text-center py-6 border-t-2 border-white/10">
+                    <a href="shows.html" class="text-palette-acid font-black uppercase tracking-widest text-sm no-underline hover:underline">All shows &amp; tickets →</a>
+                </div>
+
             </div>
         </div>
 
         <!-- MIXES -->
-        <div class="section-block w-full mb-6">
-            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
-                FEATURED MIXES
-            </div>
+        <div id="mixes" class="section-block w-full mb-6 scroll-mt-20">
+            <div class="section-header border-b-4 border-palette-acid">FEATURED MIXES</div>
             <div class="section-content bg-palette-blue">
                 <div class="p-8 space-y-4">
                     <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchoreplay-mini-mix-1-150bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
-                    
+
                     <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchoreplay-mini-mix-2-92bpm%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
-                    
+
                     <iframe width="100%" height="60" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fchoreboys%2Fchore-boys-mini-mix-3-live%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;" class="w-full"></iframe>
                 </div>
             </div>
         </div>
 
         <!-- WHO THE BOYS ARE -->
-        <div class="section-block w-full mb-6">
-            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
-                WHO THE BOYS ARE
-            </div>
+        <div id="boys" class="section-block w-full mb-6 scroll-mt-20">
+            <div class="section-header border-b-4 border-palette-blue">WHO THE BOYS ARE</div>
             <div class="section-content bg-palette-gray">
                 <div class="p-8 md:p-12">
                     <!-- Main Header Image -->
-                    <div class="mb-6 flex justify-center">
+                    <div class="mb-10 flex justify-center">
                         <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/CB images/CB_Glarbo_01.png" alt="Chore Boys" class="w-full md:max-w-2xl aspect-video object-cover grayscale hover:grayscale-0 transition-all duration-500 shadow-xl border-2 border-black">
                     </div>
 
@@ -517,7 +581,7 @@
                     <div id="bio-messy" class="individual-bio-panel">
                         <div class="bg-white/50 p-6 md:p-8 border-l-4 border-palette-blue shadow-sm">
                             <h4 class="text-xl font-black mb-4 uppercase tracking-widest text-palette-blue">Messy</h4>
-                            <div class="space-y-4 text-lg leading-relaxed text-black">
+                            <div class="space-y-4 text-base leading-relaxed text-black">
                                 <p class="italic font-medium">
                                     Messy came to New Orleans in 2005 and never left. He spent his early years producing films, including a stint as Associate Producer on Beasts of the Southern Wild, before realizing he cared less about the filmmaking and more about the party after wrap. That pull led him straight into DJing and event production, working and performing at Glastonbury Festival and Bonnaroo.
                                 </p>
@@ -532,62 +596,89 @@
                     <div id="bio-rusty" class="individual-bio-panel">
                         <div class="bg-white/50 p-6 md:p-8 border-l-4 border-palette-pink shadow-sm">
                             <h4 class="text-xl font-black mb-4 uppercase tracking-widest text-palette-pink">Rusty Lazer</h4>
-                            <div class="space-y-4 text-lg leading-relaxed text-black">
+                            <div class="space-y-4 text-base leading-relaxed text-black">
                                 <p class="italic font-medium">
-                                    Rusty Lazer is a DJ, Producer, Artist Manager and Non-Profit founder who has called New Orleans home since the mid 90’s, when he arrived with his drums and a lifetime of performing an eclectic range of music from jazz to classical, and punk to new wave.
+                                    Rusty Lazer is a DJ, Producer, Artist Manager and Non-Profit founder who has called New Orleans home since the mid 90&rsquo;s, when he arrived with his drums and a lifetime of performing an eclectic range of music from jazz to classical, and punk to new wave.
                                 </p>
                                 <p>
-                                    In the upheaval and loss after Katrina, he transitioned from playing in 5 active touring bands to DJ’ing. His first set in 2007 was at an ex-girlfriend and bandmate’s birthday, and just a couple of years later he was managing, DJ’ing and touring the world many times over with Bounce Music legends Big Freedia, Katey Red, Nicky Da B and Ha Sizzle. Nicky Da B’s track on Diplo’s first solo record, “Express Yourself”, remains one of the most enduring creations from this period. His sets at the time were dubbed “a sweaty, mega-mix crash course in the sound of New Orleans,” These days his tastes encompass a spectrum that includes the music of his adopted hometown blended with genres beyond the generational and geographical, and always 100% dance party focused.
+                                    In the upheaval and loss after Katrina, he transitioned from playing in 5 active touring bands to DJ&rsquo;ing. His first set in 2007 was at an ex-girlfriend and bandmate&rsquo;s birthday, and just a couple of years later he was managing, DJ&rsquo;ing and touring the world many times over with Bounce Music legends Big Freedia, Katey Red, Nicky Da B and Ha Sizzle. Nicky Da B&rsquo;s track on Diplo&rsquo;s first solo record, &ldquo;Express Yourself&rdquo;, remains one of the most enduring creations from this period. His sets at the time were dubbed &ldquo;a sweaty, mega-mix crash course in the sound of New Orleans,&rdquo; These days his tastes encompass a spectrum that includes the music of his adopted hometown blended with genres beyond the generational and geographical, and always 100% dance party focused.
                                 </p>
                                 <p>
-                                    In addition to his work as an artist, in 2008 he co-founded the artist exchange non-profit New Orleans Airlift in an effort to create opportunities for local artists to engage with the wider world through global travel. He’s a founding creator of its flagship project, Music Box Village, a “village of musical architecture” that still hosts cross-culture collaborations in New Orleans’ Bywater neighborhood.
+                                    In addition to his work as an artist, in 2008 he co-founded the artist exchange non-profit New Orleans Airlift in an effort to create opportunities for local artists to engage with the wider world through global travel. He&rsquo;s a founding creator of its flagship project, Music Box Village, a &ldquo;village of musical architecture&rdquo; that still hosts cross-culture collaborations in New Orleans&rsquo; Bywater neighborhood.
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Updated Combined Bio with Paragraph Breaks -->
+                    <!-- Combined Bio -->
                     <div class="pt-2 space-y-6">
                         <p class="text-lg md:text-xl leading-relaxed text-black font-medium">
-                        Chore Boys is the newest project of New Orleans DJs Messy and Rusty Lazer, a live-remixing duo whose partnership began on a video shoot for Bounce artist Big Freedia not long after Hurricane Katrina. Rusty was DJ’ing, managing and touring globally with Big Freedia, Katey Red and Nicky Da B, and Casey was producing alongside his work on the Oscar-nominated film Beasts of the Southern Wild.
-                        </p>
-                        
-                        <p class="text-lg md:text-xl leading-relaxed text-black font-medium">
-                        In 2024 their friendship turned a corner as they bonded over shared musicianship (guitar and drums respectively). With a combined 31 years of performing and producing experience, they think of themselves as friends first, musicians second, and DJ’s most recently. Their sets are live-remixed, improvised, rapid-fire adventures in dance floor mayhem punctuated by elements of intense classic hits and obscure personal faves.
+                        Chore Boys is the newest project of New Orleans DJs Messy and Rusty Lazer, a live-remixing duo whose partnership began on a video shoot for Bounce artist Big Freedia not long after Hurricane Katrina. Rusty was DJ&rsquo;ing, managing and touring globally with Big Freedia, Katey Red and Nicky Da B, and Casey was producing alongside his work on the Oscar-nominated film Beasts of the Southern Wild.
                         </p>
 
                         <p class="text-lg md:text-xl leading-relaxed text-black font-medium">
-                        Following several sets at Glastonbury Festival in 2025, and building on Rusty’s extensive touring across Europe, the U.S., and Asia since 2011, the duo continues to push the boundaries of the traditional DJ set.
+                        In 2024 their friendship turned a corner as they bonded over shared musicianship (guitar and drums respectively). With a combined 31 years of performing and producing experience, they think of themselves as friends first, musicians second, and DJ&rsquo;s most recently. Their sets are live-remixed, improvised, rapid-fire adventures in dance floor mayhem punctuated by elements of intense classic hits and obscure personal faves.
+                        </p>
+
+                        <p class="text-lg md:text-xl leading-relaxed text-black font-medium">
+                        Following several sets at Glastonbury Festival in 2025, and building on Rusty&rsquo;s extensive touring across Europe, the U.S., and Asia since 2011, the duo continues to push the boundaries of the traditional DJ set.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- KEEP UP -->
-        <div id="contact" class="section-block w-full mb-6 scroll-mt-4">
-            <div class="section-header bg-black text-white text-3xl sm:text-2xl font-light tracking-wider text-center py-10">
-                KEEP UP
-            </div>
+        <!-- BOOKING & CONTACT -->
+        <div id="contact" class="section-block w-full mb-6 scroll-mt-20">
+            <div class="section-header border-b-4 border-palette-pink">BOOKING &amp; CONTACT</div>
             <div class="section-content bg-palette-acid text-black">
                 <div class="text-content p-8">
+                    <p class="text-center text-lg font-bold max-w-xl mx-auto mb-6">Weddings, festivals, backyard mayhem — tell us about your lifestyle improvement project.</p>
                     <div id="formStatus" class="form-status text-center text-xl font-bold p-4 mt-4" style="display: none;"></div>
 
-                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto"
-                          action="https://docs.google.com/forms/d/e/1FAIpQLSc9vf-SXrgzU6C4g4Lq3TWTBDT5dICYne1ZYQJszMI68_fviA/formResponse"
-                          method="POST"
-                          target="hidden_iframe">
-                        
-                        <input type="text" placeholder="Your Name" name="entry.14617025" required class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
-                        
-                        <input type="email" placeholder="Your Email" name="entry.1915870487" required class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
-                        
-                        <textarea placeholder="Your Message / Booking Inquiry" name="entry.2082616783" rows="5" required class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none resize-y"></textarea>
-                        
-                        <button type="submit" id="submitButton" class="bg-black text-white py-4 px-8 border-none text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-palette-pink hover:scale-105">SEND MESSAGE</button>
-                    </form>
+                    <form id="contactForm" class="contact-form flex flex-col space-y-6 max-w-xl mx-auto">
 
-                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+                        <input type="text" placeholder="Your Name" name="name" required
+                               class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
+
+                        <input type="email" placeholder="Your Email" name="email" required
+                               class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
+
+                        <textarea placeholder="Your Message / Booking Inquiry" name="message" rows="5" required
+                                  class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none resize-y"></textarea>
+
+                        <!-- Honeypot: hidden from real users via CSS, bots often fill every field -->
+                        <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+                            <label for="website">Leave this field blank</label>
+                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        <!-- SMS opt-in block -->
+                        <div class="border-2 border-black bg-white p-4 space-y-3">
+                            <input type="tel" placeholder="Mobile Phone Number (optional)" name="phone"
+                                   class="p-4 border-2 border-black text-base w-full transition-colors bg-white focus:bg-palette-gray focus:outline-none">
+
+                            <label class="flex items-start gap-3 text-sm leading-snug cursor-pointer">
+                                <input type="checkbox" name="smsOptIn" value="yes"
+                                       class="mt-1 w-5 h-5 flex-shrink-0 border-2 border-black">
+                                <span>
+                                    Yes, sign me up for text messages from Chore Boys. I agree to receive SMS/text messages about show announcements, new releases, and drops. Message frequency varies (up to 6 msgs/month). Msg & data rates may apply. Reply STOP to cancel, HELP for help. This is not required to submit this form.
+                                    <a href="terms.html" class="underline" target="_blank">Terms</a> &middot;
+                                    <a href="privacy.html" class="underline" target="_blank">Privacy</a>.
+                                    Consent is not a condition of any purchase.
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- Cloudflare Turnstile widget — auto-renders into this div -->
+                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAEW_doaB_G35ogOq"></div>
+
+                        <button type="submit" id="submitButton"
+                                class="bg-black text-white py-4 px-8 border-none text-xl font-bold tracking-wider cursor-pointer transition-all duration-300 hover:bg-palette-pink hover:scale-105">
+                            SEND MESSAGE
+                        </button>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -597,14 +688,18 @@
     <!-- FOOTER -->
     <footer class="relative z-10 bg-black text-white border-t-4 border-palette-acid">
         <div class="w-11/12 max-w-5xl mx-auto py-10 text-center">
+            <div class="font-display text-2xl tracking-widest mb-2">CHORE <span class="text-palette-acid">BOYS</span></div>
+            <p class="text-sm opacity-70 mb-6">New Orleans, LA · friends first, musicians second, DJs together</p>
             <div class="flex flex-row gap-3 justify-center items-center flex-wrap mb-6">
-                <a href="shows.html" class="link-button">SHOWS</a>
                 <a href="#contact" class="link-button">BOOKING</a>
+                <a href="https://choreboys.bandcamp.com/" target="_blank" class="link-button">BANDCAMP</a>
+                <a href="http://instagram.com/choreboys.party" target="_blank" class="link-button">INSTAGRAM</a>
+                <a href="https://www.youtube.com/@choreboys.offical" target="_blank" class="link-button">YOUTUBE</a>
+                <a href="https://www.mixcloud.com/choreboys/" target="_blank" class="link-button">MIXCLOUD</a>
                 <a href="privacy.html" class="link-button">PRIVACY POLICY</a>
                 <a href="terms.html" class="link-button">TERMS</a>
             </div>
-            <p class="text-sm opacity-70 mb-2">New Orleans, LA · friends first, musicians second, DJs most recently</p>
-            <p class="text-xs opacity-50">&copy; 2026 Two Fold Arts LLC dba Chore Boys · choreboys.party</p>
+            <p class="text-xs opacity-50">&copy; 2026 Chore Boys · choreboys.party</p>
         </div>
     </footer>
 
@@ -622,43 +717,136 @@
             var file = (n === 10102) ? n + '.png' : n + '.jpg';
             document.body.style.backgroundImage = "url('images/" + file + "')";
         })();
+
+        /* ===== BIO FOLDS =====
+           Clicking a name opens that bio and closes the other one; clicking the
+           open name closes it again. Same behaviour as index.html. */
+        function toggleBio(dj) {
+            var bioMessy = document.getElementById('bio-messy');
+            var bioRusty = document.getElementById('bio-rusty');
+            var btnMessy = document.getElementById('btn-messy');
+            var btnRusty = document.getElementById('btn-rusty');
+            if (!bioMessy || !bioRusty) return;
+
+            var open  = (dj === 'messy') ? bioMessy : bioRusty;
+            var openBtn  = (dj === 'messy') ? btnMessy : btnRusty;
+            var close = (dj === 'messy') ? bioRusty : bioMessy;
+            var closeBtn = (dj === 'messy') ? btnRusty : btnMessy;
+
+            var wasActive = open.classList.contains('active');
+            close.classList.remove('active');
+            if (closeBtn) closeBtn.classList.remove('active');
+
+            open.classList.toggle('active', !wasActive);
+            if (openBtn) openBtn.classList.toggle('active', !wasActive);
+        }
+
+        /* ===== HERO PHOTO =====
+           Rotates between the hero banner shots, one per page load.
+           TO ADD MORE: drop the file in images/ and add its name here. */
+        (function () {
+            var HEROES = [
+                'images/CB_Banner.jpg'
+            ];
+            var img = document.getElementById('heroImg');
+            if (img) img.src = HEROES[Math.floor(Math.random() * HEROES.length)];
+        })();
+
+        /* ===== HERO PARALLAX =====
+           The photo drifts at ~30% of scroll speed while the header is on screen.
+           It STARTS bottom-justified (offset -limit, matching the CSS resting
+           transform) and drifts down as you scroll, revealing more of the top of
+           the photo. TO TUNE: change RATE (higher = more drift). The CSS gives
+           the image 10% of headroom above and below the band, capping travel. */
+        (function () {
+            var RATE = 0.3;
+            var band = document.querySelector('.hero-band');
+            var img  = document.getElementById('heroImg');
+            if (!band || !img) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            var limit = 0, ticking = false;
+
+            function measure() {
+                limit = band.offsetHeight * 0.1;
+                update();
+            }
+            function update() {
+                ticking = false;
+                var y = window.pageYOffset || document.documentElement.scrollTop;
+                if (y > band.offsetHeight + 200) return;   // header is gone, stop working
+                var offset = -limit + (y * RATE);
+                if (offset > limit) offset = limit;
+                if (offset < -limit) offset = -limit;
+                img.style.transform = 'translate3d(0,' + offset.toFixed(1) + 'px,0)';
+            }
+            function onScroll() {
+                if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+            }
+
+            measure();
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', measure);
+        })();
     </script>
-    <script>
-        let submitted = false;
+    <script data-cfasync="false">
+        /* Posts to the Cloudflare Worker, which verifies Turnstile and the
+           honeypot before forwarding the message. Replaced the old
+           Google-Forms-via-hidden-iframe handler. */
+
+        const WORKER_URL = "https://choreboys-contact.choreboys.workers.dev";
 
         const form = document.getElementById('contactForm');
         const statusMessage = document.getElementById('formStatus');
-        const hiddenIframe = document.getElementById('hidden_iframe');
         const submitButton = document.getElementById('submitButton');
 
-        function showSuccessMessage() {
-            if (submitted) {
-                statusMessage.style.display = 'block';
-                statusMessage.className = 'form-status success bg-custom-success text-white';
-                statusMessage.textContent = 'Thank you! Your message has been sent successfully.';
-                
-                form.reset();
-                submitButton.disabled = false;
-                submitButton.textContent = 'SEND MESSAGE';
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-                setTimeout(() => {
-                    statusMessage.style.display = 'none';
-                }, 5000);
-                submitted = false;
-            }
-        }
-
-        form.addEventListener('submit', function(e) {
-            submitted = true;
             submitButton.disabled = true;
             submitButton.textContent = 'SENDING...';
             statusMessage.style.display = 'block';
             statusMessage.className = 'form-status loading bg-custom-loading text-black';
-            statusMess
-age.textContent = 'Sending your message...';
-        });
+            statusMessage.textContent = 'Sending your message...';
 
-        hiddenIframe.addEventListener('load', showSuccessMessage);
+            const formData = new FormData(form);
+            const turnstileToken = formData.get('cf-turnstile-response');
+
+            const payload = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                message: formData.get('message'),
+                phone: formData.get('phone') || null,
+                smsOptIn: formData.get('smsOptIn') === 'yes',
+                website: formData.get('website'), // honeypot
+                turnstileToken: turnstileToken,
+            };
+
+            try {
+                const res = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    statusMessage.className = 'form-status success bg-custom-success text-white';
+                    statusMessage.textContent = 'Thank you! Your message has been sent successfully.';
+                    form.reset();
+                    if (window.turnstile) window.turnstile.reset();
+                } else {
+                    throw new Error(data.error || 'Something went wrong');
+                }
+            } catch (err) {
+                statusMessage.className = 'form-status error bg-custom-error text-white';
+                statusMessage.textContent = 'Sorry, something went wrong. Please try again or email us directly.';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'SEND MESSAGE';
+                setTimeout(() => { statusMessage.style.display = 'none'; }, 5000);
+            }
+        });
     </script>
 </body>
 </html>
