@@ -11,7 +11,9 @@
     <meta property="og:url" content="https://choreboys.party/">
     <meta property="og:title" content="Chore Boys — New Orleans Live-Remixing DJ Duo">
     <meta property="og:description" content="With a combined 100 years of life experience, Chore Boys are the only choice for all of your lifestyle improvement projects.">
-    <meta property="og:image" content="https://choreboys.party/images/CB_Banner.jpg">
+    <meta property="og:image" content="https://choreboys.party/images/CB_Double_Exp_og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23121212%22/><text y=%22.85em%22 font-size=%2260%22 fill=%22%23DFFF00%22 font-weight=%22900%22 font-family=%22Arial, sans-serif%22 text-anchor=%22middle%22 x=%2250%22>CB</text></svg>">
@@ -135,6 +137,48 @@
         }
         .hero-logo {
             filter: drop-shadow(0 1px 2px rgba(0,0,0,0.45));
+        }
+
+        /* Bio Transitions */
+        .individual-bio-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            opacity: 0;
+        }
+        .individual-bio-panel.active {
+            max-height: 1200px;
+            opacity: 1;
+            margin-bottom: 2rem;
+        }
+
+        /* Name Toggle Box Styling */
+        .name-box {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 0.4rem 1.2rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .name-box-messy:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: #007BFF;
+            color: #007BFF;
+        }
+        .name-box-rusty:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: #FF007F;
+            color: #FF007F;
+        }
+        .name-box-messy.active {
+            background: #007BFF;
+            color: white;
+            border-color: #007BFF;
+        }
+        .name-box-rusty.active {
+            background: #FF007F;
+            color: white;
+            border-color: #FF007F;
         }
 
         .btn-hard {
@@ -522,23 +566,33 @@
                         <img src="https://raw.githubusercontent.com/m3ssyforever/choreboys/main/CB images/CB_Glarbo_01.png" alt="Chore Boys" class="w-full md:max-w-2xl aspect-video object-cover grayscale hover:grayscale-0 transition-all duration-500 shadow-xl border-2 border-black">
                     </div>
 
-                    <!-- Individual Bios — side by side, always visible -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                    <!-- Interactive Name Toggles -->
+                    <div class="flex flex-row justify-center gap-4 md:gap-6 mb-8">
+                        <div id="btn-messy" class="name-box name-box-messy group text-center" onclick="toggleBio('messy')">
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-tighter transition-colors">Messy</h3>
+                        </div>
+                        <div id="btn-rusty" class="name-box name-box-rusty group text-center" onclick="toggleBio('rusty')">
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-tighter transition-colors">Rusty Lazer</h3>
+                        </div>
+                    </div>
+
+                    <!-- Messy Bio Panel -->
+                    <div id="bio-messy" class="individual-bio-panel">
                         <div class="bg-white/50 p-6 md:p-8 border-l-4 border-palette-blue shadow-sm">
                             <h4 class="text-xl font-black mb-4 uppercase tracking-widest text-palette-blue">Messy</h4>
                             <div class="space-y-4 text-base leading-relaxed text-black">
                                 <p class="italic font-medium">
-                                    In 2005, Messy arrived in New Orleans to study film, sparking a twenty-year love affair with the city and the art of the celebrating together. Messy had the privilege to work as Associate Producer on the Oscar-nominated Beasts of the Southern Wild and went on to co-found the non-profit Court 13 Arts to keep that creative fire burning in Louisiana.
+                                    Messy came to New Orleans in 2005 and never left. He spent his early years producing films, including a stint as Associate Producer on Beasts of the Southern Wild, before realizing he cared less about the filmmaking and more about the party after wrap. That pull led him straight into DJing and event production, working and performing at Glastonbury Festival and Bonnaroo.
                                 </p>
                                 <p>
-                                    Along the way, he discovered that his true medium wasn't just film and art-making, it was the party itself. Whether he was launching the Always for Pleasure festival, to helping run the legendary Carhenge field at Glastonbury, or producing high-octane events for Bonnaroo and Sundance via his company event production company Everything Forever, Messy learned that a dance floor is a place where we can all truly be free.
-                                </p>
-                                <p>
-                                    After a decade-long semi-party-hiatus spent raising a now nine-year-old son, Messy is stepping back into the booth as one-half of Chore Boys. He returns to the nightlife not just as a DJ, but as a believer in the restorative power of a shared rhythm. He&rsquo;s here to play the music that makes the work of being human feel like celebration.
+                                    After a decade-long slowdown to raise a family, he is back in the night world. As one half of Chore Boys, Messy gets what he has always wanted, a room full of strangers turning into a single moving crowd.
                                 </p>
                             </div>
                         </div>
+                    </div>
 
+                    <!-- Rusty Bio Panel -->
+                    <div id="bio-rusty" class="individual-bio-panel">
                         <div class="bg-white/50 p-6 md:p-8 border-l-4 border-palette-pink shadow-sm">
                             <h4 class="text-xl font-black mb-4 uppercase tracking-widest text-palette-pink">Rusty Lazer</h4>
                             <div class="space-y-4 text-base leading-relaxed text-black">
@@ -632,6 +686,29 @@
             var file = (n === 10102) ? n + '.png' : n + '.jpg';
             document.body.style.backgroundImage = "url('images/" + file + "')";
         })();
+
+        /* ===== BIO FOLDS =====
+           Clicking a name opens that bio and closes the other one; clicking the
+           open name closes it again. Same behaviour as index.html. */
+        function toggleBio(dj) {
+            var bioMessy = document.getElementById('bio-messy');
+            var bioRusty = document.getElementById('bio-rusty');
+            var btnMessy = document.getElementById('btn-messy');
+            var btnRusty = document.getElementById('btn-rusty');
+            if (!bioMessy || !bioRusty) return;
+
+            var open  = (dj === 'messy') ? bioMessy : bioRusty;
+            var openBtn  = (dj === 'messy') ? btnMessy : btnRusty;
+            var close = (dj === 'messy') ? bioRusty : bioMessy;
+            var closeBtn = (dj === 'messy') ? btnRusty : btnMessy;
+
+            var wasActive = open.classList.contains('active');
+            close.classList.remove('active');
+            if (closeBtn) closeBtn.classList.remove('active');
+
+            open.classList.toggle('active', !wasActive);
+            if (openBtn) openBtn.classList.toggle('active', !wasActive);
+        }
 
         /* ===== HERO PHOTO =====
            Rotates between the hero banner shots, one per page load.
