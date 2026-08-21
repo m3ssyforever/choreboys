@@ -118,8 +118,25 @@
             max-height: 720px;
             background: #000;
         }
+        /* On a phone the band is far taller than the 2:1 banner is wide, so
+           object-fit: cover was zooming in and pushing both faces past the
+           edges. Below 640px drop the fixed height and the parallax entirely
+           and just lay the whole banner in flow — nothing cropped. */
         @media (max-width: 640px) {
-            .hero-band { height: 52vh; min-height: 300px; }
+            .hero-band {
+                height: auto;
+                min-height: 0;
+                max-height: none;
+            }
+            .hero-band > img {
+                position: relative;
+                top: 0;
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+                /* beats the inline transform the parallax script writes */
+                transform: none !important;
+            }
         }
         .hero-band > img {
             /* swap to grayscale(100%) contrast(1.08) for the B&W version */
@@ -147,8 +164,10 @@
             transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
             opacity: 0;
         }
+        /* No fixed max-height here on purpose. A hard cap clipped Rusty's bio on
+           narrow screens, where the same text wraps to far more lines. The
+           script measures scrollHeight and sets max-height inline instead. */
         .individual-bio-panel.active {
-            max-height: 1200px;
             opacity: 1;
             margin-bottom: 2rem;
         }
@@ -265,6 +284,46 @@
             padding: 0.2rem 0.6rem;
             margin-bottom: 0.35rem;
         }
+
+        /* A show that already happened. Stays listed until the whole month is
+           removed, so the run of dates still reads as a run. */
+        .show-list-item.past {
+            opacity: 0.45;
+            border-left: 8px solid rgba(255,255,255,0.2);
+        }
+        .show-list-item.past .show-venue,
+        .show-list-item.past .show-info,
+        .show-list-item.past .show-city,
+        .show-list-item.past .show-date { text-decoration: line-through; }
+        .show-list-item.past .show-date { background-color: #5F5E5A; }
+        .past-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.22);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            padding: 0.2rem 0.6rem;
+            margin-bottom: 0.35rem;
+        }
+        /* Tickets are pointless once the show has happened */
+        .show-list-item.past .ticket-btn { display: none; }
+        /* A past featured show drops back to looking like any other past show */
+        .show-list-item.past.featured { background: transparent; }
+        .show-list-item.past .featured-tag { display: none; }
+        .show-list-item.past .featured-headliner,
+        .show-list-item.past .featured-support,
+        .show-list-item.past .featured-venue { text-decoration: line-through; }
+        [hidden] { display: none !important; }
+        .no-shows {
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
         .show-list-item {
             flex-wrap: wrap;
         }
@@ -297,22 +356,102 @@
         @media (max-width: 640px) {
             .ticket-btn { margin-left: 0; width: 100%; text-align: center; }
         }
+        /* Month bars are the accordion triggers */
         .month-bar {
             display: flex;
-            align-items: baseline;
+            align-items: center;
             justify-content: space-between;
-            gap: 0.25rem 1rem;
+            gap: 0.5rem 1rem;
             padding: 0.9rem 1.5rem;
             color: white;
+            border: none;
+            width: 100%;
+            font-family: inherit;
+            cursor: pointer;
+            text-align: left;
+            transition: filter 0.2s ease;
         }
-        /* On narrow screens the month and the city list fight for one line and
+        .month-bar:hover { filter: brightness(1.12); }
+        .month-bar-left {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            min-width: 0;
+        }
+        .month-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+        .month-arrow {
+            display: inline-block;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+        .month-arrow.open { transform: rotate(180deg); }
+
+        .tour-group { border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .tour-group-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s ease;
+        }
+
+        /* On narrow screens the month and the city fight for one line and
            collide. Stack them instead. */
         @media (max-width: 640px) {
-            .month-bar {
+            .month-bar { padding: 0.9rem 1rem; }
+            .month-bar-left {
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 0.9rem 1rem;
+                gap: 0.15rem;
             }
+        }
+
+        /* Featured show — a touring headliner outranks the venue, so this
+           inverts the normal hierarchy used by the other listings. */
+        .show-list-item.featured {
+            background: rgba(223, 255, 0, 0.07);
+            border-left: 8px solid #DFFF00;
+        }
+        .featured-body { min-width: 0; }
+        .featured-tag {
+            display: inline-block;
+            background: #FF007F;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.6rem;
+            margin-bottom: 0.4rem;
+        }
+        .featured-headliner {
+            display: block;
+            font-family: 'Archivo Black', Arial, sans-serif;
+            font-size: 2.4rem;
+            line-height: 1;
+            letter-spacing: 0.02em;
+            color: #DFFF00;
+            text-transform: uppercase;
+        }
+        .featured-support {
+            display: block;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            opacity: 0.9;
+            margin-top: 0.45rem;
+        }
+        .featured-venue {
+            display: block;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-top: 0.15rem;
+        }
+        @media (max-width: 640px) {
+            .featured-headliner { font-size: 1.9rem; }
         }
 
         /* Section headers — slimmer, harder */
@@ -391,150 +530,212 @@
             <div class="section-header border-b-4 border-palette-pink">UPCOMING SHOWS</div>
             <div class="section-content bg-palette-dark text-white">
 
+                <!-- Rendered from the show spreadsheet by shows.js.
+                     The months below are the fallback shown if that fetch fails. -->
+                <div id="showsList" data-mode="accordion">
                 <!-- AUGUST -->
-                <div class="month-bar bg-palette-blue">
-                    <span class="font-display text-xl tracking-widest">AUGUST</span>
-                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                <div class="tour-group" data-month="august">
+                    <button type="button" class="month-bar bg-palette-blue w-full text-left" aria-expanded="true" aria-controls="august" onclick="toggleGroup('august')">
+                        <span class="month-bar-left">
+                            <span class="font-display text-xl tracking-widest">AUGUST</span>
+                            <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                        </span>
+                        <span class="month-bar-right">
+                            <span class="text-sm opacity-75">2 shows</span>
+                            <span id="august-arrow" class="month-arrow open">&#9660;</span>
+                        </span>
+                    </button>
+                    <div id="august" class="tour-group-body open">
+                        <ul class="list-none p-0 m-0">
+                        <li class="show-list-item past" data-date="2026-08-20">
+                            <span class="show-date">AUG 20</span>
+                            <span>
+                                <span class="past-tag">PLAYED</span>
+                                <span class="show-info">w/ Heelturn</span>
+                                <span class="show-venue">Saturn Bar</span>
+                                <span class="show-city">New Orleans, LA</span>
+                            </span>
+                        </li>
+                        <li class="show-list-item next-up" data-date="2026-08-22">
+                            <span class="show-date">AUG 22</span>
+                            <span>
+                                <span class="next-up-tag">NEXT UP</span>
+                                <span class="show-venue">Anna's</span>
+                                <span class="show-city">New Orleans, LA</span>
+                            </span>
+                        </li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="list-none p-0 m-0">
-                    <li class="show-list-item next-up">
-                        <span class="show-date">AUG 20</span>
-                        <span>
-                            <span class="next-up-tag">NEXT UP</span>
-                            <span class="show-info">w/ Heelturn</span>
-                            <span class="show-venue">Saturn Bar</span>
-                            <span class="show-city">New Orleans, LA</span>
-                        </span>
-                    </li>
-                    <li class="show-list-item">
-                        <span class="show-date">AUG 22</span>
-                        <span>
-                            <span class="show-venue">Anna's</span>
-                            <span class="show-city">New Orleans, LA</span>
-                        </span>
-                    </li>
-                </ul>
 
                 <!-- SEPTEMBER -->
-                <div class="month-bar bg-palette-pink">
-                    <span class="font-display text-xl tracking-widest">SEPTEMBER</span>
-                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                <div class="tour-group" data-month="september">
+                    <button type="button" class="month-bar bg-palette-pink w-full text-left" aria-expanded="false" aria-controls="september" onclick="toggleGroup('september')">
+                        <span class="month-bar-left">
+                            <span class="font-display text-xl tracking-widest">SEPTEMBER</span>
+                            <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                        </span>
+                        <span class="month-bar-right">
+                            <span class="text-sm opacity-75">2 shows</span>
+                            <span id="september-arrow" class="month-arrow">&#9660;</span>
+                        </span>
+                    </button>
+                    <div id="september" class="tour-group-body">
+                        <ul class="list-none p-0 m-0">
+                        <li class="show-list-item" data-date="2026-09-05">
+                            <span class="show-date">SEPT 5</span>
+                            <span>
+                                <span class="show-venue">Anna's</span>
+                                <span class="show-city">New Orleans, LA</span>
+                            </span>
+                        </li>
+                        <li class="show-list-item" data-date="2026-09-06">
+                            <span class="show-date">SEPT 6</span>
+                            <span>
+                                <span class="show-venue">Virgin Hotel Pool</span>
+                                <span class="show-city">New Orleans, LA</span>
+                            </span>
+                        </li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="list-none p-0 m-0">
-                    <li class="show-list-item">
-                        <span class="show-date">SEPT 5</span>
-                        <span>
-                            <span class="show-venue">Anna's</span>
-                            <span class="show-city">New Orleans, LA</span>
-                        </span>
-                    </li>
-                    <li class="show-list-item">
-                        <span class="show-date">SEPT 6</span>
-                        <span>
-                            <span class="show-venue">Virgin Hotel Pool</span>
-                            <span class="show-city">New Orleans, LA</span>
-                        </span>
-                    </li>
-                </ul>
 
                 <!-- OCTOBER -->
-                <div class="month-bar bg-palette-blue">
-                    <span class="font-display text-xl tracking-widest">OCTOBER</span>
-                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA + Austin &amp; Round Top, TX</span>
+                <div class="tour-group" data-month="october">
+                    <button type="button" class="month-bar bg-palette-blue w-full text-left" aria-expanded="false" aria-controls="october" onclick="toggleGroup('october')">
+                        <span class="month-bar-left">
+                            <span class="font-display text-xl tracking-widest">OCTOBER</span>
+                            <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA + Austin &amp; Round Top, TX</span>
+                        </span>
+                        <span class="month-bar-right">
+                            <span class="text-sm opacity-75">6 shows</span>
+                            <span id="october-arrow" class="month-arrow">&#9660;</span>
+                        </span>
+                    </button>
+                    <div id="october" class="tour-group-body">
+                        <ul class="list-none p-0 m-0">
+                        <li class="show-list-item featured" data-date="2026-10-08">
+                            <span class="show-date">OCT 8</span>
+                            <span class="featured-body">
+                                <span class="featured-tag">Special Guest</span>
+                                <span class="featured-headliner">SHERELLE</span>
+                                <span class="featured-support">with Chore Boys, Toki Doki Hoe, FREAK POV</span>
+                                <span class="featured-venue">ARORA &middot; New Orleans, LA</span>
+                            </span>
+                            <a href="https://www.tixr.com/e/203792" target="_blank" rel="noopener" class="ticket-btn">Buy Tickets Now!</a>
+                        </li>
+                        <li class="show-list-item" data-date="2026-10-09">
+                            <span class="show-date">OCT 9</span>
+                            <span>
+                                <span class="show-venue">Brushy St. Commons</span>
+                                <span class="show-city">Austin, TX</span>
+                            </span>
+                        </li>
+                        <li class="show-list-item" data-date="2026-10-16">
+                            <span class="show-date">OCT 16</span>
+                            <span>
+                                <span class="show-venue">The Saint</span>
+                                <span class="show-city">New Orleans, LA</span>
+                            </span>
+                        </li>
+                        <li class="show-list-item" data-date="2026-10-17">
+                            <span class="show-date">OCT 17</span>
+                            <span>
+                                <span class="show-venue">Anna's</span>
+                                <span class="show-city">New Orleans, LA</span>
+                            </span>
+                        </li>
+                        <li class="show-list-item" data-date="2026-10-29">
+                            <span class="show-date">OCT 29</span>
+                            <span>
+                                <span class="show-info">Monster Mash!</span>
+                                <span class="show-venue">Round Top</span>
+                                <span class="show-city">Round Top, TX</span>
+                            </span>
+                        </li>
+                        <li class="show-list-item" data-date="2026-10-31">
+                            <span class="show-date">OCT 31</span>
+                            <span>
+                                <span class="show-info">w/ Brooke</span>
+                                <span class="show-venue">Saturn Bar</span>
+                                <span class="show-city">New Orleans, LA</span>
+                            </span>
+                        </li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="list-none p-0 m-0">
-                    <li class="show-list-item">
-                        <span class="show-date">OCT 8</span>
-                        <span>
-                            <span class="show-info">Sherelle w/ Toki Doki Hoe, FREAK POV</span>
-                            <span class="show-venue">ARORA</span>
-                            <span class="show-city">New Orleans, LA</span>
-                        </span>
-                        <a href="https://www.tixr.com/e/203792" target="_blank" rel="noopener" class="ticket-btn">Buy Tickets Now!</a>
-                    </li>
-                    <li class="show-list-item">
-                        <span class="show-date">OCT 9</span>
-                        <span>
-                            <span class="show-venue">Brushy St. Commons</span>
-                            <span class="show-city">Austin, TX</span>
-                        </span>
-                    </li>
-                    <li class="show-list-item">
-                        <span class="show-date">OCT 16</span>
-                        <span>
-                            <span class="show-venue">The Saint</span>
-                            <span class="show-city">New Orleans, LA</span>
-                        </span>
-                    </li>
-                    <li class="show-list-item">
-                        <span class="show-date">OCT 17</span>
-                        <span>
-                            <span class="show-venue">Anna's</span>
-                            <span class="show-city">New Orleans, LA</span>
-                        </span>
-                    </li>
-                    <li class="show-list-item">
-                        <span class="show-date">OCT 29</span>
-                        <span>
-                            <span class="show-info">Monster Mash!</span>
-                            <span class="show-venue">Round Top</span>
-                            <span class="show-city">Round Top, TX</span>
-                        </span>
-                    </li>
-                    <li class="show-list-item">
-                        <span class="show-date">OCT 31</span>
-                        <span>
-                            <span class="show-info">w/ Brooke</span>
-                            <span class="show-venue">Saturn Bar</span>
-                            <span class="show-city">New Orleans, LA</span>
-                        </span>
-                    </li>
-                </ul>
 
                 <!-- NOVEMBER -->
-                <div class="month-bar bg-palette-pink">
-                    <span class="font-display text-xl tracking-widest">NOVEMBER</span>
-                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                <div class="tour-group" data-month="november">
+                    <button type="button" class="month-bar bg-palette-pink w-full text-left" aria-expanded="false" aria-controls="november" onclick="toggleGroup('november')">
+                        <span class="month-bar-left">
+                            <span class="font-display text-xl tracking-widest">NOVEMBER</span>
+                            <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
+                        </span>
+                        <span class="month-bar-right">
+                            <span class="text-sm opacity-75">3 shows</span>
+                            <span id="november-arrow" class="month-arrow">&#9660;</span>
+                        </span>
+                    </button>
+                    <div id="november" class="tour-group-body">
+                        <ul class="list-none p-0 m-0">
+                        <li class="show-list-item" data-date="2026-11-07">
+                            <span class="show-date">NOV 7</span>
+                            <span>
+                                <span class="show-venue">Anna's</span>
+                                <span class="show-city">New Orleans, LA</span>
+                            </span>
+                        </li>
+                        <li class="show-list-item" data-date="2026-11-13">
+                            <span class="show-date">NOV 13</span>
+                            <span>
+                                <span class="show-venue">Blue Nile</span>
+                                <span class="show-city">New Orleans, LA</span>
+                            </span>
+                        </li>
+                        <li class="show-list-item" data-date="2026-11-28">
+                            <span class="show-date">NOV 28</span>
+                            <span>
+                                <span class="show-venue">Anna's</span>
+                                <span class="show-city">New Orleans, LA</span>
+                            </span>
+                        </li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="list-none p-0 m-0">
-                    <li class="show-list-item">
-                        <span class="show-date">NOV 7</span>
-                        <span>
-                            <span class="show-venue">Anna's</span>
-                            <span class="show-city">New Orleans, LA</span>
-                        </span>
-                    </li>
-                    <li class="show-list-item">
-                        <span class="show-date">NOV 13</span>
-                        <span>
-                            <span class="show-venue">Blue Nile</span>
-                            <span class="show-city">New Orleans, LA</span>
-                        </span>
-                    </li>
-                    <li class="show-list-item">
-                        <span class="show-date">NOV 28</span>
-                        <span>
-                            <span class="show-venue">Anna's</span>
-                            <span class="show-city">New Orleans, LA</span>
-                        </span>
-                    </li>
-                </ul>
 
                 <!-- DECEMBER -->
-                <div class="month-bar bg-palette-blue">
-                    <span class="font-display text-xl tracking-widest">DECEMBER</span>
-                    <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
-                </div>
-                <ul class="list-none p-0 m-0">
-                    <li class="show-list-item">
-                        <span class="show-date">DEC 31</span>
-                        <span>
-                            <span class="show-info">w/ Brookiecita</span>
-                            <span class="show-venue">Saturn Bar</span>
-                            <span class="show-city">New Orleans, LA</span>
+                <div class="tour-group" data-month="december">
+                    <button type="button" class="month-bar bg-palette-blue w-full text-left" aria-expanded="false" aria-controls="december" onclick="toggleGroup('december')">
+                        <span class="month-bar-left">
+                            <span class="font-display text-xl tracking-widest">DECEMBER</span>
+                            <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
                         </span>
-                    </li>
-                </ul>
+                        <span class="month-bar-right">
+                            <span class="text-sm opacity-75">1 show</span>
+                            <span id="december-arrow" class="month-arrow">&#9660;</span>
+                        </span>
+                    </button>
+                    <div id="december" class="tour-group-body">
+                        <ul class="list-none p-0 m-0">
+                        <li class="show-list-item" data-date="2026-12-31">
+                            <span class="show-date">DEC 31</span>
+                            <span>
+                                <span class="show-info">w/ Brookiecita</span>
+                                <span class="show-venue">Saturn Bar</span>
+                                <span class="show-city">New Orleans, LA</span>
+                            </span>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+
+                </div>
+
+                <!-- Shown by the status script only if every listed date has passed -->
+                <div id="noShowsNote" class="no-shows" hidden>
+                    No dates on the books right now &mdash; <a href="#contact" class="text-palette-acid underline">book us</a>.
+                </div>
 
                 <div class="text-center py-6 border-t-2 border-white/10">
                     <a href="shows.html" class="text-palette-acid font-black uppercase tracking-widest text-sm no-underline hover:underline">All shows &amp; tickets →</a>
@@ -718,6 +919,123 @@
             document.body.style.backgroundImage = "url('images/" + file + "')";
         })();
 
+        /* ===== SHOW STATUS (automatic) =====
+           Every <li> carries data-date="YYYY-MM-DD" and every month group
+           carries data-month. On load this:
+             - strikes through any show whose date has passed
+             - moves the NEXT UP tag to the first show still to come
+             - hides a month once every date in it has passed
+             - opens the nearest month with shows left in it
+           So adding a show only means adding a row with the right data-date;
+           nothing else needs maintaining by hand. */
+        function updateShowStatus() {
+            function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+            // A late-night gig shouldn't grey out at midnight while it's still
+            // going, so anything before 6am still counts as the night before.
+            var now = new Date();
+            if (now.getHours() < 6) now.setDate(now.getDate() - 1);
+            var today = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+
+            var items = document.querySelectorAll('[data-date]');
+            var foundNext = false;
+
+            for (var i = 0; i < items.length; i++) {
+                var li = items[i];
+                var isPast = li.getAttribute('data-date') < today;   // ISO strings compare correctly
+                var body = li.children[1];
+
+                li.classList.toggle('past', isPast);
+                li.classList.remove('next-up');
+
+                // rebuild the status tag from scratch each time
+                var oldTag = body.querySelector('.past-tag, .next-up-tag');
+                if (oldTag) oldTag.parentNode.removeChild(oldTag);
+
+                var tag = null;
+                if (isPast) {
+                    tag = document.createElement('span');
+                    tag.className = 'past-tag';
+                    tag.textContent = 'PLAYED';
+                } else if (!foundNext) {
+                    foundNext = true;
+                    li.classList.add('next-up');
+                    tag = document.createElement('span');
+                    tag.className = 'next-up-tag';
+                    tag.textContent = 'NEXT UP';
+                }
+                if (tag) body.insertBefore(tag, body.firstChild);
+            }
+
+            // Hide any month with nothing left in it
+            var groups = document.querySelectorAll('[data-month]');
+            var firstLive = null;
+            for (var g = 0; g < groups.length; g++) {
+                var grp = groups[g];
+                var rows = grp.querySelectorAll('[data-date]');
+                if (!rows.length) continue;
+                var allPast = true;
+                for (var r = 0; r < rows.length; r++) {
+                    if (!rows[r].classList.contains('past')) { allPast = false; break; }
+                }
+                grp.hidden = allPast;
+                if (!allPast && !firstLive) firstLive = grp;
+            }
+
+            // Open the nearest month that still has shows, collapse the rest
+            var bodies = document.querySelectorAll('.tour-group-body');
+            for (var b = 0; b < bodies.length; b++) {
+                var panel = bodies[b];
+                var open = !!firstLive && firstLive.contains(panel);
+                panel.classList.toggle('open', open);
+                panel.style.maxHeight = '';
+                var arrow = document.getElementById(panel.id + '-arrow');
+                if (arrow) arrow.classList.toggle('open', open);
+                var btn = document.querySelector('[aria-controls="' + panel.id + '"]');
+                if (btn) btn.setAttribute('aria-expanded', String(open));
+            }
+
+            // If literally everything has passed, say so rather than showing a blank box
+            var note = document.getElementById('noShowsNote');
+            if (note) note.hidden = !!firstLive;
+        }
+
+        /* ===== SHOW MONTH ACCORDIONS =====
+           Each month collapses so the full run of dates doesn't bury the rest
+           of the page on a phone. The nearest month starts open. Heights are
+           measured rather than hard-coded so a month can hold any number of
+           shows without clipping. */
+        function toggleGroup(id) {
+            var body  = document.getElementById(id);
+            var arrow = document.getElementById(id + '-arrow');
+            var btn   = document.querySelector('[aria-controls="' + id + '"]');
+            if (!body) return;
+
+            var isOpen = body.classList.contains('open');
+            if (isOpen) {
+                body.style.maxHeight = '';
+                body.classList.remove('open');
+            } else {
+                body.classList.add('open');
+                body.style.maxHeight = body.scrollHeight + 'px';
+            }
+            if (arrow) arrow.classList.toggle('open', !isOpen);
+            if (btn) btn.setAttribute('aria-expanded', String(!isOpen));
+        }
+
+        /* Measure whatever starts open, and re-measure on resize since
+           re-wrapping changes the height. */
+        function measureOpenGroups() {
+            var open = document.querySelectorAll('.tour-group-body.open');
+            for (var i = 0; i < open.length; i++) {
+                open[i].style.maxHeight = open[i].scrollHeight + 'px';
+            }
+        }
+        /* Status first (it decides which month is open), then measure. */
+        updateShowStatus();
+        window.addEventListener('load', measureOpenGroups);
+        window.addEventListener('resize', measureOpenGroups);
+
         /* ===== BIO FOLDS =====
            Clicking a name opens that bio and closes the other one; clicking the
            open name closes it again. Same behaviour as index.html. */
@@ -734,12 +1052,28 @@
             var closeBtn = (dj === 'messy') ? btnRusty : btnMessy;
 
             var wasActive = open.classList.contains('active');
+
             close.classList.remove('active');
+            close.style.maxHeight = '';
             if (closeBtn) closeBtn.classList.remove('active');
 
-            open.classList.toggle('active', !wasActive);
+            if (wasActive) {
+                open.classList.remove('active');
+                open.style.maxHeight = '';
+            } else {
+                open.classList.add('active');
+                // measured, so a long bio is never clipped at any width
+                open.style.maxHeight = open.scrollHeight + 'px';
+            }
             if (openBtn) openBtn.classList.toggle('active', !wasActive);
         }
+
+        /* Re-measure the open bio when the viewport changes, since rotating a
+           phone re-wraps the text to a different height. */
+        window.addEventListener('resize', function () {
+            var openPanel = document.querySelector('.individual-bio-panel.active');
+            if (openPanel) openPanel.style.maxHeight = openPanel.scrollHeight + 'px';
+        });
 
         /* ===== HERO PHOTO =====
            Rotates between the hero banner shots, one per page load.
@@ -848,5 +1182,6 @@
             }
         });
     </script>
+    <script src="shows.js" data-cfasync="false"></script>
 </body>
 </html>

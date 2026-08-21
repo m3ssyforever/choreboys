@@ -117,6 +117,39 @@
             padding: 0.2rem 0.6rem;
             margin-bottom: 0.35rem;
         }
+
+        /* A show that already happened. Stays listed until the whole month is
+           removed, so the run of dates still reads as a run. */
+        .show-list-item.past {
+            opacity: 0.45;
+            border-left: 8px solid rgba(255,255,255,0.2);
+        }
+        .show-list-item.past .show-venue,
+        .show-list-item.past .show-info,
+        .show-list-item.past .show-city,
+        .show-list-item.past .show-date { text-decoration: line-through; }
+        .show-list-item.past .show-date { background-color: #5F5E5A; }
+        .past-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.22);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            padding: 0.2rem 0.6rem;
+            margin-bottom: 0.35rem;
+        }
+        /* Tickets are pointless once the show has happened */
+        .show-list-item.past .ticket-btn { display: none; }
+        [hidden] { display: none !important; }
+        .no-shows {
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
         .month-bar {
             display: flex;
             align-items: baseline;
@@ -198,24 +231,28 @@
             <div class="section-header border-b-4 border-palette-pink">UPCOMING SHOWS</div>
             <div class="section-content bg-palette-dark text-white">
 
+                <!-- Rendered from the show spreadsheet by shows.js.
+                     The months below are the fallback shown if that fetch fails. -->
+                <div id="showsList" data-mode="flat">
                 <!-- AUGUST -->
-                <div class="month-bar bg-palette-blue">
+                <div data-month="august" class="month-bar bg-palette-blue">
                     <span class="font-display text-xl tracking-widest">AUGUST</span>
                     <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
                 </div>
-                <ul class="list-none p-0 m-0">
-                    <li class="show-list-item next-up">
+                <ul data-month="august" class="list-none p-0 m-0">
+                    <li class="show-list-item past" data-date="2026-08-20">
                         <span class="show-date">AUG 20</span>
                         <span>
-                            <span class="next-up-tag">NEXT UP</span>
+                            <span class="past-tag">PLAYED</span>
                             <span class="show-info">w/ Heelturn</span>
                             <span class="show-venue">Saturn Bar</span>
                             <span class="show-city">New Orleans, LA</span>
                         </span>
                     </li>
-                    <li class="show-list-item">
+                    <li class="show-list-item next-up" data-date="2026-08-22">
                         <span class="show-date">AUG 22</span>
                         <span>
+                            <span class="next-up-tag">NEXT UP</span>
                             <span class="show-venue">Anna's</span>
                             <span class="show-city">New Orleans, LA</span>
                         </span>
@@ -223,19 +260,19 @@
                 </ul>
 
                 <!-- SEPTEMBER -->
-                <div class="month-bar bg-palette-pink">
+                <div data-month="september" class="month-bar bg-palette-pink">
                     <span class="font-display text-xl tracking-widest">SEPTEMBER</span>
                     <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
                 </div>
-                <ul class="list-none p-0 m-0">
-                    <li class="show-list-item">
+                <ul data-month="september" class="list-none p-0 m-0">
+                    <li class="show-list-item" data-date="2026-09-05">
                         <span class="show-date">SEPT 5</span>
                         <span>
                             <span class="show-venue">Anna's</span>
                             <span class="show-city">New Orleans, LA</span>
                         </span>
                     </li>
-                    <li class="show-list-item">
+                    <li class="show-list-item" data-date="2026-09-06">
                         <span class="show-date">SEPT 6</span>
                         <span>
                             <span class="show-venue">Virgin Hotel Pool</span>
@@ -245,12 +282,12 @@
                 </ul>
 
                 <!-- OCTOBER -->
-                <div class="month-bar bg-palette-blue">
+                <div data-month="october" class="month-bar bg-palette-blue">
                     <span class="font-display text-xl tracking-widest">OCTOBER</span>
                     <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA + Austin &amp; Round Top, TX</span>
                 </div>
-                <ul class="list-none p-0 m-0">
-                    <li class="show-list-item">
+                <ul data-month="october" class="list-none p-0 m-0">
+                    <li class="show-list-item" data-date="2026-10-08">
                         <span class="show-date">OCT 8</span>
                         <span>
                             <span class="show-info">Sherelle w/ Toki Doki Hoe, FREAK POV</span>
@@ -259,28 +296,28 @@
                         </span>
                         <a href="https://www.tixr.com/e/203792" target="_blank" rel="noopener" class="ticket-btn">Buy Tickets Now!</a>
                     </li>
-                    <li class="show-list-item">
+                    <li class="show-list-item" data-date="2026-10-09">
                         <span class="show-date">OCT 9</span>
                         <span>
                             <span class="show-venue">Brushy St. Commons</span>
                             <span class="show-city">Austin, TX</span>
                         </span>
                     </li>
-                    <li class="show-list-item">
+                    <li class="show-list-item" data-date="2026-10-16">
                         <span class="show-date">OCT 16</span>
                         <span>
                             <span class="show-venue">The Saint</span>
                             <span class="show-city">New Orleans, LA</span>
                         </span>
                     </li>
-                    <li class="show-list-item">
+                    <li class="show-list-item" data-date="2026-10-17">
                         <span class="show-date">OCT 17</span>
                         <span>
                             <span class="show-venue">Anna's</span>
                             <span class="show-city">New Orleans, LA</span>
                         </span>
                     </li>
-                    <li class="show-list-item">
+                    <li class="show-list-item" data-date="2026-10-29">
                         <span class="show-date">OCT 29</span>
                         <span>
                             <span class="show-info">Monster Mash!</span>
@@ -288,7 +325,7 @@
                             <span class="show-city">Round Top, TX</span>
                         </span>
                     </li>
-                    <li class="show-list-item">
+                    <li class="show-list-item" data-date="2026-10-31">
                         <span class="show-date">OCT 31</span>
                         <span>
                             <span class="show-info">w/ Brooke</span>
@@ -299,26 +336,26 @@
                 </ul>
 
                 <!-- NOVEMBER -->
-                <div class="month-bar bg-palette-pink">
+                <div data-month="november" class="month-bar bg-palette-pink">
                     <span class="font-display text-xl tracking-widest">NOVEMBER</span>
                     <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
                 </div>
-                <ul class="list-none p-0 m-0">
-                    <li class="show-list-item">
+                <ul data-month="november" class="list-none p-0 m-0">
+                    <li class="show-list-item" data-date="2026-11-07">
                         <span class="show-date">NOV 7</span>
                         <span>
                             <span class="show-venue">Anna's</span>
                             <span class="show-city">New Orleans, LA</span>
                         </span>
                     </li>
-                    <li class="show-list-item">
+                    <li class="show-list-item" data-date="2026-11-13">
                         <span class="show-date">NOV 13</span>
                         <span>
                             <span class="show-venue">Blue Nile</span>
                             <span class="show-city">New Orleans, LA</span>
                         </span>
                     </li>
-                    <li class="show-list-item">
+                    <li class="show-list-item" data-date="2026-11-28">
                         <span class="show-date">NOV 28</span>
                         <span>
                             <span class="show-venue">Anna's</span>
@@ -328,12 +365,12 @@
                 </ul>
 
                 <!-- DECEMBER -->
-                <div class="month-bar bg-palette-blue">
+                <div data-month="december" class="month-bar bg-palette-blue">
                     <span class="font-display text-xl tracking-widest">DECEMBER</span>
                     <span class="text-sm font-light uppercase tracking-wider opacity-90">New Orleans, LA</span>
                 </div>
-                <ul class="list-none p-0 m-0">
-                    <li class="show-list-item">
+                <ul data-month="december" class="list-none p-0 m-0">
+                    <li class="show-list-item" data-date="2026-12-31">
                         <span class="show-date">DEC 31</span>
                         <span>
                             <span class="show-info">w/ Brookiecita</span>
@@ -342,6 +379,13 @@
                         </span>
                     </li>
                 </ul>
+
+                </div>
+
+                <!-- Shown by the status script only if every listed date has passed -->
+                <div id="noShowsNote" class="no-shows" hidden>
+                    No dates on the books right now &mdash; <a href="index.html#contact" class="text-palette-acid underline">book us</a>.
+                </div>
 
             </div>
         </div>
@@ -388,5 +432,71 @@
             document.body.style.backgroundImage = "url('images/" + file + "')";
         })();
     </script>
+    <script data-cfasync="false">
+        /* ===== SHOW STATUS (automatic) =====
+           Mirrors the logic on the homepage: strike past dates, move NEXT UP to
+           the first date still to come, and hide a month once all of its dates
+           have passed. Adding a show only means adding a row with the right
+           data-date. */
+        function updateShowStatus() {
+            function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+            // Anything before 6am still counts as the night before, so a show
+            // doesn't grey out at midnight while it's still going.
+            var now = new Date();
+            if (now.getHours() < 6) now.setDate(now.getDate() - 1);
+            var today = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+
+            var items = document.querySelectorAll('[data-date]');
+            var foundNext = false;
+
+            for (var i = 0; i < items.length; i++) {
+                var li = items[i];
+                var isPast = li.getAttribute('data-date') < today;
+                var body = li.children[1];
+
+                li.classList.toggle('past', isPast);
+                li.classList.remove('next-up');
+
+                var oldTag = body.querySelector('.past-tag, .next-up-tag');
+                if (oldTag) oldTag.parentNode.removeChild(oldTag);
+
+                var tag = null;
+                if (isPast) {
+                    tag = document.createElement('span');
+                    tag.className = 'past-tag';
+                    tag.textContent = 'PLAYED';
+                } else if (!foundNext) {
+                    foundNext = true;
+                    li.classList.add('next-up');
+                    tag = document.createElement('span');
+                    tag.className = 'next-up-tag';
+                    tag.textContent = 'NEXT UP';
+                }
+                if (tag) body.insertBefore(tag, body.firstChild);
+            }
+
+            // Hide the bar and the list together once a month is done
+            var lists = document.querySelectorAll('ul[data-month]');
+            var anyLive = false;
+            for (var m = 0; m < lists.length; m++) {
+                var ul = lists[m];
+                var rows = ul.querySelectorAll('[data-date]');
+                var allPast = true;
+                for (var r = 0; r < rows.length; r++) {
+                    if (!rows[r].classList.contains('past')) { allPast = false; break; }
+                }
+                var bar = document.querySelector('div[data-month="' + ul.getAttribute('data-month') + '"]');
+                ul.hidden = allPast;
+                if (bar) bar.hidden = allPast;
+                if (!allPast) anyLive = true;
+            }
+
+            var note = document.getElementById('noShowsNote');
+            if (note) note.hidden = anyLive;
+        }
+        updateShowStatus();
+    </script>
+    <script src="shows.js" data-cfasync="false"></script>
 </body>
 </html>
