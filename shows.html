@@ -418,7 +418,7 @@
         </div>
     </footer>
 
-    <script data-cfasync="false">
+    <script>
         /* ===== BACKGROUND PHOTO =====
            Shows a random photo from the images/ folder, one per page load.
            TO ADD MORE PHOTOS: drop {number}.jpg files into the images/ folder,
@@ -432,7 +432,7 @@
             document.body.style.backgroundImage = "url('images/" + file + "')";
         })();
     </script>
-    <script data-cfasync="false">
+    <script>
         /* ===== SHOW STATUS (automatic) =====
            Mirrors the logic on the homepage: strike past dates, move NEXT UP to
            the first date still to come, and hide a month once all of its dates
@@ -497,6 +497,6 @@
         }
         updateShowStatus();
     </script>
-    <script src="shows.js" data-cfasync="false"></script>
+    <script src="shows.js"></script>
 </body>
 </html>
