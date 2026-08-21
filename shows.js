@@ -177,9 +177,21 @@
       return res.text();
     })
     .then(function (text) {
-      var shows = toObjects(parseCSV(text)).filter(function (s) {
-        return validDate(s.date) && s.venue;
-      });
+      var shows = toObjects(parseCSV(text))
+        .filter(function (s) { return validDate(s.date); })
+        .map(function (s) {
+          /* A row with no venue still deserves to show up — an outdoor or
+             one-off gig often has an event name and a town but no room name.
+             Promote whatever we do have into the venue slot rather than
+             dropping the date. */
+          if (!s.venue) {
+            if (s.support)   { s.venue = s.support; s.support = ''; }
+            else if (s.city) { s.venue = s.city;    s.city = ''; }
+          }
+          return s;
+        })
+        .filter(function (s) { return s.venue; });
+
       if (!shows.length) throw new Error('feed had no usable rows');
 
       shows.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
